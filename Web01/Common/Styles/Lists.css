@@ -1,0 +1,20 @@
+﻿dt
+{
+	clear:both;
+	width : 33%;
+	float:left;
+	text-align : left;
+	line-height : normal;
+	padding: 0.25em 0.25em 0.5em 0.25em;
+}
+dd
+{
+	float : left;
+	width : auto;
+	margin : 0.25em 0.25em 0.5em 0.25em;
+	line-height : normal;	
+}
+dl
+{
+	width : 100%;
+}
