@@ -9,7 +9,7 @@
             $("a", ".demo").click(function () { return false; });
         });
     </script>
-    <div class="demo">
+    <div class="demo"> 
         <button>
             A button element</button>
         <input type="submit" value="A submit button">
