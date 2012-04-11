@@ -2,12 +2,24 @@
     CodeFile="SearchQGroups.aspx.cs" Inherits="Config_HRA_SearchQGroups" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script type="text/javascript">
+    $(function () {
+        $("table tr")
+        .css("cursor", "pointer")
+        .click(function () {
+            $row = $(this);
+            var id = $("td", $row).eq(0).text();
+            window.location.href = "QuestionGroups.aspx?id=" + id;
+        });
+    });
+    
+</script>
     <div class="grid_24 alpha">
         <dl>
             <dt>Search </dt>
             <dd>
                 <asp:TextBox ID="tbSearchQGroups" runat="server" CssClass="grid_10 alpha"></asp:TextBox>
-                <asp:LinkButton ID="lbSearchQGroups" runat="server" CssClass="grid_5 omega">Search</asp:LinkButton>
+                <asp:LinkButton ID="lbSearchQGroups" runat="server" CssClass="grid_5 omega" OnClick="lbSearchQGroups_Click">Search</asp:LinkButton>
             </dd>
         </dl>
     </div>
@@ -30,10 +42,10 @@
                                 Description
                             </th>
                             <th>
-                                Created By
+                                Created Date
                             </th>
                             <th>
-                                Created Date
+                                Created By
                             </th>
                             <th>
                                 Is Active
@@ -60,10 +72,10 @@
                         <%#Eval("Description") %>
                     </td>
                     <td>
-                        <%#Eval("Created By") %>
+                        <%#DateTime.Parse(Eval("CreatedDate").ToString()).ToString("MM/dd/yyyy")%>
                     </td>
                     <td>
-                        <%#Eval("Created Date") %>
+                        <%#Eval("CreatedBy") %>
                     </td>
                     <td>
                         <%#Eval("Status") %>

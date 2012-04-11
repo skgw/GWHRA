@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using BaseCore;
 
 namespace HRACore
 {
@@ -16,6 +17,7 @@ namespace HRACore
         private string mLastModifiedBy;
         private DateTime mLastModifiedDate;
         private int mQuestionsCount;
+        private string mStatus;
 
 
         public int ID
@@ -65,18 +67,46 @@ namespace HRACore
             get { return mQuestionsCount; }
             set { mQuestionsCount = value; }
         }
+        public string Status
+        {
+            get { return mStatus; }
+            set { mStatus = value; }
+        }
 
+        public QuestionGroup()
+        {
+            
+        }
         public QuestionGroup(IDataReader reader)
         {
             ID = Int32.Parse(reader[0].ToString());
             Name = reader[1].ToString();
             Description = reader[2].ToString();
-            CreatedDate = DateTime.Parse(reader[3].ToString());
-            CreatedBy = reader[4].ToString();
-            LastModifiedDate = DateTime.Parse(reader[5].ToString());
-            LastModifiedBy = reader[6].ToString();
-            QuestionsCount = Int32.Parse(reader[7].ToString());
+            Status = reader[3].ToString();
+            CreatedDate = DateTime.Parse(reader[4].ToString());
+            CreatedBy = reader[5].ToString();
+            //LastModifiedDate = DateTime.Parse(reader[5].ToString());
+            //LastModifiedBy = reader[6].ToString();
+            QuestionsCount = reader[6] == DBNull.Value ? 0 : Int32.Parse(reader[6].ToString());
 
         }
+        public  QuestionGroup Save()
+        {
+            QuestionGroup obj = null;;
+            string procName = "INSERTUPDATE_QUESTIONGROUP";
+            DBHelper dl = new DBHelper(ConnectionStrings.DefaultDBConnection);
+            dl.AddParameter("@id", this.ID);
+            dl.AddParameter("@name", this.Name);
+            dl.AddParameter("@description", this.Description);
+            dl.AddParameter("@status", this.Status);
+            //DataSet ds = dl.ExecuteDataSet(procName);
+            IDataReader dr = dl.ExecuteReader(procName);
+            while (dr.Read())
+            {
+                obj = (new QuestionGroup(dr));
+            }
+            return obj;
+        }
+        
     }
 }
