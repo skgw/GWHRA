@@ -1,15 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true"
     CodeFile="QuestionGroups.aspx.cs" Inherits="Config_HRA_QuestionGroups" %>
-
+    <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+[Use this screeb to add/edit question groups]
     <div class="grid_24 alpha">
         <dl>
             <dt>Name</dt>
             <dd>
-                <asp:TextBox ID="txtName" runat="server"></asp:TextBox><span style="color:Red"><b>*</b></span>
-                <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtName"  ErrorMessage="Name is required."
-                 ValidationGroup="QuestionGroup" ForeColor="Red"></asp:RequiredFieldValidator>
+                <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
             </dd>
             <dt>Description</dt>
             <dd>
@@ -21,8 +19,8 @@
         
     </div>
     <div class="grid_24 alpha">
-        <asp:LinkButton ID="lbSave" runat="server" OnClick="lbSave_Click" CausesValidation="true" ValidationGroup="QuestionGroup">Save</asp:LinkButton>
-        
+        <asp:LinkButton ID="lbSave" runat="server" OnClick="lbSave_Click">Save</asp:LinkButton>
+        <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click">Add New</asp:LinkButton>
 
     </div>
 </asp:Content>
