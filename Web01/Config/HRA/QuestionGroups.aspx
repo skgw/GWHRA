@@ -21,5 +21,6 @@
     <div class="grid_24 alpha">
         <asp:LinkButton ID="lbSave" runat="server" OnClick="lbSave_Click">Save</asp:LinkButton>
         <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click">Add New</asp:LinkButton>
+
     </div>
 </asp:Content>
