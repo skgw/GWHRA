@@ -11,4 +11,15 @@ public partial class BasePages_Base : System.Web.UI.MasterPage
     {
 
     }
+    public string PageHeader
+    {
+        get
+        {
+            return lblPageHeader.Text;
+        }
+        set
+        {
+            lblPageHeader.Text = value;
+        }
+    }
 }

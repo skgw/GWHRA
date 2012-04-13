@@ -2,13 +2,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <title></title>
     <link href="../Common/Styles/960.css" rel="stylesheet" type="text/css" />
     <link href="../Common/Styles/960_24_col.css" rel="stylesheet" type="text/css" />
     <link href="../Common/Styles/reset.css" rel="stylesheet" type="text/css" />
     <link href="../Common/Styles/text.css" rel="stylesheet" type="text/css" />
     <link href="../Common/Styles/lists.css" rel="stylesheet" type="text/css" />
+    <link href="../Common/Styles/layout.css" rel="stylesheet" type="text/css" />
+    <link href="../Common/Styles/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -16,18 +18,29 @@
         <Scripts>
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/jQuery.js" />
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/jQuery-ui-1.8.18.min.js" />
+            <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap.js" />
         </Scripts>
     </asp:ScriptManager>
     <div class="container_24">
         <div class="container_24 alpha" id="header">
-        <h2>Header</h2>
+            <h2>
+                Header</h2>
         </div>
-        <div class="container_24 alpha " id="content"  style="border-top: dotted 1px #333">
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+        <div class="container_24 alpha" id="content">
+            <div class="grid_24 alpha">
+                <h3>
+                    <asp:Label ID="lblPageHeader" runat="server">
+                    </asp:Label>
+                </h3>
+            </div>
+            <div class="grid_24 alpha">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
         </div>
-        <div class="container_24 alpha" id="footer" style="border-top: dotted 1px #333">
-        <h4>Footer</h4>
+        <div class="container_24 alpha" id="footer">
+            <h4>
+                Footer</h4>
         </div>
     </div>
     </form>
