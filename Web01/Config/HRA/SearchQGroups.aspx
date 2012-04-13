@@ -9,7 +9,7 @@
         .click(function () {
             $row = $(this);
             var id = $("td", $row).eq(0).text();
-            window.location.href = "QuestionGroups.aspx?id=" + id;
+            window.location.href = "QuestionGroups.aspx?qgroupid=" + id;
         });
     });
     
@@ -20,6 +20,7 @@
             <dd>
                 <asp:TextBox ID="tbSearchQGroups" runat="server" CssClass="grid_10 alpha"></asp:TextBox>
                 <asp:LinkButton ID="lbSearchQGroups" runat="server" CssClass="grid_5 omega" OnClick="lbSearchQGroups_Click">Search</asp:LinkButton>
+                <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click">Add New</asp:LinkButton>
             </dd>
         </dl>
     </div>

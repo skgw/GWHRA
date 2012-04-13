@@ -86,6 +86,9 @@
                     <asp:ListItem Value="102">Option List</asp:ListItem>
                     <asp:ListItem Value="103">Check List</asp:ListItem>
                 </asp:DropDownList>
+                <span style="color:Red"><b>*</b></span>
+            <asp:CustomValidator ID="cvQuestionGroup" runat="server" ControlToValidate="ddlQuestionGroup" 
+                 ValidationGroup="Question" ForeColor="Red"></asp:CustomValidator>
         </div>
         <div class="grid_12 omega">
             Select Response Type
@@ -96,6 +99,7 @@
                     <asp:ListItem Value="102">Option List</asp:ListItem>
                     <asp:ListItem Value="103">Check List</asp:ListItem>--%>
                 </asp:DropDownList>
+                <span style="color:Red"><b>*</b></span>
         </div>
         
     </div>
@@ -103,7 +107,10 @@
     <div class="grid_24 alpha" style="margin-top:2.0em">
         <dl>
             <dt>Question Text</dt>
-            <dd><asp:TextBox ID="txtQuestionText" runat="server" TextMode="MultiLine" Rows="4" Columns="60"></asp:TextBox></dd>
+            <dd><asp:TextBox ID="txtQuestionText" runat="server" TextMode="MultiLine" Rows="2" Columns="40"></asp:TextBox><span style="color:Red"><b>*</b></span>
+            <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtQuestionText"  ErrorMessage="Question Text is required."
+                 ValidationGroup="Question" ForeColor="Red"></asp:RequiredFieldValidator>
+            </dd>
         </dl>
     </div>
     <div id="dvResponseOptions" runat="server" class="grid_24 alpha" visible="false">
@@ -122,7 +129,11 @@
     <div class="grid_24 alpha">
         <dl>
             <dt>Display Order</dt>
-            <dd><asp:TextBox ID="txtDisplayOrder" runat="server"></asp:TextBox></dd>
+            <dd><asp:TextBox ID="txtDisplayOrder" runat="server"></asp:TextBox>
+            <span style="color:Red"><b>*</b></span>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtDisplayOrder"  ErrorMessage="Display Order is required."
+                 ValidationGroup="Question" ForeColor="Red"></asp:RequiredFieldValidator>
+            </dd>
             <dt>Gender</dt>
             <dd><asp:DropDownList ID="ddlGender" runat="server">
                 <asp:ListItem Value="B">Both</asp:ListItem>
@@ -140,7 +151,7 @@
         </dl>
     </div>
     <div class="grid_24 alpha" >
-        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"/>
+        <asp:Button ID="btnSave" runat="server" Text="Save" CausesValidation="true" OnClick="btnSave_Click" ValidationGroup="Question"/>
         <asp:Button ID="Button1" runat="server" Text="Test" OnClick="Button1_Click"/>
     </div>
 <asp:HiddenField ID="hdnOptions" runat="server" />

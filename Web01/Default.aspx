@@ -12,7 +12,7 @@
     <div class="demo"> 
         <button>
             A button element</button>
-        <input type="submit" value="A submit button">
+        <input type="submit" value="A submit button" />
         <a href="#">An anchor</a>
     </div>
     <!-- End demo -->

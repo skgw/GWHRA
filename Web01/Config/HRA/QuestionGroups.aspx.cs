@@ -9,41 +9,34 @@ using HRACore;
 
 public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
 {
-    private int GroupId = 0;
+    private int QGroupId = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
        if(!Page.IsPostBack)
        {
-           if (Request.QueryString["id"] != null)
+           if (Request.QueryString["qgroupid"] != null)
            {
-               GroupId = Convert.ToInt16(Request.QueryString["id"]);
-               Session["id"] = GroupId;
+               QGroupId = Convert.ToInt16(Request.QueryString["qgroupid"]);
+               Session["qgroupid"] = QGroupId;
                getQuestionGroupDetails();
            }
            else
            {
-               Session["id"] = null;
+               Session["qgroupid"] = null;
            }
        }
     }
-    protected void lbAddNew_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("QuestionGroups.aspx");
-        //Session["id"] = null;
-        //txtName.Text = string.Empty;
-        //txtDescription.Text = string.Empty;
-        //chkIsActive.Checked = false;
-    }
+    
     protected void lbSave_Click(object sender, EventArgs e)
     {
         QuestionGroup obj = new QuestionGroup();
-        if (Session["id"] == null)
+        if (Session["qgroupid"] == null)
         {
             obj.ID = 0;
         }
         else
         {
-            obj.ID = (int)Session["id"];
+            obj.ID = (int)Session["qgroupid"];
         }
         obj.Name = txtName.Text;
         obj.Description = txtDescription.Text;
@@ -53,12 +46,12 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
             txtName.Text = retObj.Name;
             txtDescription.Text = retObj.Description;
             chkIsActive.Checked = retObj.Status == "ACTIVE" ? true : false;
-            Session["id"] = retObj.ID;
+            Session["qgroupid"] = retObj.ID;
         }
     }
     private void getQuestionGroupDetails()
     {
-        QuestionGroup obj = QuestionGroupList.GetQuestionGroup_By_ID(GroupId);
+        QuestionGroup obj = QuestionGroupList.GetQuestionGroup_By_ID(QGroupId);
         if (obj != null)
         {
             txtName.Text = obj.Name;

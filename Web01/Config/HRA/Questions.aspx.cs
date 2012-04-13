@@ -30,8 +30,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
 
             //load the Response Type dropdown from the Enums
             BindResponseTypes();
-            //ddlResponseType.DataSource = qObj.QuestionResponseType;
-            //ddlResponseType.DataBind();
+            
             if (QuestionId > 0)
             {
                     //Populate the data for the QuestionId
@@ -59,14 +58,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         ddlResponseType.DataTextField = "Name";
         ddlResponseType.DataValueField = "ID";
         ddlResponseType.DataBind();
-        //string[] enumNames = Enum.GetNames(typeof(ResponseTypes));
-        //foreach (string item in enumNames)
-        //{
-        //    //get the enum item value
-        //    int value = (int)Enum.Parse(typeof(ResponseTypes), item);
-        //    ListItem listItem = new ListItem(item, value.ToString());
-        //    ddlResponseType.Items.Add(listItem);
-        //}
+        
     }
     protected void ddlResponseType_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -91,6 +83,13 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
+        if (ddlQuestionGroup.SelectedIndex == 0)
+        {
+            cvQuestionGroup.ErrorMessage = "Question Group is required.";
+            cvQuestionGroup.IsValid = false;
+            cvQuestionGroup.Visible = true;
+            return;
+        }
         string strXML = "";
         switch (ddlResponseType.SelectedItem.Text)
         {

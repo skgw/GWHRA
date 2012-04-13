@@ -26,4 +26,9 @@ public partial class Config_HRA_SearchQGroups : System.Web.UI.Page
         lvQuestionGroups.DataSource = lst;
         lvQuestionGroups.DataBind();
     }
+    protected void lbAddNew_Click(object sender, EventArgs e)
+    {
+        Session["qgroupid"] = null;
+        Response.Redirect("QuestionGroups.aspx");
+    }
 }
