@@ -30,7 +30,7 @@
                 <b>No records returned.</b>
             </EmptyDataTemplate>
             <LayoutTemplate>
-                <table>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>
