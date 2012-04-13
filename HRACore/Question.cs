@@ -36,6 +36,7 @@ namespace HRACore
         private Int64 mQGroupId_Ref;
         private Int64 mQResponseTypeId_Ref;
         private char mGender;
+        //This is a sample text.
 
         public Int64 ID
         {
