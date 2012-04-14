@@ -9,21 +9,19 @@ using HRACore;
 
 public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
 {
-    private int GroupId = 0;
+    private int GroupID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
+        Master.PageHeader = "Question Group Details";
+        if (Request.QueryString["qgroupid"] != null)
+        {
+            GroupID = Convert.ToInt32(Request.QueryString["qgroupid"]);
+            getQuestionGroupDetails();
+        }
+
         if (!Page.IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
-            {
-                GroupId = Convert.ToInt16(Request.QueryString["id"]);
-                Session["id"] = GroupId;
-                getQuestionGroupDetails();
-            }
-            else
-            {
-                Session["id"] = null;
-            }
+
         }
     }
     protected void lbAddNew_Click(object sender, EventArgs e)
@@ -37,34 +35,26 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
     protected void lbSave_Click(object sender, EventArgs e)
     {
         QuestionGroup obj = new QuestionGroup();
-        if (Session["id"] == null)
-        {
-            obj.ID = 0;
-        }
-        else
-        {
-            obj.ID = (int)Session["id"];
-        }
+        obj.ID = (GroupID > 0) ? GroupID : 0;
         obj.Name = txtName.Text;
         obj.Description = txtDescription.Text;
-        obj.Status = chkIsActive.Checked ? "A" : "I";
+        obj.Status = rblqGroupStatus.SelectedValue;
         QuestionGroup retObj = obj.Save();
-        if (retObj != null)
-        {
-            txtName.Text = retObj.Name;
-            txtDescription.Text = retObj.Description;
-            chkIsActive.Checked = retObj.Status == "ACTIVE" ? true : false;
-            Session["id"] = retObj.ID;
-        }
+
+        LoadQuestionGroupDetail(retObj);
     }
-    private void getQuestionGroupDetails()
+    private void LoadQuestionGroupDetail(QuestionGroup obj)
     {
-        QuestionGroup obj = new QuestionGroup(GroupId);        
         if (obj != null)
         {
             txtName.Text = obj.Name;
             txtDescription.Text = obj.Description;
-            chkIsActive.Checked = obj.Status == "ACTIVE" ? true : false;
+            rblqGroupStatus.SelectedIndex = obj.Status.Trim().Equals("A") ? 0 : 1;
         }
+    }
+    private void getQuestionGroupDetails()
+    {
+        QuestionGroup obj = new QuestionGroup(GroupID, 1);
+        LoadQuestionGroupDetail(obj);
     }
 }

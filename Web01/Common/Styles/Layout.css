@@ -15,3 +15,11 @@
 {
 	padding-bottom : 5px;
 }
+.textarea_h80
+{
+	height:80px;
+}
+.radioButtonList td 
+{
+	padding-right: 20px;
+}

@@ -2,25 +2,29 @@
     CodeFile="QuestionGroups.aspx.cs" Inherits="Config_HRA_QuestionGroups" %>
     <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-[Use this screeb to add/edit question groups]
     <div class="grid_24 alpha">
         <dl>
             <dt>Name</dt>
             <dd>
-                <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtName" runat="server" CssClass="grid_15"></asp:TextBox>
             </dd>
             <dt>Description</dt>
             <dd>
-                <asp:TextBox ID="txtDescription" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtDescription" runat="server" CssClass="grid_15 textarea_h80" TextMode="MultiLine"></asp:TextBox>
             </dd>
             <dt>IsActive</dt>
-            <dd><asp:CheckBox ID="chkIsActive" runat="server" /></dd>
+            <dd>
+                <asp:RadioButtonList runat="server" ID="rblqGroupStatus" RepeatDirection="Horizontal" CssClass="radioButtonList" >
+                <asp:ListItem Text="Yes" Value="A"></asp:ListItem>
+                <asp:ListItem Text="No" Value="I"></asp:ListItem>
+                </asp:RadioButtonList>
+            </dd>
         </dl>
         
     </div>
     <div class="grid_24 alpha">
-        <asp:LinkButton ID="lbSave" runat="server" OnClick="lbSave_Click">Save</asp:LinkButton>
-        <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click">Add New</asp:LinkButton>
+        <asp:Button ID="lbSave" runat="server" OnClick="lbSave_Click" Text="Save" />
+        <asp:Button ID="lbAddNew" runat="server" OnClick="lbAddNew_Click" Text="Add New" />
 
     </div>
 </asp:Content>

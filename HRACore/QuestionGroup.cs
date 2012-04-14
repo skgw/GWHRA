@@ -88,12 +88,13 @@ namespace HRACore
         {
             
         }
-        public QuestionGroup(int ID)
+        public QuestionGroup(int ID,int CurrentUserID)
         {
             const string procName = "GET_QUESTIONGROUPS_BY_ID";
             using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
                 dbObj.AddParameter("@id", ID);
+                dbObj.AddParameter("@CurrentUserID", CurrentUserID);
                 IDataReader dr = dbObj.ExecuteReader(procName);
                 while (dr.Read())
                 {
@@ -125,7 +126,7 @@ namespace HRACore
         }
         public QuestionGroup GetQuestionGroup_By_ID(int ID)
         {
-            QuestionGroup obj = new QuestionGroup(ID);
+            QuestionGroup obj = new QuestionGroup(ID,1);
             const string procName = "GET_QUESTIONGROUPS_BY_ID";
             using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
