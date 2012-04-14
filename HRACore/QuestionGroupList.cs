@@ -8,14 +8,15 @@ namespace HRACore
 {
     public class QuestionGroupList
     {
-        public List<QuestionGroup> GetQuestionGroups(string Name)
+        public List<QuestionGroup> GetQuestionGroups(string questionGroupName,bool qGroupStatus)
         {
             List<QuestionGroup> items = new List<QuestionGroup>();
-            string procName = "GET_QUESTIONGROUPS";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            const string procName = "GET_QUESTIONGROUPS";
+            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection,1))
             {
-                dbObj.AddParameter("@name", Name);
-                //DataSet ds = dbObj.ExecuteDataSet(procName);
+                dbObj.AddParameter("@name",questionGroupName);
+                dbObj.AddParameter("@status", qGroupStatus);
+                dbObj.AddParameter("@CurrentUserID", 1);
                 IDataReader dr = dbObj.ExecuteReader(procName);
                 while (dr.Read())
                 {
@@ -25,20 +26,6 @@ namespace HRACore
             return items;
         }
 
-        public static QuestionGroup GetQuestionGroup_By_ID(int ID)
-        {
-            QuestionGroup obj = null;
-            string procName = "GET_QUESTIONGROUPS_BY_ID";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
-            {
-                dbObj.AddParameter("@id", ID);
-                IDataReader dr = dbObj.ExecuteReader(procName);
-                while (dr.Read())
-                {
-                    obj = (new QuestionGroup(dr));
-                }
-            }
-            return obj;
-        }
+    
     }
 }

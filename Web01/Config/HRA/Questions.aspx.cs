@@ -21,7 +21,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         if (!IsPostBack) {
             List<QuestionGroup> lst = new List<QuestionGroup>();
             QuestionGroupList obj = new QuestionGroupList();
-            lst = obj.GetQuestionGroups("");
+            lst = obj.GetQuestionGroups("",true);
             ddlQuestionGroup.DataSource = lst;
             ddlQuestionGroup.DataTextField = "Name";
             ddlQuestionGroup.DataValueField = "ID";

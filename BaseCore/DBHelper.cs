@@ -189,26 +189,19 @@ namespace BaseCore
 
         public IDataReader ExecuteReader(string procedureName)
         {
-            return ExecuteReader(procedureName, 0);
+            return ExecuteReader(procedureName, CommandBehavior.Default);
         }
 
-        public IDataReader ExecuteReader(string procedureName, Int16
-                                                                   refCursorCount)
-        {
-            return ExecuteReader(procedureName, refCursorCount,
-                                 CommandBehavior.CloseConnection);
-        }
+     
 
-        public IDataReader ExecuteReader(string procedureName, Int16
-                                                                   refCursorCount, CommandBehavior commandBehavior)
+        public IDataReader ExecuteReader(string procedureName, CommandBehavior commandBehavior)
         {
-            return Execute(procedureName, ExecuteType.Reader, CommandBehavior.Default, false);
+            return Execute(procedureName, ExecuteType.Reader, commandBehavior, false);
         }
 
         #endregion
 
-        public int ExecuteCommand(string procedureName, bool
-                                                            closeConnection = true)
+        public int ExecuteCommand(string procedureName, bool closeConnection = true)
         {
             return Execute(procedureName, ExecuteType.Command, CommandBehavior.Default, closeConnection);
         }
@@ -228,9 +221,8 @@ namespace BaseCore
 
 
                 //If currentuserId is passed in constructor it will add to DBHelper
-                if (-1 != currentUserID)
-                    SqlParameters.Add(new
-                                          SqlParameter("iCurrentUserID", SqlDbType.BigInt, currentUserID));
+               // if (-1 != currentUserID)
+                    //SqlParameters.Add(new SqlParameter("@CurrentUserID", SqlDbType.Int, currentUserID));
 
                 //adds refcursor to SqlParameters
                 //CreateRefCursors(refCursorCount);
@@ -241,6 +233,7 @@ namespace BaseCore
                     foreach (SqlParameter parameter in SqlParameters)
                         cmd.Parameters.Add(parameter);
                 }
+               // cmd.Parameters.Add(new SqlParameter("@CurrentUserID", SqlDbType.Int, currentUserID));
 
                 try
                 {

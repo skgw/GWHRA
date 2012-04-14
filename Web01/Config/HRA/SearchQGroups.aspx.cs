@@ -10,25 +10,28 @@ public partial class Config_HRA_SearchQGroups : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Master.PageHeader = "Search Question Groups";
         if (!IsPostBack)
         {
             SearchGroups();
         }
     }
-    protected void lbSearchQGroups_Click (object sender, EventArgs e) {
+    protected void lbSearchQGroups_Click(object sender, EventArgs e)
+    {
         SearchGroups();
     }
-    protected void SearchGroups()
+    private void SearchGroups()
     {
-        List<QuestionGroup> lst = new List<QuestionGroup>();
-        QuestionGroupList obj = new QuestionGroupList();
-        lst = obj.GetQuestionGroups(tbSearchQGroups.Text);
-        lvQuestionGroups.DataSource = lst;
+        List<QuestionGroup> qGroups = new List<QuestionGroup>();
+        QuestionGroupList qGroupList = new QuestionGroupList();
+        
+        qGroups = qGroupList.GetQuestionGroups(Server.HtmlEncode(tbSearchQGroups.Text), cbQGroupStatus.Checked);
+
+        lvQuestionGroups.DataSource = qGroups;
         lvQuestionGroups.DataBind();
     }
     protected void lbAddNew_Click(object sender, EventArgs e)
-    {
-        Session["qgroupid"] = null;
+    {    
         Response.Redirect("QuestionGroups.aspx");
     }
 }

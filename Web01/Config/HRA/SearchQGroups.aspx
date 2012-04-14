@@ -1,28 +1,43 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true"
     CodeFile="SearchQGroups.aspx.cs" Inherits="Config_HRA_SearchQGroups" %>
 
+<%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script type="text/javascript">
-    $(function () {
-        $("table tr")
+    <script type="text/javascript">
+        $(function () {
+            $("table tbody tr")
         .css("cursor", "pointer")
         .click(function () {
             $row = $(this);
             var id = $("td", $row).eq(0).text();
-            window.location.href = "QuestionGroups.aspx?qgroupid=" + id;
+            window.location.href = "QuestionGroups.aspx?qgroupid=" + $.trim(id);
         });
-    });
+        });
     
-</script>
-    <div class="grid_24 alpha">
-        <dl>
-            <dt>Search </dt>
-            <dd>
-                <asp:TextBox ID="tbSearchQGroups" runat="server" CssClass="grid_10 alpha"></asp:TextBox>
-                <asp:LinkButton ID="lbSearchQGroups" runat="server" CssClass="grid_5 omega" OnClick="lbSearchQGroups_Click">Search</asp:LinkButton>
-                <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click">Add New</asp:LinkButton>
-            </dd>
-        </dl>
+    </script>
+    <div class="grid_24 alpha append_bottom">
+        <div class="grid_17 alpha">
+            <dl>
+                <dt>Name </dt>
+                <dd>
+                    <asp:TextBox ID="tbSearchQGroups" runat="server" CssClass="grid_8 alpha"></asp:TextBox>
+                </dd>
+            </dl>
+        </div>
+        <div class="grid_7 omega">
+            <asp:CheckBox ID="cbQGroupStatus" runat="server" Text="Search Active groups only" />
+        </div>
+    </div>
+    <div class="grid_24 alpha append_bottom">
+        <div class="grid_8 alpha">
+            <asp:LinkButton ID="lbSearchQGroups" runat="server" CssClass="btn btn-primary" OnClick="lbSearchQGroups_Click">Search</asp:LinkButton>
+        </div>
+        <div class="grid_8">
+            <asp:Button ID="LinkButton1" runat="server" CssClass="btn" Text="Cancel" ></asp:Button>
+        </div>
+        <div class="grid_8 omega">
+            <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click" CssClass="btn btn-success "> + Add New</asp:LinkButton>
+        </div>
     </div>
     <div class="grid_24 alpha">
         <asp:ListView ID="lvQuestionGroups" runat="server">
@@ -30,7 +45,7 @@
                 <b>No records returned.</b>
             </EmptyDataTemplate>
             <LayoutTemplate>
-                <table class="table table-bordered">
+                <table class="table table-bordered ">
                     <thead>
                         <tr>
                             <th>

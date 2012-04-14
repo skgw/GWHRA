@@ -59,7 +59,7 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
     }
     private void getQuestionGroupDetails()
     {
-        QuestionGroup obj = QuestionGroupList.GetQuestionGroup_By_ID(GroupId);
+        QuestionGroup obj = new QuestionGroup(GroupId);        
         if (obj != null)
         {
             txtName.Text = obj.Name;

@@ -72,12 +72,7 @@ namespace HRACore
             get { return mStatus; }
             set { mStatus = value; }
         }
-
-        public QuestionGroup()
-        {
-            
-        }
-        public QuestionGroup(IDataReader reader)
+        private void LoadReader(IDataReader reader)
         {
             ID = Int32.Parse(reader[0].ToString());
             Name = reader[1].ToString();
@@ -88,6 +83,27 @@ namespace HRACore
             //LastModifiedDate = DateTime.Parse(reader[5].ToString());
             //LastModifiedBy = reader[6].ToString();
             QuestionsCount = reader[6] == DBNull.Value ? 0 : Int32.Parse(reader[6].ToString());
+        }
+        public QuestionGroup()
+        {
+            
+        }
+        public QuestionGroup(int ID)
+        {
+            const string procName = "GET_QUESTIONGROUPS_BY_ID";
+            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbObj.AddParameter("@id", ID);
+                IDataReader dr = dbObj.ExecuteReader(procName);
+                while (dr.Read())
+                {
+                    LoadReader(dr);
+                }
+            }         
+        }
+        public QuestionGroup(IDataReader reader)
+        {
+           LoadReader(reader);
 
         }
         public  QuestionGroup Save()
@@ -104,6 +120,21 @@ namespace HRACore
             while (dr.Read())
             {
                 obj = (new QuestionGroup(dr));
+            }
+            return obj;
+        }
+        public QuestionGroup GetQuestionGroup_By_ID(int ID)
+        {
+            QuestionGroup obj = new QuestionGroup(ID);
+            const string procName = "GET_QUESTIONGROUPS_BY_ID";
+            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbObj.AddParameter("@id", ID);
+                IDataReader dr = dbObj.ExecuteReader(procName);
+                while (dr.Read())
+                {
+                    obj = (new QuestionGroup(dr));
+                }
             }
             return obj;
         }
