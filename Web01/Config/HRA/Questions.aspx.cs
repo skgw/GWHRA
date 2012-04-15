@@ -18,10 +18,11 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         {
             QuestionId = Convert.ToInt64(Request.QueryString["QuestionId"]);
         }
-        if (!IsPostBack) {
+        if (!IsPostBack)
+        {
             List<QuestionGroup> lst = new List<QuestionGroup>();
             QuestionGroupList obj = new QuestionGroupList();
-            lst = obj.GetQuestionGroups("",true);
+            lst = obj.GetQuestionGroups("");
             ddlQuestionGroup.DataSource = lst;
             ddlQuestionGroup.DataTextField = "Name";
             ddlQuestionGroup.DataValueField = "ID";
@@ -30,10 +31,10 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
 
             //load the Response Type dropdown from the Enums
             BindResponseTypes();
-            
+
             if (QuestionId > 0)
             {
-                    //Populate the data for the QuestionId
+                //Populate the data for the QuestionId
                 Question qObj = Question.GetQuestionById(QuestionId);
                 if (qObj != null)
                 {
@@ -58,7 +59,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         ddlResponseType.DataTextField = "Name";
         ddlResponseType.DataValueField = "ID";
         ddlResponseType.DataBind();
-        
+
     }
     protected void ddlResponseType_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -69,7 +70,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
             case "TextBox":
                 dvResponseOptions.Visible = false;
                 break;
-            case  "TextArea":
+            case "TextArea":
                 dvResponseOptions.Visible = false;
                 break;
             case "RadioButtons":
@@ -113,9 +114,9 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
                     strXML += "</optionlist>";
                 }
                 break;
-            
+
         }
-//assign the values to the Question Object properties
+        //assign the values to the Question Object properties
         Question obj = new Question();
 
         if (Session["Questionid"] == null)
@@ -196,13 +197,13 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Questions.aspx?QuestionId=1645"); 
+        Response.Redirect("Questions.aspx?QuestionId=1645");
         return;
         txtQuestionText.Text = "xxxxxxxxxxxxxxxxxxxx";
         txtDisplayOrder.Text = "1";
         txtNarrative.Text = "yyyyyyyyyyyyyyyy";
         txtHelpText.Text = "zzzzzzzzzzzzzzzzzzz";
-        
+
         //string xyz = "<optionlist><option>QWQWQW</option><option>SAASASS</option><option>ZXZXZX</option></optionlist>";
         //hdnOptions.Value = "";
         //XmlDocument optionsXML = new XmlDocument();
@@ -220,6 +221,6 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         //        hdnOptions.Value += "~" + xnList[i].InnerXml;
         //    }
         //}
-        
+
     }
 }

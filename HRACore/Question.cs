@@ -36,7 +36,6 @@ namespace HRACore
         private Int64 mQGroupId_Ref;
         private Int64 mQResponseTypeId_Ref;
         private char mGender;
-        //This is a sample text.
 
         public Int64 ID
         {
@@ -126,7 +125,7 @@ namespace HRACore
             set { mGender = value; }
         }
         public Question()
-        {            
+        {
         }
 
         public Question(IDataReader reader)
@@ -136,7 +135,7 @@ namespace HRACore
             QResponseTypeId_Ref = Int64.Parse(reader[2].ToString());
             Content = reader[3].ToString();
             DisplayOrder = Int64.Parse(reader[4].ToString());
-            Gender =Convert.ToChar(reader[5].ToString());
+            Gender = Convert.ToChar(reader[5].ToString());
             Narrative = reader[6].ToString();
             HelpText = reader[7].ToString();
             IsMandatory = Convert.ToChar(reader[8].ToString());
@@ -148,7 +147,7 @@ namespace HRACore
             //LastModifiedBy = reader[6].ToString();
             //QuestionsCount = reader[6] == DBNull.Value ? 0 : Int64.Parse(reader[6].ToString());
             //QUESTION_GROUP_ID_REF, RESPONSE_TYPE_ID_REF, QUESTION_CONTENT, DISPLAY_ORDER
-		    //, GENDER, NARRATIVE, HELP_TEXT, IS_MANDATORY, CREATED_DATE, CREATED_BY, STATUS
+            //, GENDER, NARRATIVE, HELP_TEXT, IS_MANDATORY, CREATED_DATE, CREATED_BY, STATUS
         }
 
         public Question Save(int userid)
@@ -176,7 +175,7 @@ namespace HRACore
             }
             return obj;
         }
-         /// <summary>
+        /// <summary>
         /// TEST : REMOVE THIS LATER.
         /// </summary>
         /// <returns></returns>
@@ -200,7 +199,7 @@ namespace HRACore
                 DataSet ds = dbObj.ExecuteDataSet(procName);
                 if (ds.Tables.Count > 0)
                 {
-                    dt = ds.Tables[0];    
+                    dt = ds.Tables[0];
                 }
             }
             return dt;
