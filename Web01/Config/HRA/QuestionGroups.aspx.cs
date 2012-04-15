@@ -44,8 +44,8 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
     {
         if (obj != null)
         {
-            txtName.Text = obj.Name;
-            txtDescription.Text = obj.Description;
+            txtName.Text = Server.HtmlDecode(obj.Name);
+            txtDescription.Text = Server.HtmlDecode(obj.Description);
             rblqGroupStatus.SelectedIndex = obj.Status.Trim().Equals("A") ? 0 : 1;
         }
     }
