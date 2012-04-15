@@ -114,7 +114,7 @@ namespace HRACore
         }
         public void Save()
         {
-            QuestionGroup obj = null;;
+            
             string procName = "INSERTUPDATE_QUESTIONGROUP";
             using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
@@ -124,7 +124,7 @@ namespace HRACore
                 dbhQuestionGroup.AddParameter("@status", this.Status);
                 dbhQuestionGroup.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
-                //dl.ExecuteCommand(procName, true);
+            
                 IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
                 while (dr.Read())
                 {                  
