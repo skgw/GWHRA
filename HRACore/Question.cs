@@ -7,18 +7,29 @@ using BaseCore;
 
 namespace HRACore
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Synced with db (SYS_CODES). Code type : 1005</remarks>
     public enum Sex
     {
-        Both = 0,
-        Male = 1,
-        Female = 2
+        Both = 1000,
+        Female = 1001,
+        Male = 1002
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Synced with db (SYS_CODES). Code type : 1005</remarks>
+    ///
     public enum ResponseTypes
     {
-        TextBox = 0,
-        TextArea = 1,
-        CheckBox = 2,
-        RadioButtons = 3
+        CheckBox = 1003,
+        RadioButtons = 1004,
+        TextArea = 1005,
+        TextBox = 1006
     }
     public class Question
     {
