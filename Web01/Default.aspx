@@ -4,5 +4,5 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
   
-  Removed content.
+SAmple content. Testing checkins
 </asp:Content>
