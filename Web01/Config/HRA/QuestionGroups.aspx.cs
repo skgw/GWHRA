@@ -16,32 +16,29 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
         if (Request.QueryString["qgroupid"] != null)
         {
             GroupID = Convert.ToInt32(Request.QueryString["qgroupid"]);
-            getQuestionGroupDetails();
         }
-
         if (!Page.IsPostBack)
         {
-
+            if (GroupID > 0)
+            {
+                GetQuestionGroupDetail();
+            }
         }
     }
     protected void lbAddNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("QuestionGroups.aspx");
-        //Session["id"] = null;
-        //txtName.Text = string.Empty;
-        //txtDescription.Text = string.Empty;
-        //chkIsActive.Checked = false;
     }
     protected void lbSave_Click(object sender, EventArgs e)
     {
-        QuestionGroup obj = new QuestionGroup();
+        QuestionGroup obj = new QuestionGroup(1);
         obj.ID = (GroupID > 0) ? GroupID : 0;
         obj.Name = txtName.Text;
         obj.Description = txtDescription.Text;
         obj.Status = rblqGroupStatus.SelectedValue;
-        QuestionGroup retObj = obj.Save();
+        obj.Save();
 
-        LoadQuestionGroupDetail(retObj);
+        LoadQuestionGroupDetail(obj);
     }
     private void LoadQuestionGroupDetail(QuestionGroup obj)
     {
@@ -52,7 +49,7 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
             rblqGroupStatus.SelectedIndex = obj.Status.Trim().Equals("A") ? 0 : 1;
         }
     }
-    private void getQuestionGroupDetails()
+    private void GetQuestionGroupDetail()
     {
         QuestionGroup obj = new QuestionGroup(GroupID, 1);
         LoadQuestionGroupDetail(obj);

@@ -9,6 +9,7 @@ namespace HRACore
 {
     public class QuestionGroup
     {
+      
         private int mID;
         private string mName;
         private string mDescription;
@@ -19,6 +20,8 @@ namespace HRACore
         private int mQuestionsCount;
         private string mStatus;
 
+        private int mCurrentUserID = 0;
+        private DBHelper dbhQuestionGroup;
 
         public int ID
         {
@@ -84,22 +87,24 @@ namespace HRACore
             //LastModifiedBy = reader[6].ToString();
             QuestionsCount = reader[6] == DBNull.Value ? 0 : Int32.Parse(reader[6].ToString());
         }
-        public QuestionGroup()
+        public QuestionGroup(int CurrentUserID)
         {
-            
+            mCurrentUserID = CurrentUserID;
         }
         public QuestionGroup(int ID,int CurrentUserID)
         {
+            mCurrentUserID = CurrentUserID;
             const string procName = "GET_QUESTIONGROUPS_BY_ID";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbObj.AddParameter("@id", ID);
-                dbObj.AddParameter("@CurrentUserID", CurrentUserID);
-                IDataReader dr = dbObj.ExecuteReader(procName);
+                dbhQuestionGroup.AddParameter("@id", ID);
+                dbhQuestionGroup.AddParameter("@CurrentUserID", mCurrentUserID);
+                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
                 while (dr.Read())
                 {
                     LoadReader(dr);
                 }
+                dbhQuestionGroup.Dispose();
             }         
         }
         public QuestionGroup(IDataReader reader)
@@ -107,35 +112,42 @@ namespace HRACore
            LoadReader(reader);
 
         }
-        public  QuestionGroup Save()
+        public void Save()
         {
             QuestionGroup obj = null;;
             string procName = "INSERTUPDATE_QUESTIONGROUP";
-            DBHelper dl = new DBHelper(ConnectionStrings.DefaultDBConnection);
-            dl.AddParameter("@id", this.ID);
-            dl.AddParameter("@name", this.Name);
-            dl.AddParameter("@description", this.Description);
-            dl.AddParameter("@status", this.Status);
-            //DataSet ds = dl.ExecuteDataSet(procName);
-            IDataReader dr = dl.ExecuteReader(procName);
-            while (dr.Read())
+            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                obj = (new QuestionGroup(dr));
+                dbhQuestionGroup.AddParameter("@id", this.ID);
+                dbhQuestionGroup.AddParameter("@name", this.Name);
+                dbhQuestionGroup.AddParameter("@description", this.Description);
+                dbhQuestionGroup.AddParameter("@status", this.Status);
+                dbhQuestionGroup.AddParameter("@CURRENTUSERID", mCurrentUserID);
+
+                //dl.ExecuteCommand(procName, true);
+                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
+                while (dr.Read())
+                {                  
+                    LoadReader(dr);
+                }
+                dbhQuestionGroup.Dispose();
             }
-            return obj;
+            
         }
         public QuestionGroup GetQuestionGroup_By_ID(int ID)
         {
             QuestionGroup obj = new QuestionGroup(ID,1);
             const string procName = "GET_QUESTIONGROUPS_BY_ID";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbObj.AddParameter("@id", ID);
-                IDataReader dr = dbObj.ExecuteReader(procName);
+                dbhQuestionGroup.AddParameter("@id", ID);
+                dbhQuestionGroup.AddParameter("@CURRENTUSERID", mCurrentUserID);
+                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
                 while (dr.Read())
                 {
                     obj = (new QuestionGroup(dr));
                 }
+                dbhQuestionGroup.Dispose();
             }
             return obj;
         }
