@@ -4,15 +4,15 @@
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-        //        $(function () {
-        //            $("table tbody tr")
-        //        .css("cursor", "pointer")
-        //        .click(function () {
-        //            $row = $(this);
-        //            var id = $("td", $row).eq(0).text();
-        //            //window.location.href = "AssessmentGroup.aspx?AGroupid=" + $.trim(id);
-        //        });
-        //        });
+                $(function () {
+                    $("table tbody tr")
+                .css("cursor", "pointer")
+                .click(function () {
+                    $row = $(this);
+                    var id = $("td", $row).eq(0).text();
+                    window.location.href = "AssessmentGroups.aspx?AGroupid=" + $.trim(id);
+                });
+                });
     
     </script>
     <div class="grid_24 alpha append_bottom">

@@ -33,6 +33,6 @@ public partial class Config_HRA_SearchAGroups : System.Web.UI.Page
     }
     protected void lbAddNew_Click(object sender, EventArgs e)
     {
-        //   Response.Redirect("QuestionGroups.aspx");
+        Response.Redirect("AssessmentGroups.aspx");
     }
 }
