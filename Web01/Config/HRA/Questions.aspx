@@ -4,78 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <script type="text/javascript">
     $(function () {
-        if ($("input[id$='hdnOptions']").val() != "") {
-            var strOption = $("input[id$='hdnOptions']").val().split("~");
-            for (var i = 0; i < strOption.length; i++) {
-                displayOptions(strOption[i]);
-            }
-            BindEvents();
-        }
     });
-
-    $("input[id$='btnAddOption']").live("click", function (e) {
-        e.preventDefault();
-        var retMsg = ValidateOption();
-        if (retMsg != "") {
-            alert(retMsg);
-            return;
-        }
-        displayOptions($("input[id$='txtResponseOption']").val());
-        BindEvents()
-        $("input[id$='txtResponseOption']").val("");
-
-    });
-    function displayOptions(OptionText) {
-        //Add the options one in each click
-        $("input[id$='hdnOptions']").val("");
-        var thisTr = "";
-        if ($("select[id$='ddlResponseType'] :selected").text() == "RadioButtons") {
-            thisTr += "<tr><td style='border:1px solid Black;text-align:center;'><input type='radio' name='radioresponse'/></td><td style='width:90%;border:1px solid Black;'>" + OptionText + "</td><td style='border:1px solid Black;text-align:center;color:Red;'><b>&#120;</b></td></tr>";
-        }
-        else if ($("select[id$='ddlResponseType'] :selected").text() == "CheckBox") {
-            thisTr += "<tr><td style='border:1px solid Black;text-align:center;'><input type='checkbox' name='checkresponse'/></td><td style='width:70%;border:1px solid Black;'>" + OptionText + "</td><td style='border:1px solid Black;text-align:center;color:Red;'><b>&#120;</b></td></tr>";
-        }
-
-        $("#tblOptions").append(thisTr);
-    }
-    function ValidateOption() {
-        var msg = "";
-        if (jQuery.trim($("input[id$='txtResponseOption']").val()) == "") {
-            msg = "You must enter option text.";
-            return msg;
-        }
-        $("#dvOptions table tr").each(function () {
-            $row = $(this);
-            var option = $("td", $row).eq(1).text();
-            if (option == $("input[id$='txtResponseOption']").val()) {
-                strOptions = option;
-                msg = "This option already exists for this Question.";
-            }
-        });
-        return msg;
-    }
-    function BindEvents() {
-        var strOptions = "";
-        $("#dvOptions table tr").each(function () {
-            $row = $(this);
-            var option = $("td", $row).eq(1).text();
-            if (strOptions == "") {
-                strOptions = option;
-            }
-            else {
-                strOptions += "~" + option;
-            }
-            //alert(strOptions);
-            $("td", $row).eq(2)
-            .css("cursor", "pointer")
-            .click(function (e) {
-                $row = $(this).parent();
-                $row.remove();
-            });
-        });
-        $("input[id$='hdnOptions']").val(strOptions);
-        //alert($("input[id$='hdnOptions']").val());
-    }
 </script>
     <div class="grid_24 alpha" >
         <div class="grid_12 alpha">
@@ -113,19 +42,26 @@
             </dd>
         </dl>
     </div>
-    <div id="dvResponseOptions" runat="server" class="grid_24 alpha" visible="false">
-        <div id="dvOptions" class="grid_24 alpha">
+    <div id="dvResponseOptions" runat="server" class="grid grid_24 alpha" visible="false">
         <dl>
             <dt>Response Options</dt>
             <dd>
                 <asp:TextBox ID="txtResponseOption" runat="server" Width="450px"></asp:TextBox>
-                <asp:Button ID="btnAddOption" runat="server" Text="Add" />
+                <asp:Button ID="btnAddOption" runat="server" Text="Add" OnClick="btnAddOption_click" />
             </dd>
          </dl>
-         <div class="grid_8 alpha">&nbsp;</div>
-         <div class="grid_16 omega"><table style="width:80%; border:1px solid Black;" id="tblOptions"></table></div>
-        </div>
+         <div class="grid_12 alpha push_8" style="margin-left:0.8em">
+                 <asp:GridView ID="gvOptions" runat="server" class="table table-bordered" AutoGenerateColumns="false"  GridLines="Both" OnRowCommand="gvOptions_RowCommand">
+                        <Columns>
+                            <asp:BoundField DataField="Item1" HeaderText="Option Text" ReadOnly="True" />
+                            <asp:ButtonField ButtonType="Link" CommandName="Remove" HeaderText="Remove" Text="&#120;" />
+                        </Columns>
+                </asp:GridView>
+         </div>
+        
     </div>
+
+
     <div class="grid_24 alpha">
         <dl>
             <dt>Display Order</dt>
@@ -154,6 +90,6 @@
         <asp:Button ID="btnSave" runat="server" Text="Save" CausesValidation="true" OnClick="btnSave_Click" ValidationGroup="Question"/>
         <asp:Button ID="Button1" runat="server" Text="Test" OnClick="Button1_Click"/>
     </div>
-<asp:HiddenField ID="hdnOptions" runat="server" />
+
 </asp:Content>
 

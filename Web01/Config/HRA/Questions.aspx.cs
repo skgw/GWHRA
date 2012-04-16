@@ -12,6 +12,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
 {
     private Question qObj = new Question();
     private Int64 QuestionId = 0;
+    List<Tuple<string>> lstOptions = new List<Tuple<string>>();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["QuestionId"] != null)
@@ -22,7 +23,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         {
             List<QuestionGroup> lst = new List<QuestionGroup>();
             QuestionGroupList obj = new QuestionGroupList();
-            lst = obj.GetQuestionGroups("");
+            lst = obj.GetQuestionGroups("",true);
             ddlQuestionGroup.DataSource = lst;
             ddlQuestionGroup.DataTextField = "Name";
             ddlQuestionGroup.DataValueField = "ID";
@@ -102,14 +103,14 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
                 break;
             case "RadioButtons":
             case "CheckBox":
-                if (hdnOptions.Value != "")
+                //make the xml string
+                if (Session["OptionList"] != null)
                 {
-                    //make the xml string
                     strXML = "<optionlist>";
-                    string[] options = hdnOptions.Value.Split('~');
-                    for (int i = 0; i < options.Length; i++)
+                    lstOptions = (List<Tuple<string>>)Session["OptionList"];
+                    for (int i = 0; i < lstOptions.Count; i++)
                     {
-                        strXML += "<option>" + options[i] + "</option>";
+                        strXML += "<option>" + lstOptions[i].Item1 + "</option>";
                     }
                     strXML += "</optionlist>";
                 }
@@ -174,6 +175,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
     }
     protected void LoadOptions(string optionString)
     {
+        Session["OptionList"] = null;
         XmlDocument optionsXML = new XmlDocument();
         if (optionString.Length > 0)
         {
@@ -181,46 +183,70 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
             hdnOptions.Value = "";
             XmlElement root = optionsXML.DocumentElement;
             XmlNodeList xnList = root.ChildNodes;
+            lstOptions.Clear();
             for (int i = 0; i < xnList.Count; i++)
             {
-                if (hdnOptions.Value == "")
-                {
-                    hdnOptions.Value = xnList[i].InnerXml;
-                }
-                else
-                {
-                    hdnOptions.Value += "~" + xnList[i].InnerXml;
-                }
+                lstOptions.Add(Tuple.Create<string>(Server.HtmlDecode(xnList[i].InnerXml)));
             }
-            dvResponseOptions.Visible = true;
+            Session["OptionList"] = lstOptions;
+            BindOptions();
         }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Questions.aspx?QuestionId=1645");
-        return;
-        txtQuestionText.Text = "xxxxxxxxxxxxxxxxxxxx";
+        //Response.Redirect("Questions.aspx?QuestionId=1685");
+        //return;
+        ddlQuestionGroup.SelectedIndex = 3;
+        txtQuestionText.Text = "Test Question";
         txtDisplayOrder.Text = "1";
-        txtNarrative.Text = "yyyyyyyyyyyyyyyy";
-        txtHelpText.Text = "zzzzzzzzzzzzzzzzzzz";
+        txtNarrative.Text = "Narrative Test Question";
+        txtHelpText.Text = "Help Text Test Question";
+        chkMandatory.Checked = false;
+        chkStatus.Checked = true;
+    }
 
-        //string xyz = "<optionlist><option>QWQWQW</option><option>SAASASS</option><option>ZXZXZX</option></optionlist>";
-        //hdnOptions.Value = "";
-        //XmlDocument optionsXML = new XmlDocument();
-        //optionsXML.LoadXml(xyz);
-        //XmlElement root = optionsXML.DocumentElement;
-        //XmlNodeList xnList = root.ChildNodes;
-        //for (int i = 0; i < xnList.Count; i++)
-        //{
-        //    if (hdnOptions.Value == "")
-        //    {
-        //        hdnOptions.Value = xnList[i].InnerXml;
-        //    }
-        //    else
-        //    {
-        //        hdnOptions.Value += "~" + xnList[i].InnerXml;
-        //    }
-        //}
 
+
+    protected void btnAddOption_click(object sender, EventArgs e)
+    {
+        if (txtResponseOption.Text.Trim().Length > 0)
+        {
+            if (Session["OptionList"] != null)
+            {
+                lstOptions = (List<Tuple<string>>)Session["OptionList"];
+            }
+            lstOptions.Add(Tuple.Create<string>(txtResponseOption.Text.Trim()));
+        }
+        if (lstOptions.Count > 0)
+        {
+            Session["OptionList"] = lstOptions;
+        }
+        BindOptions();
+        txtResponseOption.Text = "";
+        txtResponseOption.Focus();
+    }
+
+    protected void gvOptions_RowCommand(Object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Remove")
+        {
+            int thisIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvOptions.Rows[thisIndex];
+            string thisOptionText = Server.HtmlDecode(row.Cells[0].Text).ToString();
+            if (Session["OptionList"] != null)
+            {
+                lstOptions = (List<Tuple<string>>)Session["OptionList"];
+                lstOptions.RemoveAt(thisIndex);
+                Session["OptionList"] = lstOptions;
+            }
+            BindOptions();
+        }
+    }
+
+    protected void BindOptions()
+    {
+        dvResponseOptions.Visible = true;
+        gvOptions.DataSource = lstOptions;
+        gvOptions.DataBind();
     }
 }
