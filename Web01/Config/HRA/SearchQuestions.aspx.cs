@@ -9,6 +9,7 @@ public partial class Config_HRA_SearchQuestions : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        Master.PageHeader = "Search Questions";
     }
+
 }
