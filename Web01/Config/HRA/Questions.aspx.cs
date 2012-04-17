@@ -50,7 +50,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
                     chkStatus.Checked = obj1.Status.ToString() == "A" ? true : false;
                     LoadOptions(obj1.ResponseText);
                 }
-                Session["Questionid"] = QuestionId;
+                //Session["Questionid"] = QuestionId;
             }
         }
     }
@@ -121,15 +121,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         }
         //assign the values to the Question Object properties
         Question obj = new Question(1);
-
-        if (Session["Questionid"] == null)
-        {
-            obj.ID = 0;
-        }
-        else
-        {
-            obj.ID = (Int64)Session["Questionid"];
-        }
+        obj.ID = (QuestionId > 0) ? QuestionId : 0;
         obj.Content = txtQuestionText.Text;
         obj.DisplayOrder = Convert.ToInt64(txtDisplayOrder.Text);
 
@@ -170,7 +162,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         
         obj.Save(1);
         LoadOptions(obj.ResponseText);
-        Session["Questionid"] = obj.ID;
+        //Session["Questionid"] = obj.ID;
     }
     
     protected void LoadOptions(string optionString)
@@ -194,7 +186,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
     }
     protected void lnkAddNew_Click(object sender, EventArgs e)
     {
-        Session["Questionid"] = null;
+        Session["OptionList"] = null;
         Response.Redirect("Questions.aspx");
     }
     protected void btnBack_Click(object sender, EventArgs e)

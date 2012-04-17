@@ -39,7 +39,7 @@ public partial class Config_HRA_SearchQuestions : System.Web.UI.Page
     }
     protected void lnkAddNew_Click(object sender, EventArgs e)
     {
-        Session["Questionid"] = null;
+        //Session["Questionid"] = null;
         Response.Redirect("Questions.aspx");
     }
     protected void lnkCancel_Click(object sender, EventArgs e)
