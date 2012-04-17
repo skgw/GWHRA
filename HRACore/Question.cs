@@ -33,6 +33,8 @@ namespace HRACore
     }
     public class Question
     {
+        private DBHelper dbhQuestionGroup;
+
         private Int64 mID;
         private string mContent;
         private Sex mAppliesTo;
@@ -45,8 +47,12 @@ namespace HRACore
         private string mResponseText;
         private char mIsMandatory;
         private Int64 mQGroupId_Ref;
+        private string mGroupName;
         private Int64 mQResponseTypeId_Ref;
         private char mGender;
+        private string mCreatedBy;
+        private DateTime mCreatedDate;
+        private int mCurrentUserID = 0;
 
         public Int64 ID
         {
@@ -135,101 +141,91 @@ namespace HRACore
             get { return mGender; }
             set { mGender = value; }
         }
-        public Question()
+        public string GroupName
         {
+            get { return mGroupName; }
+            set { mGroupName = value; }
+        }
+        public string CreatedBy
+        {
+            get { return mCreatedBy; }
+            set { mCreatedBy = value; }
+        }
+        public DateTime CreatedDate
+        {
+            get { return mCreatedDate; }
+            set { mCreatedDate = value; }
+        }
+
+        public Question( int CurrentUserId)
+        {
+            mCurrentUserID = CurrentUserId;
+        }
+
+        public void LoadQuestion(IDataReader reader)
+        {
+            ID = Int64.Parse(reader[0].ToString());
+            Gender = Convert.ToChar(reader[1].ToString());
+            Content = reader[2].ToString();
+            GroupName = reader[3].ToString();
+            DisplayOrder = Int64.Parse(reader[4].ToString());
+            Status = Convert.ToChar(reader[5].ToString());
+            IsMandatory = Convert.ToChar(reader[6].ToString());
+            CreatedBy = reader[7].ToString();
+            CreatedDate = DateTime.Parse(reader[8].ToString());
+
+            QGroupId_Ref = Int64.Parse(reader[9].ToString());
+            QResponseTypeId_Ref = Int64.Parse(reader[10].ToString());
+            Narrative = reader[11].ToString();
+            HelpText = reader[12].ToString();
+            ResponseText = reader[13].ToString();
         }
 
         public Question(IDataReader reader)
         {
             ID = Int64.Parse(reader[0].ToString());
-            QGroupId_Ref = Int64.Parse(reader[1].ToString());
-            QResponseTypeId_Ref = Int64.Parse(reader[2].ToString());
-            Content = reader[3].ToString();
+            Gender = Convert.ToChar(reader[1].ToString());
+            Content = reader[2].ToString();
+            GroupName = reader[3].ToString();
             DisplayOrder = Int64.Parse(reader[4].ToString());
-            Gender = Convert.ToChar(reader[5].ToString());
-            Narrative = reader[6].ToString();
-            HelpText = reader[7].ToString();
-            IsMandatory = Convert.ToChar(reader[8].ToString());
-            Status = Convert.ToChar(reader[11].ToString());
-            ResponseText = reader[12].ToString();
-            //CreatedDate = DateTime.Parse(reader[4].ToString());
-            //CreatedBy = reader[5].ToString();
-            //LastModifiedDate = DateTime.Parse(reader[5].ToString());
-            //LastModifiedBy = reader[6].ToString();
-            //QuestionsCount = reader[6] == DBNull.Value ? 0 : Int64.Parse(reader[6].ToString());
-            //QUESTION_GROUP_ID_REF, RESPONSE_TYPE_ID_REF, QUESTION_CONTENT, DISPLAY_ORDER
-            //, GENDER, NARRATIVE, HELP_TEXT, IS_MANDATORY, CREATED_DATE, CREATED_BY, STATUS
+            Status = Convert.ToChar(reader[5].ToString());
+            IsMandatory = Convert.ToChar(reader[6].ToString());
+            CreatedBy = reader[7].ToString();
+            CreatedDate = DateTime.Parse(reader[8].ToString());
+
+            QGroupId_Ref = Int64.Parse(reader[9].ToString());
+            QResponseTypeId_Ref = Int64.Parse(reader[10].ToString());
+            Narrative = reader[11].ToString();
+            HelpText = reader[12].ToString();
+            ResponseText = reader[13].ToString();
         }
 
-        public Question Save(int userid)
+        public void Save(int userid)
         {
-            Question obj = null; ;
             string procName = "INSERTUPDATE_QUESTIONS";
-            DBHelper dl = new DBHelper(ConnectionStrings.DefaultDBConnection);
-            dl.AddParameter("@id", this.ID);
-            dl.AddParameter("@qgroupid_ref", this.QGroupId_Ref);
-            dl.AddParameter("@responsetypeid_ref", this.QResponseTypeId_Ref);
-            dl.AddParameter("@qcontent", this.Content);
-            dl.AddParameter("@options", this.ResponseText);
-            dl.AddParameter("@displayorder", this.DisplayOrder);
-            dl.AddParameter("@gender", this.Gender);
-            dl.AddParameter("@narrative", this.Narrative);
-            dl.AddParameter("@helptext", this.HelpText);
-            dl.AddParameter("@ismandatory", this.IsMandatory);
+            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhQuestionGroup.AddParameter("@id", this.ID);
+                dbhQuestionGroup.AddParameter("@qgroupid_ref", this.QGroupId_Ref);
+                dbhQuestionGroup.AddParameter("@responsetypeid_ref", this.QResponseTypeId_Ref);
+                dbhQuestionGroup.AddParameter("@qcontent", this.Content);
+                dbhQuestionGroup.AddParameter("@options", this.ResponseText);
+                dbhQuestionGroup.AddParameter("@displayorder", this.DisplayOrder);
+                dbhQuestionGroup.AddParameter("@gender", this.Gender);
+                dbhQuestionGroup.AddParameter("@narrative", this.Narrative);
+                dbhQuestionGroup.AddParameter("@helptext", this.HelpText);
+                dbhQuestionGroup.AddParameter("@ismandatory", this.IsMandatory);
 
-            dl.AddParameter("@status", this.Status);
-            dl.AddParameter("@userId", userid);
-            IDataReader dr = dl.ExecuteReader(procName);
-            while (dr.Read())
-            {
-                obj = (new Question(dr));
-            }
-            return obj;
-        }
-        /// <summary>
-        /// TEST : REMOVE THIS LATER.
-        /// </summary>
-        /// <returns></returns>
-        public DataSet GetGroups()
-        {
-            DataSet ds = new DataSet("QuestionGroups");
-            using (DBHelper obj = new DBHelper(ConnectionStrings.DefaultDBConnection))
-            {
-                ds = obj.ExecuteDataSet("usp_GetQuestionGroups");
-                obj.Dispose();
-            }
-            return ds;
-        }
-
-        public static DataTable GetQResponseTypes()
-        {
-            DataTable dt = new DataTable();
-            string procName = "usp_GETRESPONSETYPES";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
-            {
-                DataSet ds = dbObj.ExecuteDataSet(procName);
-                if (ds.Tables.Count > 0)
-                {
-                    dt = ds.Tables[0];
-                }
-            }
-            return dt;
-        }
-
-        public static Question GetQuestionById(Int64 id)
-        {
-            Question obj = new Question();
-            string procName = "GET_QUESTION_BY_ID";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection))
-            {
-                dbObj.AddParameter("@id", id);
-                IDataReader dr = dbObj.ExecuteReader(procName);
+                dbhQuestionGroup.AddParameter("@status", this.Status);
+                dbhQuestionGroup.AddParameter("@CURRENTUSERID", userid);
+                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
                 while (dr.Read())
                 {
-                    obj = (new Question(dr));
+                    LoadQuestion(dr);
                 }
+                dbhQuestionGroup.Dispose();
             }
-            return obj;
         }
+                
     }
 }

@@ -77,9 +77,9 @@
                 <asp:ListItem Value="F">Female</asp:ListItem>
             </asp:DropDownList></dd>
             <dt>Narrative</dt>
-            <dd><asp:TextBox ID="txtNarrative" runat="server" TextMode="MultiLine" Rows="4" Columns="60"></asp:TextBox></dd>
+            <dd><asp:TextBox ID="txtNarrative" runat="server" TextMode="MultiLine" Rows="4" Columns="60" MaxLength="1000"></asp:TextBox></dd>
             <dt>Help Text</dt>
-            <dd><asp:TextBox ID="txtHelpText" runat="server" TextMode="MultiLine" Rows="4" Columns="60"></asp:TextBox></dd>
+            <dd><asp:TextBox ID="txtHelpText" runat="server" TextMode="MultiLine" Rows="4" Columns="60" MaxLength="1000"></asp:TextBox></dd>
             <dt>Is Mandatory</dt>
             <dd><asp:CheckBox ID="chkMandatory" runat="server" /></dd>
             <dt>Is Active</dt>
@@ -88,7 +88,8 @@
     </div>
     <div class="grid_24 alpha" >
         <asp:Button ID="btnSave" runat="server" Text="Save" CausesValidation="true" OnClick="btnSave_Click" ValidationGroup="Question"/>
-        <asp:Button ID="Button1" runat="server" Text="Test" OnClick="Button1_Click"/>
+        <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"/>
+        <asp:Button ID="btnBack" runat="server" Text="Back" OnClick="btnBack_Click"/>
     </div>
 
 </asp:Content>

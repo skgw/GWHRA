@@ -47,6 +47,7 @@
     <Compile Include="Question.cs" />
     <Compile Include="QuestionGroup.cs" />
     <Compile Include="QuestionGroupList.cs" />
+    <Compile Include="QuestionList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseCore\BaseCore.csproj">
