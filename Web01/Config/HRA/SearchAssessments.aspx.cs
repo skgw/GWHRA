@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Config_HRA_Assessments : System.Web.UI.Page
+public partial class Config_HRA_SearchAssessments : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Master.PageHeader = "Assessments";
+        Master.PageHeader = "Search Assessments";
+
     }
 }
