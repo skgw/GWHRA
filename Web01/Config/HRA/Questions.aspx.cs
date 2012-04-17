@@ -10,7 +10,7 @@ using HRACore;
 
 public partial class Config_HRA_Questions : System.Web.UI.Page
 {
-    private Question qObj = new Question();
+    private Question qObj = new Question(1);
     private Int64 QuestionId = 0;
     List<Tuple<string>> lstOptions = new List<Tuple<string>>();
     protected void Page_Load(object sender, EventArgs e)
@@ -36,26 +36,28 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
             if (QuestionId > 0)
             {
                 //Populate the data for the QuestionId
-                Question qObj = Question.GetQuestionById(QuestionId);
-                if (qObj != null)
+                QuestionList qObj = new QuestionList();
+                Question obj1 = qObj.GetQuestionById(QuestionId,1);
+                if (obj1 != null)
                 {
-                    txtQuestionText.Text = qObj.Content;
-                    txtDisplayOrder.Text = qObj.DisplayOrder.ToString();
-                    txtNarrative.Text = qObj.Narrative;
-                    txtHelpText.Text = qObj.HelpText;
-                    ddlQuestionGroup.SelectedValue = qObj.QGroupId_Ref.ToString();
-                    ddlResponseType.SelectedValue = qObj.QResponseTypeId_Ref.ToString();
-                    chkMandatory.Checked = qObj.IsMandatory.ToString() == "Y" ? true : false;
-                    chkStatus.Checked = qObj.Status.ToString() == "A" ? true : false;
-                    LoadOptions(qObj.ResponseText);
+                    txtQuestionText.Text = obj1.Content;
+                    txtDisplayOrder.Text = obj1.DisplayOrder.ToString();
+                    txtNarrative.Text = obj1.Narrative;
+                    txtHelpText.Text = obj1.HelpText;
+                    ddlQuestionGroup.SelectedValue = obj1.QGroupId_Ref.ToString();
+                    ddlResponseType.SelectedValue = obj1.QResponseTypeId_Ref.ToString();
+                    chkMandatory.Checked = obj1.IsMandatory.ToString() == "Y" ? true : false;
+                    chkStatus.Checked = obj1.Status.ToString() == "A" ? true : false;
+                    LoadOptions(obj1.ResponseText);
                 }
-                Session["Questionid"] = QuestionId;
+                //Session["Questionid"] = QuestionId;
             }
         }
     }
     protected void BindResponseTypes()
     {
-        DataTable dt = Question.GetQResponseTypes();
+        QuestionList QList = new QuestionList();
+        DataTable dt = QList.GetQResponseTypes();
         ddlResponseType.DataSource = dt;
         ddlResponseType.DataTextField = "Name";
         ddlResponseType.DataValueField = "ID";
@@ -65,7 +67,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
     protected void ddlResponseType_SelectedIndexChanged(object sender, EventArgs e)
     {
         txtResponseOption.Text = string.Empty;
-        hdnOptions.Value = string.Empty;
+        
         switch (ddlResponseType.SelectedItem.Text)
         {
             case "TextBox":
@@ -118,16 +120,8 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
 
         }
         //assign the values to the Question Object properties
-        Question obj = new Question();
-
-        if (Session["Questionid"] == null)
-        {
-            obj.ID = 0;
-        }
-        else
-        {
-            obj.ID = (Int64)Session["Questionid"];
-        }
+        Question obj = new Question(1);
+        obj.ID = (QuestionId > 0) ? QuestionId : 0;
         obj.Content = txtQuestionText.Text;
         obj.DisplayOrder = Convert.ToInt64(txtDisplayOrder.Text);
 
@@ -165,14 +159,12 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         obj.ResponseText = strXML;
         obj.QGroupId_Ref = Convert.ToInt64(ddlQuestionGroup.SelectedValue);
         obj.QResponseTypeId_Ref = Convert.ToInt64(ddlResponseType.SelectedValue);
-        Question retObj = obj.Save(1);
-        if (retObj != null)
-        {
-            LoadOptions(retObj.ResponseText);
-            Session["Questionid"] = retObj.ID;
-        }
-
+        
+        obj.Save(1);
+        LoadOptions(obj.ResponseText);
+        //Session["Questionid"] = obj.ID;
     }
+    
     protected void LoadOptions(string optionString)
     {
         Session["OptionList"] = null;
@@ -180,7 +172,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         if (optionString.Length > 0)
         {
             optionsXML.LoadXml(optionString);
-            hdnOptions.Value = "";
+            
             XmlElement root = optionsXML.DocumentElement;
             XmlNodeList xnList = root.ChildNodes;
             lstOptions.Clear();
@@ -192,19 +184,15 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
             BindOptions();
         }
     }
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void lnkAddNew_Click(object sender, EventArgs e)
     {
-        //Response.Redirect("Questions.aspx?QuestionId=1685");
-        //return;
-        ddlQuestionGroup.SelectedIndex = 3;
-        txtQuestionText.Text = "Test Question";
-        txtDisplayOrder.Text = "1";
-        txtNarrative.Text = "Narrative Test Question";
-        txtHelpText.Text = "Help Text Test Question";
-        chkMandatory.Checked = false;
-        chkStatus.Checked = true;
+        Session["OptionList"] = null;
+        Response.Redirect("Questions.aspx");
     }
-
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("SearchQuestions.aspx");
+    }
 
 
     protected void btnAddOption_click(object sender, EventArgs e)

@@ -36,8 +36,11 @@
     <div class="grid_24 alpha" style="margin-top:2.0em">
         <dl>
             <dt>Question Text</dt>
-            <dd><asp:TextBox ID="txtQuestionText" runat="server" TextMode="MultiLine" Rows="2" Columns="40"></asp:TextBox><span style="color:Red"><b>*</b></span>
-            <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtQuestionText"  ErrorMessage="Question Text is required."
+            <dd><asp:TextBox ID="txtQuestionText" runat="server" TextMode="MultiLine" Rows="2" class="grid_12" Columns="100"></asp:TextBox><span style="color:Red"><b>*</b></span>
+            </dd>
+            <dt></dt>
+            <dd>
+                <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtQuestionText"  ErrorMessage="Question Text is required."
                  ValidationGroup="Question" ForeColor="Red"></asp:RequiredFieldValidator>
             </dd>
         </dl>
@@ -77,9 +80,9 @@
                 <asp:ListItem Value="F">Female</asp:ListItem>
             </asp:DropDownList></dd>
             <dt>Narrative</dt>
-            <dd><asp:TextBox ID="txtNarrative" runat="server" TextMode="MultiLine" Rows="4" Columns="60"></asp:TextBox></dd>
+            <dd><asp:TextBox ID="txtNarrative" runat="server" TextMode="MultiLine" Rows="4" Columns="100" class="grid_12" MaxLength="1000"></asp:TextBox></dd>
             <dt>Help Text</dt>
-            <dd><asp:TextBox ID="txtHelpText" runat="server" TextMode="MultiLine" Rows="4" Columns="60"></asp:TextBox></dd>
+            <dd><asp:TextBox ID="txtHelpText" runat="server" TextMode="MultiLine" Rows="4" Columns="100" class="grid_12" MaxLength="1000"></asp:TextBox></dd>
             <dt>Is Mandatory</dt>
             <dd><asp:CheckBox ID="chkMandatory" runat="server" /></dd>
             <dt>Is Active</dt>
@@ -87,8 +90,11 @@
         </dl>
     </div>
     <div class="grid_24 alpha" >
-        <asp:Button ID="btnSave" runat="server" Text="Save" CausesValidation="true" OnClick="btnSave_Click" ValidationGroup="Question"/>
-        <asp:Button ID="Button1" runat="server" Text="Test" OnClick="Button1_Click"/>
+    <asp:Button ID="btnBack" runat="server" Text="Return to search results" CssClass="btn btn-info" OnClick="btnBack_Click"/>
+        <asp:Button ID="btnSave" runat="server" Text="Save" CausesValidation="true" CssClass="btn btn-primary" OnClick="btnSave_Click" ValidationGroup="Question"/>
+        <asp:LinkButton ID="lnkAddNew" runat="server" CssClass="btn btn-success " OnClick="lnkAddNew_Click">+ Add New</asp:LinkButton>
+        <%--<asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click"/>--%>
+        
     </div>
 
 </asp:Content>
