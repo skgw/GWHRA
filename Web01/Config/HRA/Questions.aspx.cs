@@ -192,18 +192,10 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
             BindOptions();
         }
     }
-    protected void btnCancel_Click(object sender, EventArgs e)
+    protected void lnkAddNew_Click(object sender, EventArgs e)
     {
-        ddlQuestionGroup.SelectedIndex = 0;
-        txtQuestionText.Text = "";
-        txtDisplayOrder.Text = "1";
-        txtNarrative.Text = "";
-        txtHelpText.Text = "";
-        chkMandatory.Checked = false;
-        chkStatus.Checked = true;
-        dvResponseOptions.Visible = false;
-        gvOptions.DataSource = null;
-        gvOptions.DataBind();
+        Session["Questionid"] = null;
+        Response.Redirect("Questions.aspx");
     }
     protected void btnBack_Click(object sender, EventArgs e)
     {

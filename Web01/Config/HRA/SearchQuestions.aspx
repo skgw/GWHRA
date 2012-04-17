@@ -45,8 +45,8 @@
                 <dt>&nbsp;</dt>
                 <dd>
                 <asp:LinkButton ID="lnkSearch" runat="server" CssClass="btn btn-primary" OnClick="lnkSearch_Click">Search</asp:LinkButton>
-                <asp:LinkButton ID="lnkAddNew" runat="server" CssClass="btn" OnClick="lnkAddNew_Click">Add New</asp:LinkButton>
-                <asp:LinkButton ID="lnkCancel" runat="server" CssClass="btn btn-success " OnClick="lnkCancel_Click">Reset</asp:LinkButton>
+                <asp:LinkButton ID="lnkAddNew" runat="server" CssClass="btn btn-success " OnClick="lnkAddNew_Click">+ Add New</asp:LinkButton>
+                <asp:LinkButton ID="lnkCancel" runat="server" CssClass="btn" OnClick="lnkCancel_Click">Reset</asp:LinkButton>
                 </dd>
             </dl>
     </div>

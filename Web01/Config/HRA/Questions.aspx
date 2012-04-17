@@ -90,9 +90,11 @@
         </dl>
     </div>
     <div class="grid_24 alpha" >
+    <asp:Button ID="btnBack" runat="server" Text="Return to search results" CssClass="btn btn-info" OnClick="btnBack_Click"/>
         <asp:Button ID="btnSave" runat="server" Text="Save" CausesValidation="true" CssClass="btn btn-primary" OnClick="btnSave_Click" ValidationGroup="Question"/>
-        <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-success" OnClick="btnCancel_Click"/>
-        <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="btn btn-success" OnClick="btnBack_Click"/>
+        <asp:LinkButton ID="lnkAddNew" runat="server" CssClass="btn btn-success " OnClick="lnkAddNew_Click">+ Add New</asp:LinkButton>
+        <%--<asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click"/>--%>
+        
     </div>
 
 </asp:Content>
