@@ -31,7 +31,23 @@ namespace HRACore
             }
             return items;
         }
-
+        public List<Question> GetQuestionsByGroupId(int GroupId, int CurrentUserId)
+        {
+            List<Question> items = new List<Question>();
+            const string procName = "GET_QUESTIONS_BY_GROUPID";
+            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhQuestionGroup.AddParameter("@QGROUP_ID", GroupId);
+                dbhQuestionGroup.AddParameter("@CURRENTUSERID", CurrentUserId);
+                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
+                while (dr.Read())
+                {
+                    items.Add(new Question(dr));
+                }
+                dbhQuestionGroup.Dispose();
+            }
+            return items;
+        }
         public Question GetQuestionById(Int64 id, int CurrentUserId)
         {
             Question obj = new Question(1);
@@ -48,21 +64,6 @@ namespace HRACore
             }
             return obj;
         }
-
-        /// <summary>
-        /// TEST : REMOVE THIS LATER.
-        /// </summary>
-        /// <returns></returns>
-        //public DataSet GetGroups()
-        //{
-        //    DataSet ds = new DataSet("QuestionGroups");
-        //    using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
-        //    {
-        //        ds = dbhQuestionGroup.ExecuteDataSet("usp_GetQuestionGroups");
-        //        dbhQuestionGroup.Dispose();
-        //    }
-        //    return ds;
-        //}
 
         public DataTable GetQResponseTypes()
         {

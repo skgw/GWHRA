@@ -31,6 +31,7 @@ namespace HRACore
         TextArea = 1005,
         TextBox = 1006
     }
+    [Serializable]
     public class Question
     {
         private DBHelper dbhQuestionGroup;
@@ -49,6 +50,7 @@ namespace HRACore
         private Int64 mQGroupId_Ref;
         private string mGroupName;
         private Int64 mQResponseTypeId_Ref;
+        private string mResponseType;
         private char mGender;
         private string mCreatedBy;
         private DateTime mCreatedDate;
@@ -136,6 +138,11 @@ namespace HRACore
             get { return mQResponseTypeId_Ref; }
             set { mQResponseTypeId_Ref = value; }
         }
+        public string ResponseType
+        {
+            get { return mResponseType; }
+            set { mResponseType = value; }
+        }
         public char Gender
         {
             get { return mGender; }
@@ -179,25 +186,12 @@ namespace HRACore
             Narrative = reader[11].ToString();
             HelpText = reader[12].ToString();
             ResponseText = reader[13].ToString();
+            ResponseType = reader[14].ToString();
         }
 
         public Question(IDataReader reader)
         {
-            ID = Int64.Parse(reader[0].ToString());
-            Gender = Convert.ToChar(reader[1].ToString());
-            Content = reader[2].ToString();
-            GroupName = reader[3].ToString();
-            DisplayOrder = Int64.Parse(reader[4].ToString());
-            Status = Convert.ToChar(reader[5].ToString());
-            IsMandatory = Convert.ToChar(reader[6].ToString());
-            CreatedBy = reader[7].ToString();
-            CreatedDate = DateTime.Parse(reader[8].ToString());
-
-            QGroupId_Ref = Int64.Parse(reader[9].ToString());
-            QResponseTypeId_Ref = Int64.Parse(reader[10].ToString());
-            Narrative = reader[11].ToString();
-            HelpText = reader[12].ToString();
-            ResponseText = reader[13].ToString();
+            LoadQuestion(reader);
         }
 
         public void Save(int userid)

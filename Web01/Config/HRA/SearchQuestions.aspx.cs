@@ -16,7 +16,7 @@ public partial class Config_HRA_SearchQuestions : System.Web.UI.Page
         {
             List<QuestionGroup> lst = new List<QuestionGroup>();
             QuestionGroupList obj = new QuestionGroupList();
-            lst = obj.GetQuestionGroups("", true);
+            lst = obj.GetQuestionGroups("", 'A');
             ddlQuestionGroup.DataSource = lst;
             ddlQuestionGroup.DataTextField = "Name";
             ddlQuestionGroup.DataValueField = "ID";

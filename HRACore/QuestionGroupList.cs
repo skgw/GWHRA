@@ -8,7 +8,7 @@ namespace HRACore
 {
     public class QuestionGroupList
     {
-        public List<QuestionGroup> GetQuestionGroups(string questionGroupName,bool qGroupStatus)
+        public List<QuestionGroup> GetQuestionGroups(string questionGroupName,char qGroupStatus)
         {
             List<QuestionGroup> items = new List<QuestionGroup>();
             const string procName = "GET_QUESTIONGROUPS";

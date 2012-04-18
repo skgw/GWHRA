@@ -25,7 +25,7 @@ public partial class Config_HRA_SearchQGroups : System.Web.UI.Page
         List<QuestionGroup> qGroups = new List<QuestionGroup>();
         QuestionGroupList qGroupList = new QuestionGroupList();
         
-        qGroups = qGroupList.GetQuestionGroups(Server.HtmlEncode(tbSearchQGroups.Text), cbQGroupStatus.Checked);
+        qGroups = qGroupList.GetQuestionGroups(Server.HtmlEncode(tbSearchQGroups.Text), cbQGroupStatus.Checked == true ? 'A' : 'I');
 
         lvQuestionGroups.DataSource = qGroups;
         lvQuestionGroups.DataBind();
