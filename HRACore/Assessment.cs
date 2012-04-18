@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using BaseCore;
@@ -9,11 +10,13 @@ namespace HRACore
 {
     public class Assessment
     {
-        private DBHelper dbhQuestionGroup;
+        private DBHelper dbhAssessment;
 
         private int mID;
         private string mName;
         private string mDescription;
+        private DateTime mModifiedDate;
+        private string mModifiedBy;
         private DateTime mEffectiveFrom;
         private DateTime mEffectiveTo;
         private List<Question> mQuestionList;
@@ -23,7 +26,6 @@ namespace HRACore
         private string mCreatedBy;
         private string mStatus;
         private int mCurrentUserID = 0;
-        
 
         public int ID
         {
@@ -36,91 +38,101 @@ namespace HRACore
             get { return mName; }
             set { mName = value; }
         }
+
         public string Description
         {
             get { return mDescription; }
             set { mDescription = value; }
         }
+
+        public DateTime ModifiedDate
+        {
+            get { return mModifiedDate; }
+            set { mModifiedDate = value; }
+        }
+
+        public string ModifiedBy
+        {
+            get { return mModifiedBy; }
+            set { mModifiedBy = value; }
+        }
+
         public DateTime EffectiveFrom
         {
             get { return mEffectiveFrom; }
             set { mEffectiveFrom = value; }
         }
+
         public DateTime EffectiveTo
         {
             get { return mEffectiveTo; }
             set { mEffectiveTo = value; }
         }
 
-        public List<Question> QuestionList
+        public List<Question> Questions
         {
             get { return mQuestionList; }
             set { mQuestionList = value; }
         }
-        public int AssessmentGroupId
-        {
-            get { return mAssessmentGroupId; }
-            set { mAssessmentGroupId = value; }
-        }
-        public string AssessmentGroupName
-        {
-            get { return mAssessmentGroupName; }
-            set { mAssessmentGroupName = value; }
-        }
 
-        public DateTime CreatedDate
+        public Assessment(int CurrentUserID)
         {
-            get { return mCreatedDate; }
-            set { mCreatedDate = value; }
+            mCurrentUserID = CurrentUserID;
         }
-        public string CreatedBy
+        public Assessment (int assessmentID, int CurrentUserID)
         {
-            get { return mCreatedBy; }
-            set { mCreatedBy = value; }
-        }
-        public string Status
-        {
-            get { return mStatus; }
-            set { mStatus = value; }
-        }
+            mCurrentUserID = CurrentUserID;
+            ID = assessmentID;
 
-        public Assessment(int CurrentUserId)
+            string procName = "GET_ASSESSMENT_BY_ID";
+            using(dbhAssessment = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhAssessment.AddParameter("@ID", ID);
+                dbhAssessment.AddParameter("@CURRENTUSERID", @mCurrentUserID);
+
+                IDataReader reader = dbhAssessment.ExecuteReader(procName);
+                if(reader.Read())
+                {
+                    LoadReader(reader);
+                }
+            }
+        }
+        public void Save()
         {
-            mCurrentUserID = CurrentUserId;
+            using (dbhAssessment = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhAssessment.AddParameter("@ID",ID);
+                dbhAssessment.AddParameter("@NAME",Name);
+                dbhAssessment.AddParameter("@DESCRIPTION",Description);
+                dbhAssessment.AddParameter("@EFFECTIVE_FROM", EffectiveFrom);
+                dbhAssessment.AddParameter("@EFFECTIVE_TO", EffectiveTo);
+                dbhAssessment.AddParameter("@CURRENTUSERID", mCurrentUserID);
+
+                IDataReader reader = dbhAssessment.ExecuteReader("INSERTUPDATE_ASSESSMENT");
+                if(reader.Read())
+                {
+                    LoadReader(reader);
+
+                }
+            }
+        }
+        public void AddQuestionsToAssessment()
+        {
+            
+        }
+        public Assessment(IDataReader reader)
+        {
+            LoadReader(reader);
         }
         private void LoadReader(IDataReader reader)
         {
             ID = Int32.Parse(reader[0].ToString());
             Name = reader[1].ToString();
             Description = reader[2].ToString();
-            Status = reader[3].ToString();
-            CreatedDate = DateTime.Parse(reader[4].ToString());
-            CreatedBy = reader[5].ToString();
-            //LastModifiedDate = DateTime.Parse(reader[5].ToString());
-            //LastModifiedBy = reader[6].ToString();
-            //QuestionsCount = reader[6] == DBNull.Value ? 0 : Int32.Parse(reader[6].ToString());
-        }
-        public void Save()
-        {
-
-            string procName = "INSERTUPDATE_ASSESSMENTS";
-            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
-            {
-                dbhQuestionGroup.AddParameter("@id", this.ID);
-                dbhQuestionGroup.AddParameter("@name", this.Name);
-                dbhQuestionGroup.AddParameter("@description", this.Description);
-                dbhQuestionGroup.AddParameter("@status", this.Status);
-                dbhQuestionGroup.AddParameter("@CURRENTUSERID", mCurrentUserID);
-
-
-                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
-                while (dr.Read())
-                {
-                    LoadReader(dr);
-                }
-                dbhQuestionGroup.Dispose();
-            }
-
+            EffectiveFrom = DateTime.Parse(reader[3].ToString());
+            EffectiveTo = DateTime.Parse(reader[4].ToString());
+            ModifiedBy = reader[5].ToString();
+            ModifiedDate = DateTime.Parse(reader[6].ToString());
         }
     }
 }

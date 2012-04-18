@@ -26,8 +26,8 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         Assessment obj = new Assessment(CurrentUserId);
         obj.ID = (AssessmentId > 0) ? AssessmentId : 0;
         obj.Name = txtAssessmentName.Text;
-        obj.AssessmentGroupId = Convert.ToInt32(ddlAssessGroup.SelectedValue);
-        obj.AssessmentGroupName = ddlAssessGroup.SelectedItem.Text;
+        //obj.AssessmentGroupId = Convert.ToInt32(ddlAssessGroup.SelectedValue);
+        //obj.AssessmentGroupName = ddlAssessGroup.SelectedItem.Text;
         obj.Description = txtDescription.Text;
         if (txtEffectiveFrom.Text != "")
         {
@@ -45,6 +45,5 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         //    Response.Redirect("AddAssessmentQuestions.aspx");
         //}
         Response.Redirect("AddAssessmentQuestions.aspx");
-        
-    }
+     }
 }
