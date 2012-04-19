@@ -31,7 +31,12 @@
         <dl>
             <dt>Assessment Name </dt>
             <dd>
-                <asp:TextBox ID="txtAssessmentName" runat="server" CssClass="grid_6 alpha"></asp:TextBox>
+                <asp:TextBox ID="txtAssessmentName" runat="server" CssClass="grid_6 alpha"></asp:TextBox><span style="color:Red"><b>*</b></span>
+            </dd>
+            <dt></dt>
+            <dd>
+                <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtAssessmentName"  ErrorMessage="Assessment Name is required."
+                 ValidationGroup="Assessment" ForeColor="Red"></asp:RequiredFieldValidator>
             </dd>
             <dt>Description</dt>
             <dd>
@@ -45,6 +50,7 @@
                 <dt>Assessment Group</dt>
                 <dd>
                     <asp:DropdownList ID="ddlAssessGroup" runat="server">
+                        <asp:ListItem Value="">-- Select One --</asp:ListItem>
                         <asp:ListItem Value="1000">Medicare</asp:ListItem>
                     </asp:DropdownList>
                 </dd>
@@ -59,7 +65,7 @@
             </dl>
         </div>
             <asp:LinkButton ID="lnkBack" runat="server" CssClass="btn" OnClick="lnkBack_Click">Return to search results</asp:LinkButton>
-            <asp:LinkButton ID="lnkAddQuestions" runat="server" CssClass="btn btn-success" OnClick="lnkAddQuestions_Click">+ Add Questions</asp:LinkButton>
+            <asp:LinkButton ID="lnkAddQuestions" runat="server" CssClass="btn btn-success" OnClick="lnkAddQuestions_Click" ValidationGroup="Assessment" CausesValidation="true">+ Add Questions</asp:LinkButton>
     </div>
 </asp:Content>
 

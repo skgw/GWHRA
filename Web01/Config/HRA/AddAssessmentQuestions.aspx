@@ -22,13 +22,14 @@
     </div>
     <div class="grid_24 alpha">
         Select Questions
-        <asp:ListView ID="lvQuestions" runat="server">
+        <asp:ListView ID="lvQuestions" runat="server" DataKeyNames="ID">
             <LayoutTemplate>
                 <table id="tblQuestions" class="table table-bordered ">
                     <thead>
                         <tr>
                             <th>
-                                Select
+                                Select All 
+                                <asp:CheckBox ID="chkSelectAll" runat="server" AutoPostBack="true" OnCheckedChanged="chkSelectAll_OnCheckedChanged" />
                             </th>
                             <th>
                                 Question
@@ -36,10 +37,7 @@
                             <th>
                                 Response Type
                             </th>
-                             <th style="display:none">
-                                ID
-                            </th>
-                        </tr>
+                         </tr>
                     </thead>
                     <tbody>
                         <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -56,9 +54,6 @@
                     </td>
                     <td>
                         <%# Eval("ResponseType") %>
-                    </td>
-                    <td style="display:none">
-                        <%# Eval("ID") %>
                     </td>
                 </tr>
             </ItemTemplate>
@@ -78,7 +73,7 @@
     </div>
     <div class="grid_24 alpha">
         Selected Questions
-        <asp:ListView ID="lvSelectedQ" runat="server">
+        <asp:ListView ID="lvSelectedQ" runat="server" OnItemCommand="lvSelectedQ_OnItemCommand" DataKeyNames="ID">
             <LayoutTemplate>
                 <table id="tblSelectedQ" class="table table-bordered ">
                     <thead>
@@ -92,10 +87,7 @@
                             <th>
                                 Remove
                             </th>
-                            <th style="display:none">
-                                ID
-                            </th>
-                        </tr>
+                         </tr>
                     </thead>
                     <tbody>
                         <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -111,10 +103,7 @@
                         <%# Eval("ResponseType") %>
                     </td>
                     <td>
-                        &#120;
-                    </td>
-                    <td style="display:none">
-                        <%# Eval("ID") %>
+                       <asp:LinkButton ID="lnkDelete" runat="server" class="ui-icon ui-icon-closethick" CommandName="Remove" OnClientClick="javascript:return confirm('Are you sure to remove?');" ></asp:LinkButton>
                     </td>
                 </tr>
             </ItemTemplate>

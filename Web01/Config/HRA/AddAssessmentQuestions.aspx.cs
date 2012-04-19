@@ -45,15 +45,6 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     }
     protected void lnkAddQuestions_click(object sender, EventArgs e)
     {
-        string SelectedQuestions = "";
-        //foreach (ListViewItem Item in lvQuestions.Items)
-        //{
-        //    CheckBox myCheckbox = (CheckBox)lvQuestions.Items[0].Controls[1];
-        //    if (myCheckbox.Checked == true)
-        //    {
-        //        string xy = "true";
-        //    }
-        //}
         for (int i = 0; i < lvQuestions.Items.Count; i++)
         {
             CheckBox myCheckbox = (CheckBox)lvQuestions.Items[i].Controls[1];
@@ -63,21 +54,47 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
                 {
                     lstQuestions = (List<Question>)ViewState["QList"];
                     lstSelectedQuestions.Add(lstQuestions[i]);
-                    //if (SelectedQuestions == "")
-                    //{
-                    //    SelectedQuestions = lstQuestions[i].ID.ToString();
-                    //}
-                    //else
-                    //{
-                    //    SelectedQuestions += "," + lstQuestions[i].ID.ToString();
-                    //}
                 }
             }
         }
         lvSelectedQ.DataSource = lstSelectedQuestions;
         lvSelectedQ.DataBind();
-        //string xyz = SelectedQuestions;
+        ViewState["SelectedList"] = lstSelectedQuestions;
     }
+    protected void chkSelectAll_OnCheckedChanged(object sender, EventArgs e)
+    {
+        Boolean chkValue;
+        CheckBox source = (CheckBox)sender;
+        if (source.Checked)
+        {
+            chkValue = true;
+        }
+        else
+        {
+            chkValue = false;
+        }
+        for (int i = 0; i < lvQuestions.Items.Count; i++)
+        {
+            CheckBox myCheckbox = (CheckBox)lvQuestions.Items[i].Controls[1];
+            myCheckbox.Checked = chkValue;
+        }
+    }
+
+    protected void lvSelectedQ_OnItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (String.Equals(e.CommandName, "Remove"))
+        {
+            ListViewDataItem dataItem = (ListViewDataItem)e.Item;
+            string id = lvSelectedQ.DataKeys[dataItem.DisplayIndex].Value.ToString();
+            lstSelectedQuestions = (List<Question>)ViewState["SelectedList"];
+
+            lstSelectedQuestions.RemoveAt(dataItem.DataItemIndex);
+            lvSelectedQ.DataSource = lstSelectedQuestions;
+            lvSelectedQ.DataBind();
+            ViewState["SelectedList"] = lstSelectedQuestions;
+        }
+    }
+
     protected void lnkPreview_click(object sender, EventArgs e)
     {
         Response.Redirect("AssessmentPreview.aspx");
