@@ -32,7 +32,6 @@ namespace HRACore
             get { return mID; }
             set { mID = value; }
         }
-
         public string Name
         {
             get { return mName; }
@@ -74,6 +73,16 @@ namespace HRACore
             get { return mQuestionList; }
             set { mQuestionList = value; }
         }
+        public int AssessmentGroupId
+        {
+            get { return mAssessmentGroupId; }
+            set { mAssessmentGroupId = value; }
+        }
+        public string AssessmentGroupName
+        {
+            get { return mAssessmentGroupName; }
+            set { mAssessmentGroupName = value; }
+        }
 
         public Assessment(int CurrentUserID)
         {
@@ -101,14 +110,16 @@ namespace HRACore
         {
             using (dbhAssessment = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhAssessment.AddParameter("@ID",ID);
-                dbhAssessment.AddParameter("@NAME",Name);
-                dbhAssessment.AddParameter("@DESCRIPTION",Description);
-                dbhAssessment.AddParameter("@EFFECTIVE_FROM", EffectiveFrom);
-                dbhAssessment.AddParameter("@EFFECTIVE_TO", EffectiveTo);
+                dbhAssessment.AddParameter("@ID",this.ID);
+                dbhAssessment.AddParameter("@NAME", this.Name);
+                dbhAssessment.AddParameter("@DESCRIPTION", this.Description);
+                dbhAssessment.AddParameter("@ASSESSMENT_GROUP_ID_REF", this.AssessmentGroupId);
+                dbhAssessment.AddParameter("@EFFECTIVE_FROM", this.EffectiveFrom);
+                dbhAssessment.AddParameter("@EFFECTIVE_TO", this.EffectiveTo);
+                dbhAssessment.AddParameter("@STATUS", 'A');
                 dbhAssessment.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
-                IDataReader reader = dbhAssessment.ExecuteReader("INSERTUPDATE_ASSESSMENT");
+                IDataReader reader = dbhAssessment.ExecuteReader("INSERTUPDATE_ASSESSMENTS");
                 if(reader.Read())
                 {
                     LoadReader(reader);
@@ -129,10 +140,13 @@ namespace HRACore
             ID = Int32.Parse(reader[0].ToString());
             Name = reader[1].ToString();
             Description = reader[2].ToString();
-            EffectiveFrom = DateTime.Parse(reader[3].ToString());
-            EffectiveTo = DateTime.Parse(reader[4].ToString());
-            ModifiedBy = reader[5].ToString();
-            ModifiedDate = DateTime.Parse(reader[6].ToString());
+            AssessmentGroupId = Int32.Parse(reader[3].ToString());
+            EffectiveFrom = DateTime.Parse(reader[4].ToString());
+            EffectiveTo = DateTime.Parse(reader[5].ToString());
+            ModifiedBy = reader[6].ToString();
+            ModifiedDate = reader[7] != DBNull.Value ? DateTime.Parse(reader[7].ToString()) : Convert.ToDateTime("01/01/2099");
+            AssessmentGroupName = reader[9].ToString();
         }
+  
     }
 }
