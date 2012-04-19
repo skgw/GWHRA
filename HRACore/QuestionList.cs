@@ -9,25 +9,25 @@ namespace HRACore
     [Serializable]
     public class QuestionList
     {
-        private DBHelper dbhQuestionGroup;
+        private DBHelper dbhQuestion;
         public List<Question> GetQuestions(string Content, int GroupId, int ResponseId, char status, char IsMandatory, int CurrentUserId)
         {
             List<Question> items = new List<Question>();
             const string procName = "GET_QUESTIONS";
-            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            using (dbhQuestion = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhQuestionGroup.AddParameter("@CONTENT", Content);
-                dbhQuestionGroup.AddParameter("@QGROUP_ID", GroupId);
-                dbhQuestionGroup.AddParameter("@RESPONSETYPE_ID", ResponseId);
-                dbhQuestionGroup.AddParameter("@STATUS", status);
-                dbhQuestionGroup.AddParameter("@IS_MANDATORY", IsMandatory);
-                dbhQuestionGroup.AddParameter("@CURRENTUSERID", CurrentUserId);
-                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
+                dbhQuestion.AddParameter("@CONTENT", Content);
+                dbhQuestion.AddParameter("@QGROUP_ID", GroupId);
+                dbhQuestion.AddParameter("@RESPONSETYPE_ID", ResponseId);
+                dbhQuestion.AddParameter("@STATUS", status);
+                dbhQuestion.AddParameter("@IS_MANDATORY", IsMandatory);
+                dbhQuestion.AddParameter("@CURRENTUSERID", CurrentUserId);
+                IDataReader dr = dbhQuestion.ExecuteReader(procName);
                 while (dr.Read())
                 {
                     items.Add(new Question(dr));
                 }
-                dbhQuestionGroup.Dispose();
+                dbhQuestion.Dispose();
             }
             return items;
         }
@@ -35,16 +35,16 @@ namespace HRACore
         {
             List<Question> items = new List<Question>();
             const string procName = "GET_QUESTIONS_BY_GROUPID";
-            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            using (dbhQuestion = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhQuestionGroup.AddParameter("@QGROUP_ID", GroupId);
-                dbhQuestionGroup.AddParameter("@CURRENTUSERID", CurrentUserId);
-                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
+                dbhQuestion.AddParameter("@QGROUP_ID", GroupId);
+                dbhQuestion.AddParameter("@CURRENTUSERID", CurrentUserId);
+                IDataReader dr = dbhQuestion.ExecuteReader(procName);
                 while (dr.Read())
                 {
                     items.Add(new Question(dr));
                 }
-                dbhQuestionGroup.Dispose();
+                dbhQuestion.Dispose();
             }
             return items;
         }
@@ -52,11 +52,11 @@ namespace HRACore
         {
             Question obj = new Question(1);
             string procName = "GET_QUESTION_BY_ID";
-            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            using (dbhQuestion = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhQuestionGroup.AddParameter("@id", id);
-                dbhQuestionGroup.AddParameter("@CURRENTUSERID", CurrentUserId);
-                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
+                dbhQuestion.AddParameter("@id", id);
+                dbhQuestion.AddParameter("@CURRENTUSERID", CurrentUserId);
+                IDataReader dr = dbhQuestion.ExecuteReader(procName);
                 while (dr.Read())
                 {
                     obj = (new Question(dr));
@@ -69,9 +69,9 @@ namespace HRACore
         {
             DataTable dt = new DataTable();
             string procName = "usp_GETRESPONSETYPES";
-            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            using (dbhQuestion = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                DataSet ds = dbhQuestionGroup.ExecuteDataSet(procName);
+                DataSet ds = dbhQuestion.ExecuteDataSet(procName);
                 if (ds.Tables.Count > 0)
                 {
                     dt = ds.Tables[0];
