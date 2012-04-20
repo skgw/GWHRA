@@ -10,19 +10,23 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
 {
     List<Question> lstQuestions = new List<Question>();
     List<Question> lstSelectedQuestions = new List<Question>();
+    Assessment objAssessment = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["objAssessment"] != null)
+        {
+            objAssessment = (Assessment)Session["objAssessment"];
+            lblName.Text = objAssessment.Name;
+            lblGroupName.Text = objAssessment.AssessmentGroupName;
+        }
         if (!IsPostBack)
         {
-            if (Session["objAssessment"] != null)
-            {
-                Assessment obj = (Assessment)Session["objAssessment"];
-                lblName.Text = obj.Name;
-                lblGroupName.Text = obj.AssessmentGroupName;
-               
-            }
             //populate QuestionGroups
             PopulateGroups();
+            if (Session["SelectedList"] != null)
+            {
+                DisplayData((List < Question >) Session["SelectedList"]);
+            }
         }
     }
     protected void PopulateGroups()
@@ -57,10 +61,8 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
                 }
             }
         }
-        lvSelectedQ.DataSource = lstSelectedQuestions;
-        lvSelectedQ.DataBind();
-        ViewState["SelectedList"] = lstSelectedQuestions;
-    }
+        AddQuestions(lstSelectedQuestions);
+     }
     protected void chkSelectAll_OnCheckedChanged(object sender, EventArgs e)
     {
         Boolean chkValue;
@@ -86,21 +88,41 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
         {
             ListViewDataItem dataItem = (ListViewDataItem)e.Item;
             string id = lvSelectedQ.DataKeys[dataItem.DisplayIndex].Value.ToString();
-            lstSelectedQuestions = (List<Question>)ViewState["SelectedList"];
+            lstSelectedQuestions = (List<Question>)Session["SelectedList"];
 
             lstSelectedQuestions.RemoveAt(dataItem.DataItemIndex);
-            lvSelectedQ.DataSource = lstSelectedQuestions;
-            lvSelectedQ.DataBind();
-            ViewState["SelectedList"] = lstSelectedQuestions;
+            DisplayData(lstSelectedQuestions);
         }
     }
 
     protected void lnkPreview_click(object sender, EventArgs e)
     {
-        Response.Redirect("AssessmentPreview.aspx");
+        Response.Redirect("AssessmentPreview.aspx?=id" + objAssessment.ID);
     }
     protected void btnBack_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Assessments.aspx?id=xxx");
+        Response.Redirect("Assessments.aspx?id=" + objAssessment.ID);
+    }
+
+    protected void AddQuestions(List<Question> lst)
+    {
+        //code to lst save in database 
+        //------------------------------------
+        if (Session["SelectedList"] != null)
+        {
+            List<Question> lst1 = (List<Question>)Session["SelectedList"];
+            Session["SelectedList"] = lst1.Union(lst).ToList();
+            DisplayData(lst1.Union(lst).ToList());
+        }
+        else
+        {
+            DisplayData(lst);
+        }
+    }
+    protected void DisplayData(List<Question> lst)
+    {
+        lvSelectedQ.DataSource = lst;
+        lvSelectedQ.DataBind();
+        Session["SelectedList"] = lst;
     }
 }

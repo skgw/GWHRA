@@ -45,8 +45,8 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
     {
         txtAssessmentName.Text = obj.Name;
         txtDescription.Text = obj.Description;
-        txtEffectiveFrom.Text = obj.EffectiveFrom.ToString();
-        txtEffectiveTo.Text = obj.EffectiveTo.ToString();
+        txtEffectiveFrom.Text = obj.EffectiveFrom.ToString("MM/dd/yyyy");
+        txtEffectiveTo.Text = obj.EffectiveTo.ToString("MM/dd/yyyy");
         ddlAssessGroup.SelectedValue = obj.AssessmentGroupId.ToString();
     }
     protected void lnkBack_Click(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true" CodeFile="AddAssessmentQuestions.aspx.cs" Inherits="Config_HRA_AddAssessmentQuestions" %>
 
+<%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="grid_24 alpha">
         <div class="grid_12 alpha">
@@ -79,10 +80,16 @@
                     <thead>
                         <tr>
                             <th>
+                                Question Group
+                            </th>
+                            <th>
                                 Question
                             </th>
                             <th>
                                 Response Type
+                            </th>
+                            <th>
+                                Display Order
                             </th>
                             <th>
                                 Remove
@@ -97,10 +104,16 @@
             <ItemTemplate>
                 <tr>
                     <td>
+                        <%# Eval("GroupName")%>
+                    </td>
+                    <td>
                         <%# Eval("Content")%>
                     </td>
                     <td>
                         <%# Eval("ResponseType") %>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtDisplayOrder" runat="server" Text='<%# Eval("DisplayOrder")%>' Width="40px"></asp:TextBox>
                     </td>
                     <td>
                        <asp:LinkButton ID="lnkDelete" runat="server" class="ui-icon ui-icon-closethick" CommandName="Remove" OnClientClick="javascript:return confirm('Are you sure to remove?');" ></asp:LinkButton>
