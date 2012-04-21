@@ -51,5 +51,43 @@ namespace HRACore
             }
             return item;
         }
+        public List<Question> GetAssessmentQuestions(int AssessmentId, int CurrentUserId)
+        {
+            List<Question> lst = new List<Question>();
+            const string procName = "GET_ASSESSMENT_QUESTIONS";
+            using (dbhAssessments = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhAssessments.AddParameter("@ASSESSMENT_ID", AssessmentId);
+                dbhAssessments.AddParameter("@CURRENTUSERID", CurrentUserId);
+                IDataReader dr = dbhAssessments.ExecuteReader(procName);
+                while (dr.Read())
+                {
+                    lst.Add(new Question(dr));
+                }
+                dbhAssessments.Dispose();
+            }
+            return lst;
+        }
+
+        public List<Question> SaveQuestions(int AssessmentID, int GROUPID, string QUESTIONLIST, string DISPLAYORDER, int CurrentUserId)
+        {
+            List<Question> lst = new List<Question>();
+            using (dbhAssessments = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhAssessments.AddParameter("@ASSESSMENT_ID", AssessmentID);
+                dbhAssessments.AddParameter("@QUESTION_GROUP_ID", GROUPID);
+                dbhAssessments.AddParameter("@QUESTIONS_LIST", QUESTIONLIST);
+                dbhAssessments.AddParameter("@DISPLAY_ORDER", DISPLAYORDER);
+                dbhAssessments.AddParameter("@CURRENTUSERID", CurrentUserId);
+
+                IDataReader reader = dbhAssessments.ExecuteReader("INSERTUPDATE_ASSESSMENT_QUESTIONS");
+                if (reader.Read())
+                {
+                   lst.Add(new Question(reader));
+
+                }
+            }
+            return lst;
+        }
     }
 }

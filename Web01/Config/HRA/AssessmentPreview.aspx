@@ -74,6 +74,8 @@
         </asp:ListView>
         
 </div>
-        <asp:Button ID="btnBack" runat="server" Text="Return to Assessment" CssClass="btn btn-info" OnClick="btnBack_Click"/>
+        <asp:Button ID="btnBack" runat="server" Text="Return to Search results" CssClass="btn" OnClick="btnBack_Click"/>
+        <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-info" OnClick="btnEdit_Click"/>
+
 </asp:Content>
 

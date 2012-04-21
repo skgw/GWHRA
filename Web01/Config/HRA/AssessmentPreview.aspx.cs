@@ -34,6 +34,12 @@ public partial class Config_HRA_AssessmentPreview : System.Web.UI.Page
     }
     protected void btnBack_Click(object sender, EventArgs e)
     {
+        Session["objAssessment"] = null;
+        Session["SelectedList"] = null;
+        Response.Redirect("SearchAssessments.aspx");
+    }
+    protected void btnEdit_Click(object sender, EventArgs e)
+    {
         Response.Redirect("Assessments.aspx?id=" + objAssessment.ID);
     }
 }

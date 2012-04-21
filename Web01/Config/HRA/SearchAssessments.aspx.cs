@@ -11,6 +11,7 @@ public partial class Config_HRA_SearchAssessments : System.Web.UI.Page
     private int mCurrentUserID = 1;
     protected void Page_Load(object sender, EventArgs e)
     {
+        Session["SelectedList"] = null;
         Master.PageHeader = "Search Assessments";
         if (!IsPostBack)
         {

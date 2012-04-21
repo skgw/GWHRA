@@ -69,8 +69,8 @@
         
     </div>
     <div class="grid_24 alpha" style="margin-top:1em;margin-bottom:1em;">
-        <asp:LinkButton ID="lnkAddQuestions" runat="server" CssClass="btn btn-success" Text="Add Questions" OnClick="lnkAddQuestions_click"></asp:LinkButton>
-        <asp:Button ID="btnBack" runat="server" Text="Return to Assessment" CssClass="btn btn-info" OnClick="btnBack_Click"/>
+        <asp:Button ID="btnBack" runat="server" Text="Return to Assessment" CssClass="btn" OnClick="btnBack_Click"/>
+        <asp:LinkButton ID="lnkAddQuestions" runat="server" Visible="false" CssClass="btn btn-success" Text="Add Questions" OnClick="lnkAddQuestions_click"></asp:LinkButton>
     </div>
     <div class="grid_24 alpha">
         Selected Questions
@@ -131,7 +131,7 @@
         
     </div>
     <div class="grid_24 alpha" style="margin-top:1em; margin-bottom:1em;">
-        <asp:LinkButton ID="lnkPreview" runat="server" CssClass="btn btn-success" Text="Preview" OnClick="lnkPreview_click"></asp:LinkButton>
+        <asp:LinkButton ID="lnkPreview" runat="server" Visible="false" CssClass="btn btn-success" Text="Preview" OnClick="lnkPreview_click"></asp:LinkButton>
     </div>
 </asp:Content>
 
