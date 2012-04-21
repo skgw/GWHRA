@@ -23,8 +23,11 @@
     </asp:ScriptManager>
     <div class="container_24">
         <div class="container_24 alpha" id="header">
-            <h2>
-                Header</h2>
+          <div class="grid_8 alpha"><asp:Image ID="Image1" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-ikaht.jpg" /></div>
+          <div class="grid_8">&nbsp;</div>
+          <div class="grid_8 omega">
+            <asp:Image ID="imgCompany" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-gw.jpg" />
+          </div>
         </div>
         <div class="container_24 alpha" id="content">
             <div class="grid_24 alpha">
@@ -39,8 +42,7 @@
             </div>
         </div>
         <div class="container_24 alpha" id="footer">
-            <h4>
-                Footer</h4>
+            2012 Government Works, inc. Copyright Reserved
         </div>
     </div>
     </form>
