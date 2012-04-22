@@ -4,7 +4,8 @@
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="grid_16 alpha">
-    s
+    <a href="MemberDetails.aspx">Member Details</a>
+    <a href="FamilyDetails.aspx">Family Details</a>
     </div>
     <div class="grid_8 omega">
         <p>

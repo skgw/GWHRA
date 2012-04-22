@@ -74,8 +74,8 @@
             </div>
         </div>
     </div>
-    <div class="grid_24 alpha">
-        <h3>
+    <div class="grid_24 alpha alert alert-block">
+        <h3 class="alert-heading">
             Address Information</h3>
         <div class="grid_24 alpha">
             <div class="grid_12 alpha">
@@ -108,6 +108,33 @@
                 </dl>
             </div>
             <div class="grid_12 omega">
+                <dl>
+                    <dt>Address Type</dt>
+                    <dd>
+                        <asp:DropDownList ID="ddlWorkAddressType" runat="server">
+                        </asp:DropDownList>
+                    </dd>
+                    <dt>Address 1 </dt>
+                    <dd>
+                        <asp:TextBox ID="tbWorkAddress1" runat="server"></asp:TextBox>
+                    </dd>
+                    <dt>Address 2</dt>
+                    <dd>
+                        <asp:TextBox ID="tbWorkAddress2" runat="server"></asp:TextBox>
+                    </dd>
+                    <dt>City</dt>
+                    <dd>
+                        <asp:TextBox ID="tbWorkCity" runat="server"></asp:TextBox>
+                    </dd>
+                    <dt>State</dt>
+                    <dd>
+                        <asp:TextBox ID="tbWorkState" runat="server"></asp:TextBox>
+                    </dd>
+                    <dt>Zip code</dt>
+                    <dd>
+                        <asp:TextBox ID="tbWorkZip" runat="server"></asp:TextBox>
+                    </dd>
+                </dl>
             </div>
         </div>
     </div>
