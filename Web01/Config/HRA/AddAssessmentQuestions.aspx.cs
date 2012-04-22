@@ -36,11 +36,7 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
                 lnkPreview.Visible = false;
                 Session["SelectedList"] = null;
             }
-            //if (Session["SelectedList"] != null)
-            //{
-            //    DisplayData((List < Question >) Session["SelectedList"]);
-            //}
-        }
+         }
     }
     protected void PopulateGroups()
     {
@@ -72,6 +68,7 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     }
     protected void lnkAddQuestions_click(object sender, EventArgs e)
     {
+        Session["SelectedList"] = null;
         for (int i = 0; i < lvQuestions.Items.Count; i++)
         {
             CheckBox myCheckbox = (CheckBox)lvQuestions.Items[i].Controls[1];
@@ -80,43 +77,13 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
                 if (ViewState["QList"] != null)
                 {
                     lstQuestions = (List<Question>)ViewState["QList"];
-                    if (Session["SelectedList"] != null)
-                    {
-                        lstSelectedQuestions = (List<Question>)Session["SelectedList"];
-                        lstSelectedQuestions.Add(lstQuestions[i]);
-                    }
-                    else
-                    {
-                        lstSelectedQuestions.Add(lstQuestions[i]);
-                    }
-                    // check if this Question is already in the selected list or not.
-                    //if (Session["SelectedList"] != null)
-                    //{
-                    //    List<Question> lst1 = (List<Question>)Session["SelectedList"];
-                    //    for (int j = 0; j < lst1.Count; j++)
-                    //    {
-                    //        if (lstQuestions[i].QGroupId_Ref == lst1[j].QGroupId_Ref && lstQuestions[i].ID == lst1[j].ID)
-                    //        {
-                    //        }
-                    //        else
-                    //        {
-                    //            lstQuestions = (List<Question>)ViewState["QList"];
-                    //            lstSelectedQuestions.Add(lstQuestions[i]);
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    lstQuestions = (List<Question>)ViewState["QList"];
-                    //    lstSelectedQuestions.Add(lstQuestions[i]);  
-                    //}
-
+                    lstSelectedQuestions.Add(lstQuestions[i]);
                 }
             }
         }
         if (lstSelectedQuestions.Count > 0)
         {
-            AddQuestions(lstSelectedQuestions);
+            SaveQuestions(lstSelectedQuestions);
             lnkPreview.Visible = true;
         }
         else
@@ -165,13 +132,12 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
         Response.Redirect("Assessments.aspx?id=" + objAssessment.ID);
     }
 
-    protected void AddQuestions(List<Question> lst)
+    protected void SaveQuestions(List<Question> lst)
     {
         //code to save in database 
         string QuestionIds = "";
         string DisplayOrder = "";
-        int QuestionGrId = 0;
-        for (int i = 0; i < lst.Count; i++)
+         for (int i = 0; i < lst.Count; i++)
         {
             
             if (QuestionIds == "")
@@ -190,28 +156,23 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
         //------------------------------------
         if (qLst.Count > 0)
         {
-            DisplayData(lst);
+            DisplayData(qLst);
+            Session["SelectedList"] = qLst;
         }
         else
         {
             DisplayData(null);   
         }
 
-        //if (Session["SelectedList"] != null)
-        //{
-        //    List<Question> lst1 = (List<Question>)Session["SelectedList"];
-        //    Session["SelectedList"] = lst1.Union(lst).ToList();
-        //    DisplayData(lst1.Union(lst).ToList());
-        //}
-        //else
-        //{
-        //    DisplayData(lst);
-        //}
     }
     protected void DisplayData(List<Question> lst)
     {
         lvSelectedQ.DataSource = lst;
         lvSelectedQ.DataBind();
+        lvQuestions.DataSource = null;
+        lvQuestions.DataBind();
+        ViewState["QList"] = null;
+        lnkAddQuestions.Visible = false;
         Session["SelectedList"] = lst;
     }
 }
