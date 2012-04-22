@@ -61,7 +61,7 @@
                 Take a few minutes to sign up and start enhancing your life! Register now
             </p>
             <b>Benefits</b>
-            <p>
+           
                 <ul>
                     <li>Discover your risks and strengths with the health assessment. </li>
                     <li>Get motivated with our unique solution </li>
@@ -70,7 +70,7 @@
                     <li>Within less than 30 minutes you can assess your health and lifestyle with this online
                         tool </li>
                 </ul>
-            </p>
+          
             <div class="alert alert-info">
                 Your personal health information is safe and confidential with us.</div>
         </div>
