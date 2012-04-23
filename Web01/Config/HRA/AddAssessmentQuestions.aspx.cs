@@ -68,27 +68,44 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     }
     protected void lnkAddQuestions_click(object sender, EventArgs e)
     {
+        Boolean alreadyExists = false;
         Session["SelectedList"] = null;
         for (int i = 0; i < lvQuestions.Items.Count; i++)
         {
             CheckBox myCheckbox = (CheckBox)lvQuestions.Items[i].Controls[1];
             if (myCheckbox.Checked == true)
             {
-                if (ViewState["QList"] != null)
+                Label myContent = (Label)lvQuestions.Items[i].Controls[3];
+                string xyz = myContent.Text;
+                //check for duplicate entry in the Already Selected Questions
+                for (int j = 0; j < lvSelectedQ.Items.Count; j++)
                 {
-                    lstQuestions = (List<Question>)ViewState["QList"];
-                    lstSelectedQuestions.Add(lstQuestions[i]);
+                    Label mySelectedContent = (Label)lvSelectedQ.Items[j].Controls[1];
+                    if (mySelectedContent.Text.Trim() == xyz.Trim()) {
+                        alreadyExists = true; 
+                    }
+                }
+                if (alreadyExists == false)
+                {
+                    if (ViewState["QList"] != null)
+                    {
+                        lstQuestions = (List<Question>)ViewState["QList"];
+                        lstSelectedQuestions.Add(lstQuestions[i]);
+                    }
                 }
             }
         }
-        if (lstSelectedQuestions.Count > 0)
+        if (alreadyExists == false)
         {
-            SaveQuestions(lstSelectedQuestions);
-            lnkPreview.Visible = true;
-        }
-        else
-        {
-            lnkPreview.Visible = true;
+            if (lstSelectedQuestions.Count > 0)
+            {
+                SaveQuestions(lstSelectedQuestions);
+                lnkPreview.Visible = true;
+            }
+            else
+            {
+                lnkPreview.Visible = true;
+            }
         }
      }
     protected void chkSelectAll_OnCheckedChanged(object sender, EventArgs e)

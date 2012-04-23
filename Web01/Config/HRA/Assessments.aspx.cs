@@ -56,6 +56,13 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
     
     protected void lnkAddQuestions_Click(object sender, EventArgs e)
     {
+        string retMsg = ValidateData();
+        if (retMsg.Length > 0)
+        {
+            //need to display this msg in the page 
+            return;
+        }
+        
         Assessment obj = new Assessment(CurrentUserId);
         obj.ID = (AssessmentId > 0) ? AssessmentId : 0;
         obj.Name = txtAssessmentName.Text;
@@ -79,4 +86,33 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         }
         //Response.Redirect("AddAssessmentQuestions.aspx");
      }
+
+    protected string ValidateData()
+    {
+        string msg = string.Empty;
+        if (txtAssessmentName.Text == "")
+        {
+            msg = "You must have the Assessment Name.";
+            return msg;
+        }
+        if (ddlAssessGroup.SelectedIndex == 0) {
+            msg = "You must have the Assessment Group Name.";
+            return msg;
+        }
+        if (txtEffectiveFrom.Text.Trim() != "" && txtEffectiveFrom.Text.Trim() != "")
+        {
+            if (Convert.ToDateTime(txtEffectiveFrom.Text.Trim()) > Convert.ToDateTime(txtEffectiveTo.Text.Trim()))
+            {
+                msg = "From date can not be before To date.";
+                return msg;
+            }
+            //DateTime value;
+            //if (!DateTime.TryParse(txtEffectiveFrom.Text, out value))
+            //{
+            //    txtEffectiveFrom.Text = DateTime.Today.ToShortDateString();
+            //} 
+
+        }
+        return msg;
+    }
 }

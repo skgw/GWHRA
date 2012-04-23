@@ -51,7 +51,7 @@
                         <asp:CheckBox ID="chkSelect" runat="server" />
                     </td>
                     <td>
-                        <%# Eval("Content")%>
+                       <asp:Label ID="lblContent" runat="server" Text='<%# Eval("Content")%>'></asp:Label>
                     </td>
                     <td>
                         <%# Eval("ResponseType") %>
@@ -107,7 +107,7 @@
                         <%# Eval("GroupName")%>
                     </td>
                     <td>
-                        <%# Eval("Content")%>
+                        <asp:Label ID="lblSelectedContent" runat="server" Text='<%# Eval("Content")%>'></asp:Label>
                     </td>
                     <td>
                         <%# Eval("ResponseType") %>
