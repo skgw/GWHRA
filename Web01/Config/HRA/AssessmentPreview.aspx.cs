@@ -15,8 +15,8 @@ public partial class Config_HRA_AssessmentPreview : System.Web.UI.Page
             objAssessment = (Assessment)Session["objAssessment"];
             lblName.Text = objAssessment.Name;
             lblGroupName.Text = objAssessment.AssessmentGroupName;
-            lblEffectiveFrom.Text = objAssessment.EffectiveFrom.ToString();
-            lblEffectiveTo.Text = objAssessment.EffectiveTo.ToString();
+            lblEffectiveFrom.Text = objAssessment.EffectiveFrom.ToString("MM/dd/yyyy");
+            lblEffectiveTo.Text = objAssessment.EffectiveTo.ToString("MM/dd/yyyy");
         }
         if (!IsPostBack)
         {

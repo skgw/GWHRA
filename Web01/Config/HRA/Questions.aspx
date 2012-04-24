@@ -67,20 +67,20 @@
 
     <div class="grid_24 alpha">
         <dl>
-            <dt>Display Order</dt>
+            <%--<dt>Display Order</dt>
             <dd><asp:TextBox ID="txtDisplayOrder" runat="server"></asp:TextBox>
             <span style="color:Red"><b>*</b></span>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtDisplayOrder"  ErrorMessage="Display Order is required."
                  ValidationGroup="Question" ForeColor="Red"></asp:RequiredFieldValidator>
-            </dd>
+            </dd>--%>
             <dt>Gender</dt>
             <dd><asp:DropDownList ID="ddlGender" runat="server">
                 <asp:ListItem Value="B">Both</asp:ListItem>
                 <asp:ListItem Value="M">Male</asp:ListItem>
                 <asp:ListItem Value="F">Female</asp:ListItem>
             </asp:DropDownList></dd>
-            <dt>Narrative</dt>
-            <dd><asp:TextBox ID="txtNarrative" runat="server" TextMode="MultiLine" Rows="4" Columns="100" class="grid_12" MaxLength="1000"></asp:TextBox></dd>
+            <%--<dt>Narrative</dt>
+            <dd><asp:TextBox ID="txtNarrative" runat="server" TextMode="MultiLine" Rows="4" Columns="100" class="grid_12" MaxLength="1000"></asp:TextBox></dd>--%>
             <dt>Help Text</dt>
             <dd><asp:TextBox ID="txtHelpText" runat="server" TextMode="MultiLine" Rows="4" Columns="100" class="grid_12" MaxLength="1000"></asp:TextBox></dd>
             <dt>Is Mandatory</dt>

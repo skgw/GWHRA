@@ -24,7 +24,7 @@ namespace HRACore
         private string mAssessmentGroupName;
         private DateTime mCreatedDate;
         private string mCreatedBy;
-        private string mStatus;
+        private char mStatus;
         private int mCurrentUserID = 0;
 
         public int ID
@@ -83,6 +83,11 @@ namespace HRACore
             get { return mAssessmentGroupName; }
             set { mAssessmentGroupName = value; }
         }
+        public char Status
+        {
+            get { return mStatus; }
+            set { mStatus = value; }
+        }
 
         public Assessment(int CurrentUserID)
         {
@@ -116,7 +121,7 @@ namespace HRACore
                 dbhAssessment.AddParameter("@ASSESSMENT_GROUP_ID_REF", this.AssessmentGroupId);
                 dbhAssessment.AddParameter("@EFFECTIVE_FROM", this.EffectiveFrom);
                 dbhAssessment.AddParameter("@EFFECTIVE_TO", this.EffectiveTo);
-                dbhAssessment.AddParameter("@STATUS", 'A');
+                dbhAssessment.AddParameter("@STATUS", this.Status);
                 dbhAssessment.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
                 IDataReader reader = dbhAssessment.ExecuteReader("INSERTUPDATE_ASSESSMENTS");
@@ -145,7 +150,9 @@ namespace HRACore
             EffectiveTo = DateTime.Parse(reader[5].ToString());
             ModifiedBy = reader[6].ToString();
             ModifiedDate = reader[7] != DBNull.Value ? DateTime.Parse(reader[7].ToString()) : Convert.ToDateTime("01/01/2099");
+            Status = Convert.ToChar(reader[8].ToString());
             AssessmentGroupName = reader[9].ToString();
+            
         }
   
     }

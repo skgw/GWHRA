@@ -42,6 +42,10 @@
             <dd>
                 <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" Columns="80" Rows="4" CssClass="grid_6 alpha"></asp:TextBox>
             </dd>
+            <dt>IsActive</dt>
+            <dd>
+                <asp:CheckBox ID="chkStatus" runat="server"></asp:CheckBox>
+            </dd>
             
         </dl>
     </div>
@@ -65,7 +69,7 @@
             </dl>
         </div>
             <asp:LinkButton ID="lnkBack" runat="server" CssClass="btn" OnClick="lnkBack_Click">Return to search results</asp:LinkButton>
-            <asp:LinkButton ID="lnkAddQuestions" runat="server" CssClass="btn btn-success" OnClick="lnkAddQuestions_Click" ValidationGroup="Assessment" CausesValidation="true">+ Add Questions</asp:LinkButton>
+            <asp:LinkButton ID="lnkAddQuestions" runat="server" CssClass="btn btn-success" OnClick="lnkAddQuestions_Click" ValidationGroup="Assessment" CausesValidation="true">Save & Continue</asp:LinkButton>
     </div>
 </asp:Content>
 
