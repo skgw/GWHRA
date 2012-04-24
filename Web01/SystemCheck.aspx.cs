@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BaseCore;
+using DAL;
 
 public partial class SystemCheck : System.Web.UI.Page
 {
@@ -17,7 +18,7 @@ public partial class SystemCheck : System.Web.UI.Page
     }
     private void PerformSystemCheck()
     {
-        BaseCore.DBHelper o = new DBHelper();
+        DBHelper o = new DBHelper();
         o.Dispose();
         
     }

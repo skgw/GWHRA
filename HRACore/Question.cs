@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Text;
 using BaseCore;
+using DAL;
 
 namespace HRACore
 {

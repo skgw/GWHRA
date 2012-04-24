@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using BaseCore;
+using DAL;
 
 namespace HRACore
 {

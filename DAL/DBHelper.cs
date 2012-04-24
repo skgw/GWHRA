@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace BaseCore
+namespace DAL
 {
     [Serializable]
     public class DBHelper : IDisposable
