@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using BaseCore;
-using System.Data;
+
 
 namespace HRACore
 {
