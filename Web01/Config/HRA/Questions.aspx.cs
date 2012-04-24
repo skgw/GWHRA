@@ -197,13 +197,24 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
 
     protected void btnAddOption_click(object sender, EventArgs e)
     {
+        Boolean textExists = false;
         if (txtResponseOption.Text.Trim().Length > 0)
         {
             if (Session["OptionList"] != null)
             {
                 lstOptions = (List<Tuple<string>>)Session["OptionList"];
+                for (int i = 0; i < lstOptions.Count; i++)
+                {
+                    if (txtResponseOption.Text.Trim() == lstOptions[i].Item1.ToString())
+                    {
+                        textExists = true;
+                    }
+                }
             }
-            lstOptions.Add(Tuple.Create<string>(txtResponseOption.Text.Trim()));
+            if (textExists == false)
+            {
+                lstOptions.Add(Tuple.Create<string>(txtResponseOption.Text.Trim()));
+            }
         }
         if (lstOptions.Count > 0)
         {

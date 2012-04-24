@@ -81,10 +81,9 @@ namespace HRACore
                 dbhAssessments.AddParameter("@CURRENTUSERID", CurrentUserId);
 
                 IDataReader reader = dbhAssessments.ExecuteReader("INSERTUPDATE_ASSESSMENT_QUESTIONS");
-                if (reader.Read())
+                while (reader.Read())
                 {
-                   lst.Add(new Question(reader));
-
+                    lst.Add(new Question(reader));
                 }
             }
             return lst;
