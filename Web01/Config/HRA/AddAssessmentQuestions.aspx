@@ -2,7 +2,28 @@
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div class="grid_24 alpha">
+<asp:Label ID="lblMsg" runat="server" Font-Bold="true" ForeColor="Red"></asp:Label>
+<div class="grid_24 alpha">
+        <div class="grid_12 alpha">
+            <dl>
+                <dt>Assessment Name</dt>
+                <dd><asp:Label ID="lblName" runat="server"></asp:Label></dd>
+                <dt>Effective From</dt>
+                <dd><asp:Label ID="lblEffectiveFrom" runat="server"></asp:Label>
+                </dd>
+            </dl>
+        </div>
+        <div class="grid_12 omega">
+                <dl>
+                    <dt>Assessment Group</dt>
+                    <dd><asp:Label ID="lblGroupName" runat="server"></asp:Label></dd>
+                    <dt>Effective To</dt>
+                    <dd><asp:Label ID="lblEffectiveTo" runat="server"></asp:Label></dd>
+                </dl>
+        </div>
+
+</div>  
+    <%--<div class="grid_24 alpha">
         <div class="grid_12 alpha">
             <dl>
                 <dt>Assessment Name</dt>
@@ -15,7 +36,7 @@
                     <dd><asp:Label ID="lblGroupName" runat="server"></asp:Label></dd>
                 </dl>
         </div>
-    </div>
+    </div>--%>
     <div class="grid_24 alpha">
         Question Group  <asp:DropDownList ID="ddlQuestionGroup" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlQuestionGroup_SelectedIndexChanged">
             <asp:ListItem Value="">-- Select One --</asp:ListItem>
@@ -74,7 +95,7 @@
     </div>
     <div class="grid_24 alpha">
         Selected Questions
-        <asp:ListView ID="lvSelectedQ" runat="server" OnItemCommand="lvSelectedQ_OnItemCommand" DataKeyNames="ID">
+        <asp:ListView ID="lvSelectedQ" runat="server" OnItemCommand="lvSelectedQ_OnItemCommand" DataKeyNames="ID,QGroupId_Ref">
             <LayoutTemplate>
                 <table id="tblSelectedQ" class="table table-bordered ">
                     <thead>

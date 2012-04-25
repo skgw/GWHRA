@@ -18,6 +18,8 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
             objAssessment = (Assessment)Session["objAssessment"];
             lblName.Text = objAssessment.Name;
             lblGroupName.Text = objAssessment.AssessmentGroupName;
+            lblEffectiveFrom.Text = objAssessment.EffectiveFrom.ToString("MM/dd/yyyy");
+            lblEffectiveTo.Text = objAssessment.EffectiveTo.ToString("MM/dd/yyyy");
         }
         if (!IsPostBack)
         {
@@ -76,12 +78,13 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
             if (myCheckbox.Checked == true)
             {
                 Label myContent = (Label)lvQuestions.Items[i].Controls[3];
-                string xyz = myContent.Text;
+                string QContent = myContent.Text;
                 //check for duplicate entry in the Already Selected Questions
                 for (int j = 0; j < lvSelectedQ.Items.Count; j++)
                 {
                     Label mySelectedContent = (Label)lvSelectedQ.Items[j].Controls[1];
-                    if (mySelectedContent.Text.Trim() == xyz.Trim()) {
+                    if (mySelectedContent.Text.Trim() == QContent.Trim())
+                    {
                         alreadyExists = true; 
                     }
                 }
@@ -131,18 +134,37 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     {
         if (String.Equals(e.CommandName, "Remove"))
         {
+            AssessmentList obj = new AssessmentList();
             ListViewDataItem dataItem = (ListViewDataItem)e.Item;
-            string id = lvSelectedQ.DataKeys[dataItem.DisplayIndex].Value.ToString();
-            lstSelectedQuestions = (List<Question>)Session["SelectedList"];
-
-            lstSelectedQuestions.RemoveAt(dataItem.DataItemIndex);
+            string Qid = lvSelectedQ.DataKeys[dataItem.DisplayIndex]["ID"].ToString();
+            string QGid = lvSelectedQ.DataKeys[dataItem.DisplayIndex]["QGroupId_Ref"].ToString();
+            lstSelectedQuestions = obj.DeleteQuestions(objAssessment.ID, Convert.ToInt32(QGid), Convert.ToInt32(Qid), 1);
+            //Bind returned data
             DisplayData(lstSelectedQuestions);
         }
     }
 
     protected void lnkPreview_click(object sender, EventArgs e)
     {
-        Response.Redirect("AssessmentPreview.aspx?=id" + objAssessment.ID);
+        string retMsg = ValidateDisplayOrder();
+        if (retMsg.Length == 0)
+        {
+            //Update and go to next page
+            if (Session["SelectedList"] != null)
+            {
+                List<Question> QList = new List<Question>();
+                QList = (List<Question>)Session["SelectedList"];
+                UpdateQuestions(QList);
+            }
+            Response.Redirect("AssessmentPreview.aspx?=id" + objAssessment.ID);
+        }
+        else
+        {
+            //display validation msg
+            lvQuestions.DataSource = null;
+            lvQuestions.DataBind();
+            lblMsg.Text = retMsg;
+        }
     }
     protected void btnBack_Click(object sender, EventArgs e)
     {
@@ -152,6 +174,13 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     protected void SaveQuestions(List<Question> lst)
     {
         //code to save in database 
+        //create the display order depending on the no of questions already added for this Assessment.
+        //if not start from 1
+        int QCount = 1;
+        if (lvSelectedQ.Items.Count > 0)
+        {
+            QCount = lvSelectedQ.Items.Count + 1;
+        }
         string QuestionIds = "";
         string DisplayOrder = "";
          for (int i = 0; i < lst.Count; i++)
@@ -160,13 +189,14 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
             if (QuestionIds == "")
             {
                 QuestionIds = lst[i].ID.ToString();
-                DisplayOrder = lst[i].DisplayOrder.ToString();
+                DisplayOrder = QCount.ToString();
             }
             else
             {
                 QuestionIds += "," + lst[i].ID.ToString();
-                DisplayOrder += "," + lst[i].DisplayOrder.ToString();
+                DisplayOrder += "," + QCount.ToString();
             }
+            QCount += 1;
         }
         AssessmentList assList = new AssessmentList();
         List<Question> qLst = assList.SaveQuestions(objAssessment.ID,Convert.ToInt32(lst[0].QGroupId_Ref),QuestionIds,DisplayOrder,1);
@@ -182,14 +212,103 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
         }
 
     }
+
+    protected void UpdateQuestions(List<Question> lst)
+    {
+        //code to save in database 
+        //create the display order depending on the no of questions already added for this Assessment.
+        //if not start from 1
+        //int QCount = 1;
+        //if (lvSelectedQ.Items.Count > 0)
+        //{
+        //    QCount = lvSelectedQ.Items.Count + 1;
+        //}
+        string QuestionIds = "";
+        string DisplayOrder = "";
+        for (int i = 0; i < lst.Count; i++)
+        {
+
+            if (QuestionIds == "")
+            {
+                QuestionIds = lst[i].ID.ToString();
+                DisplayOrder = lst[i].DisplayOrder.ToString();
+            }
+            else
+            {
+                QuestionIds += "," + lst[i].ID.ToString();
+                DisplayOrder += "," + lst[i].DisplayOrder.ToString();
+            }
+        }
+        AssessmentList assList = new AssessmentList();
+        List<Question> qLst = assList.SaveQuestions(objAssessment.ID, Convert.ToInt32(lst[0].QGroupId_Ref), QuestionIds, DisplayOrder, 1);
+        //------------------------------------
+        if (qLst.Count > 0)
+        {
+            DisplayData(qLst);
+            Session["SelectedList"] = qLst;
+        }
+        else
+        {
+            DisplayData(null);
+        }
+
+    }
     protected void DisplayData(List<Question> lst)
     {
         lvSelectedQ.DataSource = lst;
         lvSelectedQ.DataBind();
         lvQuestions.DataSource = null;
         lvQuestions.DataBind();
+        ddlQuestionGroup.SelectedIndex = 0;
         ViewState["QList"] = null;
         lnkAddQuestions.Visible = false;
         Session["SelectedList"] = lst;
+    }
+
+    protected string ValidateDisplayOrder()
+    {
+        int minQCount = 1;
+        int maxQCount = lvSelectedQ.Items.Count;
+        string msg = "";
+        int RepeatCount = 0;
+        List<Question> QList = new  List<Question>();
+        if (Session["SelectedList"] != null)
+        {
+            QList = (List<Question>) Session["SelectedList"];
+        }
+        //check min & max limit
+        for (int j = 0; j < lvSelectedQ.Items.Count; j++)
+        {
+            TextBox mySelectedContent = (TextBox)lvSelectedQ.Items[j].Controls[3];
+            if (Convert.ToInt32(mySelectedContent.Text) < minQCount || Convert.ToInt32(mySelectedContent.Text) > maxQCount)
+            {
+                msg = "Display Order must be within " + minQCount + " and " + maxQCount;
+                QList.Clear();
+                return msg;
+            }
+            QList[j].DisplayOrder = Convert.ToInt32(mySelectedContent.Text);
+        }
+
+        for (int i = minQCount; i < maxQCount + 1; i++)
+        {
+            
+            for (int j = 0; j < lvSelectedQ.Items.Count; j++)
+            {
+                TextBox mySelectedContent = (TextBox)lvSelectedQ.Items[j].Controls[3];
+                if (Convert.ToInt32(mySelectedContent.Text) == i)
+                {
+                    RepeatCount += 1;
+                }
+                if (RepeatCount > 1)
+                {
+                    msg = i + " is repeated";
+                    QList.Clear();
+                    return msg;
+                }
+            }
+            RepeatCount = 0;
+        }
+        Session["SelectedList"] = QList;
+        return msg;
     }
 }

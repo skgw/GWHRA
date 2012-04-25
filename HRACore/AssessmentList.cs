@@ -89,5 +89,23 @@ namespace HRACore
             }
             return lst;
         }
+        public List<Question> DeleteQuestions(int AssessmentID, int GROUPID, int QUESTIONID, int CurrentUserId)
+        {
+            List<Question> lst = new List<Question>();
+            using (dbhAssessments = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhAssessments.AddParameter("@ASSESSMENT_ID", AssessmentID);
+                dbhAssessments.AddParameter("@QUESTION_GROUP_ID", GROUPID);
+                dbhAssessments.AddParameter("@QUESTIONS_ID", QUESTIONID);
+                dbhAssessments.AddParameter("@CURRENTUSERID", CurrentUserId);
+
+                IDataReader reader = dbhAssessments.ExecuteReader("DELETE_ASSESSMENT_QUESTION");
+                while (reader.Read())
+                {
+                    lst.Add(new Question(reader));
+                }
+            }
+            return lst;
+        }
     }
 }

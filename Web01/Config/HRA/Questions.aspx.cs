@@ -41,8 +41,8 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
                 if (obj1 != null)
                 {
                     txtQuestionText.Text = obj1.Content;
-                    txtDisplayOrder.Text = obj1.DisplayOrder.ToString();
-                    txtNarrative.Text = obj1.Narrative;
+                    //txtDisplayOrder.Text = obj1.DisplayOrder.ToString();
+                    //txtNarrative.Text = obj1.Narrative;
                     txtHelpText.Text = obj1.HelpText;
                     ddlQuestionGroup.SelectedValue = obj1.QGroupId_Ref.ToString();
                     ddlResponseType.SelectedValue = obj1.QResponseTypeId_Ref.ToString();
@@ -123,7 +123,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         Question obj = new Question(1);
         obj.ID = (QuestionId > 0) ? QuestionId : 0;
         obj.Content = txtQuestionText.Text;
-        obj.DisplayOrder = Convert.ToInt64(txtDisplayOrder.Text);
+        //obj.DisplayOrder = Convert.ToInt64(txtDisplayOrder.Text);
 
         //Sex selectedSex;
         //foreach (Sex item in Enum.GetValues(typeof(Sex)))
@@ -142,7 +142,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         //else if (ddlGender.SelectedValue == "2")
         //    obj.AppliesTo = Sex.Female;
         obj.Gender = Convert.ToChar(ddlGender.SelectedValue);
-        obj.Narrative = txtNarrative.Text;
+        //obj.Narrative = txtNarrative.Text;
         obj.HelpText = txtHelpText.Text;
         obj.IsMandatory = chkStatus.Checked == true ? 'Y' : 'N';
         obj.Status = chkStatus.Checked == true ? 'A' : 'I';

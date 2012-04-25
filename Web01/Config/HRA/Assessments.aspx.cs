@@ -48,6 +48,7 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         txtEffectiveFrom.Text = obj.EffectiveFrom.ToString("MM/dd/yyyy");
         txtEffectiveTo.Text = obj.EffectiveTo.ToString("MM/dd/yyyy");
         ddlAssessGroup.SelectedValue = obj.AssessmentGroupId.ToString();
+        chkStatus.Checked = obj.Status.ToString().Equals("A") ? true : false;
     }
     protected void lnkBack_Click(object sender, EventArgs e)
     {
@@ -77,6 +78,7 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         {
             obj.EffectiveTo = Convert.ToDateTime(txtEffectiveTo.Text);
         }
+        obj.Status = chkStatus.Checked == true ? 'A' : 'I';
         Session["objAssessment"] = obj;
         //save this and go to the next page
         obj.Save();

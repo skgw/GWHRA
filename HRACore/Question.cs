@@ -184,7 +184,7 @@ namespace HRACore
 
             QGroupId_Ref = Int64.Parse(reader[9].ToString());
             QResponseTypeId_Ref = Int64.Parse(reader[10].ToString());
-            Narrative = reader[11].ToString();
+            //Narrative = reader[11].ToString();
             HelpText = reader[12].ToString();
             ResponseText = reader[13].ToString();
             ResponseType = reader[14].ToString();
@@ -205,9 +205,9 @@ namespace HRACore
                 dbhQuestionGroup.AddParameter("@responsetypeid_ref", this.QResponseTypeId_Ref);
                 dbhQuestionGroup.AddParameter("@qcontent", this.Content);
                 dbhQuestionGroup.AddParameter("@options", this.ResponseText);
-                dbhQuestionGroup.AddParameter("@displayorder", this.DisplayOrder);
+                //dbhQuestionGroup.AddParameter("@displayorder", this.DisplayOrder);
                 dbhQuestionGroup.AddParameter("@gender", this.Gender);
-                dbhQuestionGroup.AddParameter("@narrative", this.Narrative);
+                //dbhQuestionGroup.AddParameter("@narrative", this.Narrative);
                 dbhQuestionGroup.AddParameter("@helptext", this.HelpText);
                 dbhQuestionGroup.AddParameter("@ismandatory", this.IsMandatory);
 
