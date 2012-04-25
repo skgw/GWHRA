@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using BaseCore;
+using DAL;
 
 namespace HRACore
 {
