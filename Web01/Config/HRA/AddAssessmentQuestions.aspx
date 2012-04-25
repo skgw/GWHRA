@@ -95,7 +95,7 @@
     </div>
     <div class="grid_24 alpha">
         Selected Questions
-        <asp:ListView ID="lvSelectedQ" runat="server" OnItemCommand="lvSelectedQ_OnItemCommand" DataKeyNames="ID">
+        <asp:ListView ID="lvSelectedQ" runat="server" OnItemCommand="lvSelectedQ_OnItemCommand" DataKeyNames="ID,QGroupId_Ref">
             <LayoutTemplate>
                 <table id="tblSelectedQ" class="table table-bordered ">
                     <thead>

@@ -134,14 +134,12 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     {
         if (String.Equals(e.CommandName, "Remove"))
         {
+            AssessmentList obj = new AssessmentList();
             ListViewDataItem dataItem = (ListViewDataItem)e.Item;
-            string id = lvSelectedQ.DataKeys[dataItem.DisplayIndex].Value.ToString();
-            lstSelectedQuestions = (List<Question>)Session["SelectedList"];
-            lstSelectedQuestions.RemoveAt(dataItem.DataItemIndex);
-            for (int i = 0; i < lstSelectedQuestions.Count; i++)
-            {
-                lstSelectedQuestions[i].DisplayOrder = i + 1;
-            }
+            string Qid = lvSelectedQ.DataKeys[dataItem.DisplayIndex]["ID"].ToString();
+            string QGid = lvSelectedQ.DataKeys[dataItem.DisplayIndex]["QGroupId_Ref"].ToString();
+            lstSelectedQuestions = obj.DeleteQuestions(objAssessment.ID, Convert.ToInt32(QGid), Convert.ToInt32(Qid), 1);
+            //Bind returned data
             DisplayData(lstSelectedQuestions);
         }
     }
