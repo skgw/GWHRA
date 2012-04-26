@@ -10,7 +10,7 @@ namespace DAL
     [Serializable]
     public class DBHelper : IDisposable
     {
-        private readonly List<SqlParameter> SqlParameters = new List<SqlParameter>();
+        public readonly List<SqlParameter> SqlParameters = new List<SqlParameter>();
         private readonly int currentUserID = -1;
         private string currentConnectionString = string.Empty;
         private SqlConnection currentSqlConnection;
@@ -172,15 +172,16 @@ namespace DAL
         //       }
 
 
-        //public void AddParameter(string parameterName, SqlDbType type, object obj, ParameterDirection direction)
-        //{
-        //    SqlParameters.Add(new SqlParameter(parameterName, type, obj, direction));
-        //}
+        public void AddParameter(string parameterName, object obj, ParameterDirection direction)
+        {
+            SqlParameter tmp = new SqlParameter(parameterName,obj);
+            tmp.Direction = direction;
+            SqlParameters.Add(tmp);            
+        }
 
         public void AddParameter(string parameterName, SqlDbType type, int size)
         {
-            SqlParameters.Add(new SqlParameter(parameterName,
-                                               type, size));
+            SqlParameters.Add(new SqlParameter(parameterName,type, size));
         }
 
         #endregion
