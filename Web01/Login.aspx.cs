@@ -11,4 +11,8 @@ public partial class Login : System.Web.UI.Page
     {
         Master.PageHeader = "Welcome";
     }
+    protected void siteLogin_LoggedIn(object sender, EventArgs e)
+    {
+    }
+
 }
