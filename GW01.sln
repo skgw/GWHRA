@@ -8,7 +8,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Web01", "Web01\", "{B680CED4-906B-4322-BB0B-5DC08EA2034F}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{385BF030-CB18-484F-9CD9-7D9645E465FF}|BaseCore.dll;{BADB6CF3-381D-4365-B703-694D6F4AD359}|HRACore.dll;{3F5840DD-F7E1-4F57-943A-06E84AB42337}|DAL.dll;"
+		ProjectReferences = "{385BF030-CB18-484F-9CD9-7D9645E465FF}|BaseCore.dll;{BADB6CF3-381D-4365-B703-694D6F4AD359}|HRACore.dll;{3F5840DD-F7E1-4F57-943A-06E84AB42337}|DAL.dll;{8F83062F-01B5-41A2-8882-0A7C6FD639F1}|CustomMembershipProvider.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Web01"
 		Debug.AspNetCompiler.PhysicalPath = "Web01\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Web01\"

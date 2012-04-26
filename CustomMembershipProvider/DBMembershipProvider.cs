@@ -9,6 +9,7 @@ using System.Text;
 using System.Web.Configuration;
 using System.Web.Security;
 using System.Web;
+using DAL;
 
 namespace CustomMembershipProvider
 {
@@ -273,28 +274,38 @@ namespace CustomMembershipProvider
         }
       }
 
-      SqlConnection sqlConnection = new SqlConnection(connectionString);
-      SqlCommand sqlCommand = new SqlCommand("User_ChangePassword", sqlConnection);
+      const string procName = "User_ChangePassword";
+      using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+      {
+          dbObj.AddParameter("@password", EncodePassword(newPwd));
+          dbObj.AddParameter("@username", username);
+          dbObj.AddParameter("@applicationName", applicationName);
+          dbObj.ExecuteCommand(procName, true);
+       
+      }
 
-      sqlCommand.CommandType = CommandType.StoredProcedure;
-      sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwd);
-      sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
-      sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+      //SqlConnection sqlConnection = new SqlConnection(connectionString);
+      //SqlCommand sqlCommand = new SqlCommand("User_ChangePassword", sqlConnection);
 
-      try
-      {
-        sqlConnection.Open();
-        sqlCommand.ExecuteNonQuery();
-      }
-      catch (SqlException e)
-      {
-        //Add exception handling here.
-        return false;
-      }
-      finally
-      {
-        sqlConnection.Close();
-      }
+      //sqlCommand.CommandType = CommandType.StoredProcedure;
+      //sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwd);
+      //sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+      //sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+      //try
+      //{
+      //  sqlConnection.Open();
+      //  sqlCommand.ExecuteNonQuery();
+      //}
+      //catch (SqlException e)
+      //{
+      //  //Add exception handling here.
+      //  return false;
+      //}
+      //finally
+      //{
+      //  sqlConnection.Close();
+      //}
 
       return true;
 
@@ -321,36 +332,46 @@ namespace CustomMembershipProvider
         return false;
       }
 
-      SqlConnection sqlConnection = new SqlConnection(connectionString);
-      SqlCommand sqlCommand = new SqlCommand("User_ChangePasswordQuestionAnswer", sqlConnection);
-
-      sqlCommand.CommandType = CommandType.StoredProcedure;
-      sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
-      sqlCommand.Parameters.Add("@question", SqlDbType.NVarChar, 255).Value = newPwdQuestion;
-      sqlCommand.Parameters.Add("@answer", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwdAnswer);
-      sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
-      sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
-
-      try
+      const string procName = "User_ChangePasswordQuestionAnswer";
+      using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
       {
-        sqlConnection.Open();
-        sqlCommand.ExecuteNonQuery();
-        if ((int)sqlCommand.Parameters["@returnValue"].Value != 0)
-        {
-          return false;
-        }
+          dbObj.AddParameter("@question", newPwdQuestion);
+          dbObj.AddParameter("@answer", EncodePassword(newPwdAnswer));
+          dbObj.AddParameter("@username", username);
+          dbObj.AddParameter("@applicationName", applicationName);
+          dbObj.ExecuteCommand(procName, true);
       }
-      catch (SqlException e)
-      {
-        //Add exception handling here.
-        return false;
-      }
-      finally
-      {
-        sqlConnection.Close();
-      }
-
       return true;
+      //SqlConnection sqlConnection = new SqlConnection(connectionString);
+      //SqlCommand sqlCommand = new SqlCommand("User_ChangePasswordQuestionAnswer", sqlConnection);
+
+      //sqlCommand.CommandType = CommandType.StoredProcedure;
+      //sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+      //sqlCommand.Parameters.Add("@question", SqlDbType.NVarChar, 255).Value = newPwdQuestion;
+      //sqlCommand.Parameters.Add("@answer", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwdAnswer);
+      //sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
+      //sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+      //try
+      //{
+      //  sqlConnection.Open();
+      //  sqlCommand.ExecuteNonQuery();
+      //  if ((int)sqlCommand.Parameters["@returnValue"].Value != 0)
+      //  {
+      //    return false;
+      //  }
+      //}
+      //catch (SqlException e)
+      //{
+      //  //Add exception handling here.
+      //  return false;
+      //}
+      //finally
+      //{
+      //  sqlConnection.Close();
+      //}
+
+      //return true;
 
     }
     /// <summary>
@@ -392,58 +413,76 @@ namespace CustomMembershipProvider
       {
         System.DateTime createDate = DateTime.Now;
 
-        SqlConnection sqlConnection = new SqlConnection(connectionString);
-        SqlCommand sqlCommand = new SqlCommand("User_Ins", sqlConnection);
+        const string procName = "Users_Ins";
+        using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+        {
+            //dbObj.AddParameter("@returnValue",SqlDbType.Int);
+            dbObj.AddParameter("@username", username);
+            dbObj.AddParameter("@applicationName", applicationName);
+            dbObj.AddParameter("@password", EncodePassword(password));
+            dbObj.AddParameter("@email", email);
+            dbObj.AddParameter("@passwordQuestion", passwordQuestion);
+            dbObj.AddParameter("@passwordAnswer", EncodePassword(passwordAnswer));
+            dbObj.AddParameter("@isApproved", isApproved);
+            dbObj.AddParameter("@comment", string.Empty);
+            //IDataReader dr = dbObj.ExecuteReader(procName);
+            dbObj.ExecuteCommand(procName, true);
+        }
+        
+        //SqlConnection sqlConnection = new SqlConnection(connectionString);
+        //SqlCommand sqlCommand = new SqlCommand("Users_Ins", sqlConnection);
 
-        sqlCommand.CommandType = CommandType.StoredProcedure;
-        sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
-        sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
-        sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
-        sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(password);
-        sqlCommand.Parameters.Add("@email", SqlDbType.NVarChar, 128).Value = email;
-        sqlCommand.Parameters.Add("@passwordQuestion", SqlDbType.NVarChar, 255).Value = passwordQuestion;
-        sqlCommand.Parameters.Add("@passwordAnswer", SqlDbType.NVarChar, 255).Value = EncodePassword(passwordAnswer);
-        sqlCommand.Parameters.Add("@isApproved", SqlDbType.Bit).Value = isApproved;
-        sqlCommand.Parameters.Add("@comment", SqlDbType.NVarChar, 255).Value = String.Empty;
+        //sqlCommand.CommandType = CommandType.StoredProcedure;
+        //sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+        //sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
+        //sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+        //sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(password);
+        //sqlCommand.Parameters.Add("@email", SqlDbType.NVarChar, 128).Value = email;
+        //sqlCommand.Parameters.Add("@passwordQuestion", SqlDbType.NVarChar, 255).Value = passwordQuestion;
+        //sqlCommand.Parameters.Add("@passwordAnswer", SqlDbType.NVarChar, 255).Value = EncodePassword(passwordAnswer);
+        //sqlCommand.Parameters.Add("@isApproved", SqlDbType.Bit).Value = isApproved;
+        //sqlCommand.Parameters.Add("@comment", SqlDbType.NVarChar, 255).Value = String.Empty;
 
         //sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 255).Value = firstName;
         //sqlCommand.Parameters.Add("@middleName", SqlDbType.Bit).Value = middleName;
         //sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 255).Value = lastName;
 
-         try
-        {
-          sqlConnection.Open();
+      //   try
+      //  {
+      //    sqlConnection.Open();
 
-          sqlCommand.ExecuteNonQuery();
-          if ((int)sqlCommand.Parameters["@returnValue"].Value == 0)
-          {
+      //    sqlCommand.ExecuteNonQuery();
+      //    if ((int)sqlCommand.Parameters["@returnValue"].Value == 0)
+      //    {
 
-            status = MembershipCreateStatus.Success;
-          }
-          else
-          {
-            status = MembershipCreateStatus.UserRejected;
-          }
-        }
-        catch (SqlException e)
-        {
-          //Add exception handling here.
+      //      status = MembershipCreateStatus.Success;
+      //    }
+      //    else
+      //    {
+      //      status = MembershipCreateStatus.UserRejected;
+      //    }
+      //  }
+      //  catch (SqlException e)
+      //  {
+      //    //Add exception handling here.
 
-          status = MembershipCreateStatus.ProviderError;
-        }
-        finally
-        {
-          sqlConnection.Close();
-        }
+      //    status = MembershipCreateStatus.ProviderError;
+      //  }
+      //  finally
+      //  {
+      //    sqlConnection.Close();
+      //  }
 
-        return GetUser(username, false);
+      //  return GetUser(username, false);
+      //}
+      //else
+      //{
+      //  status = MembershipCreateStatus.DuplicateUserName;
       }
-      else
-      {
-        status = MembershipCreateStatus.DuplicateUserName;
-      }
 
-      return null;
+      //return null;
+      status = MembershipCreateStatus.Success;
+      return GetUser(username, false);
     }
 
 
@@ -525,6 +564,24 @@ namespace CustomMembershipProvider
 
         return null;
     }
+
+    //public void InsertUserDetails(string username, string password, string email, string passwordQuestion
+    //  , string passwordAnswer, string firstName, string middleName, string lastName)
+    //{
+    //    const string procName = "Users_Ins";
+    //    using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+    //    {
+    //        dbObj.AddParameter("@username", username);
+    //        dbObj.AddParameter("@applicationName", applicationName);
+    //        dbObj.AddParameter("@password", EncodePassword(password));
+    //        dbObj.AddParameter("@email", email);
+    //        dbObj.AddParameter("@passwordQuestion", passwordQuestion);
+    //        dbObj.AddParameter("@passwordAnswer", EncodePassword(passwordAnswer));
+    //        dbObj.AddParameter("@isApproved", isApproved);
+    //        dbObj.AddParameter("@comment", string.Empty);
+    //        dbObj.ExecuteCommand(procName, true);
+    //    }
+    //}
     
     /// <summary>
     /// Delete a user.
@@ -584,51 +641,75 @@ namespace CustomMembershipProvider
 
     public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
     {
-
-      SqlConnection sqlConnection = new SqlConnection(connectionString);
-      SqlCommand sqlCommand = new SqlCommand("Users_Sel", sqlConnection);
-
-      sqlCommand.CommandType = CommandType.StoredProcedure;
-      sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
-
-      MembershipUserCollection users = new MembershipUserCollection();
-
-      SqlDataReader sqlDataReader = null;
-      totalRecords = 0;
-
-      try
-      {
-        sqlConnection.Open();
-        sqlDataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
+        totalRecords = 0;
         int counter = 0;
         int startIndex = pageSize * pageIndex;
         int endIndex = startIndex + pageSize - 1;
-
-        while (sqlDataReader.Read())
+        MembershipUserCollection users = new MembershipUserCollection();
+        const string procName = "Users_Sel";
+        using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
         {
-          if (counter >= startIndex)
-          {
-            users.Add(GetUserFromReader(sqlDataReader));
-          }
+            dbObj.AddParameter("@applicationName", applicationName);
+            dbObj.ExecuteCommand(procName, true);
+            IDataReader dr = dbObj.ExecuteReader(procName);
+            while (dr.Read())
+            {
+                if (counter >= startIndex)
+                {
+                   //users.Add(GetUserFromReader(dr));
+                }
 
-          if (counter >= endIndex) { sqlCommand.Cancel(); }
-          counter += 1;
+                if (counter >= endIndex) { dr.Close(); }
+                counter += 1;
+            }
         }
-      }
-      catch (SqlException e)
-      {
-        //Add exception handling here.
-      }
-      finally
-      {
-        if (sqlDataReader != null)
-        {
-          sqlDataReader.Close();
-        }
-      }
+        
+        return users;
 
-      return users;
+      //SqlConnection sqlConnection = new SqlConnection(connectionString);
+      //SqlCommand sqlCommand = new SqlCommand("Users_Sel", sqlConnection);
+
+      //sqlCommand.CommandType = CommandType.StoredProcedure;
+      //sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+      
+
+      //SqlDataReader sqlDataReader = null;
+      //totalRecords = 0;
+
+      //try
+      //{
+      //  sqlConnection.Open();
+      //  sqlDataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+      //  int counter = 0;
+      //  int startIndex = pageSize * pageIndex;
+      //  int endIndex = startIndex + pageSize - 1;
+
+      //  while (sqlDataReader.Read())
+      //  {
+      //    if (counter >= startIndex)
+      //    {
+      //      users.Add(GetUserFromReader(sqlDataReader));
+      //    }
+
+      //    if (counter >= endIndex) { sqlCommand.Cancel(); }
+      //    counter += 1;
+      //  }
+      //}
+      //catch (SqlException e)
+      //{
+      //  //Add exception handling here.
+      //}
+      //finally
+      //{
+      //  if (sqlDataReader != null)
+      //  {
+      //    sqlDataReader.Close();
+      //  }
+      //}
+
+      //return users;
 
     }
     /// <summary>
@@ -1093,66 +1174,118 @@ namespace CustomMembershipProvider
     {
 
       bool isValid = false;
-      SqlConnection sqlConnection = new SqlConnection(connectionString);
-      SqlCommand sqlCommand = new SqlCommand("User_Validate", sqlConnection);
-
-      sqlCommand.CommandType = CommandType.StoredProcedure;
-      sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
-      sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
-
-      SqlDataReader sqlDataReader = null;
       bool isApproved = false;
       string storedPassword = String.Empty;
 
-      try
+      const string procName = "User_Validate";
+      using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
       {
-        sqlConnection.Open();
-        sqlDataReader = sqlCommand.ExecuteReader(CommandBehavior.SingleRow);
+          dbObj.AddParameter("@username", username);
+          dbObj.AddParameter("@applicationName", applicationName);
+          IDataReader dr = dbObj.ExecuteReader(procName);
 
-        if (sqlDataReader.HasRows)
-        {
-          sqlDataReader.Read();
-          storedPassword = sqlDataReader.GetString(0);
-          isApproved = sqlDataReader.GetBoolean(1);
-        }
-        else
-        {
-          return false;
-        }
-
-        sqlDataReader.Close();
-
-        if (CheckPassword(password, storedPassword))
-        {
-          if (isApproved)
+          if (dr != null)
           {
-            isValid = true;
-
-            SqlCommand sqlUpdateCommand = new SqlCommand("User_UpdateLoginDate", sqlConnection);
-
-            sqlUpdateCommand.CommandType = CommandType.StoredProcedure;
-            sqlUpdateCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
-            sqlUpdateCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
-            sqlUpdateCommand.ExecuteNonQuery();
+              while (dr.Read())
+              {
+                  storedPassword = dr.GetString(0);
+                  isApproved = dr.GetBoolean(1);
+              }
           }
-        }
-        else
-        {
-          sqlConnection.Close();
-          UpdateFailureCount(username, FailureType.Password);
-        }
-      }
-      catch (SqlException e)
-      {
-        //Add exception handling here.
-      }
-      finally
-      {
-        if (sqlDataReader != null) { sqlDataReader.Close(); }
-        if ((sqlConnection != null) && (sqlConnection.State == ConnectionState.Open)) { sqlConnection.Close(); }
+          else
+          {
+              return false;
+          }
+
+          if (CheckPassword(password, storedPassword))
+          {
+              if (isApproved)
+              {
+                  isValid = true;
+                  const string procName1 = "User_UpdateLoginDate";
+                  using (DBHelper dbObj1 = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+                  {
+                      dbObj1.AddParameter("@username", username);
+                      dbObj1.AddParameter("@applicationName", applicationName);
+                      dbObj1.ExecuteCommand(procName1, true);
+                  }
+                  //SqlCommand sqlUpdateCommand = new SqlCommand("User_UpdateLoginDate", sqlConnection);
+
+                  //sqlUpdateCommand.CommandType = CommandType.StoredProcedure;
+                  //sqlUpdateCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+                  //sqlUpdateCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+                  //sqlUpdateCommand.ExecuteNonQuery();
+              }
+          }
+          else
+          {
+              dr.Close();
+              UpdateFailureCount(username, FailureType.Password);
+          }
       }
 
       return isValid;
+
+      //SqlConnection sqlConnection = new SqlConnection(connectionString);
+      //SqlCommand sqlCommand = new SqlCommand("User_Validate", sqlConnection);
+
+      //sqlCommand.CommandType = CommandType.StoredProcedure;
+      //sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+      //sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+      //SqlDataReader sqlDataReader = null;
+      //bool isApproved = false;
+      //string storedPassword = String.Empty;
+
+      //try
+      //{
+      //  sqlConnection.Open();
+      //  sqlDataReader = sqlCommand.ExecuteReader(CommandBehavior.SingleRow);
+
+      //  if (sqlDataReader.HasRows)
+      //  {
+      //    sqlDataReader.Read();
+      //    storedPassword = sqlDataReader.GetString(0);
+      //    isApproved = sqlDataReader.GetBoolean(1);
+      //  }
+      //  else
+      //  {
+      //    return false;
+      //  }
+
+      //  sqlDataReader.Close();
+
+      //  if (CheckPassword(password, storedPassword))
+      //  {
+      //    if (isApproved)
+      //    {
+      //      isValid = true;
+
+      //      SqlCommand sqlUpdateCommand = new SqlCommand("User_UpdateLoginDate", sqlConnection);
+
+      //      sqlUpdateCommand.CommandType = CommandType.StoredProcedure;
+      //      sqlUpdateCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+      //      sqlUpdateCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+      //      sqlUpdateCommand.ExecuteNonQuery();
+      //    }
+      //  }
+      //  else
+      //  {
+      //    sqlConnection.Close();
+      //    UpdateFailureCount(username, FailureType.Password);
+      //  }
+      //}
+      //catch (SqlException e)
+      //{
+      //  //Add exception handling here.
+      //}
+      //finally
+      //{
+      //  if (sqlDataReader != null) { sqlDataReader.Close(); }
+      //  if ((sqlConnection != null) && (sqlConnection.State == ConnectionState.Open)) { sqlConnection.Close(); }
+      //}
+
+      //return isValid;
     }
 
     /// <summary>

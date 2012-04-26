@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="grid_24 alpha" style="background-color : rgb(232, 238, 246); ">
         <div class="grid_8 alpha" style="padding-top:20px">
-            <asp:Login ID="Login1" runat="server" LoginButtonText="Login" TitleText="Login">
+            <asp:Login ID="siteLogin" runat="server" LoginButtonText="Login" TitleText="Login" OnLoggedIn="siteLogin_LoggedIn">
                 <LayoutTemplate>
                     <table cellpadding="1" cellspacing="0" style="border-collapse: collapse;">
                         <tr>
@@ -75,4 +75,5 @@
                 Your personal health information is safe and confidential with us.</div>
         </div>
     </div>
+    
 </asp:Content>
