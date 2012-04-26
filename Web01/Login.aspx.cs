@@ -14,7 +14,6 @@ public partial class Login : System.Web.UI.Page
     }
     protected void siteLogin_LoggedIn(object sender, EventArgs e)
     {
-        //string appPath = HttpContext.Current.Request.ApplicationPath;
         DBMembershipProvider obj = new DBMembershipProvider(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
         bool vSuccess = obj.ValidateUser(this.siteLogin.UserName, this.siteLogin.Password);
         if (vSuccess)
