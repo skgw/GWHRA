@@ -3,6 +3,11 @@
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script type="text/javascript">
+    $(function () {
+        $("#menuContainer").css("display", "none");
+    });
+</script>
     <div class="grid_24 alpha" style="background-color: rgb(232, 238, 246);">
         <div class="grid_8 alpha" style="padding-top: 20px">
             <asp:Login ID="siteLogin" runat="server" OnLoggedIn="siteLogin_LoggedIn">

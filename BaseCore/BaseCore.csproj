@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="CodeManager.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="MenuItem.cs" />
+    <Compile Include="MenuManager.cs" />
+    <Compile Include="ModuleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
