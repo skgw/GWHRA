@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Configuration.Provider;
@@ -8,11 +8,40 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Configuration;
 using System.Web.Security;
-using System.Web;
-using DAL;
+
+// This provider works with the following schema for the table of user data.
+// 
+//CREATE TABLE [dbo].[Users](
+//	[UserID] [uniqueidentifier] NOT NULL,
+//	[Username] [nvarchar](255) NOT NULL,
+//	[ApplicationName] [nvarchar](255) NOT NULL,
+//	[Email] [nvarchar](128) NOT NULL,
+//	[Comment] [nvarchar](255) NULL,
+//	[Password] [nvarchar](128) NOT NULL,
+//	[PasswordQuestion] [nvarchar](255) NULL,
+//	[PasswordAnswer] [nvarchar](255) NULL,
+//	[IsApproved] [bit] NULL,
+//	[LastActivityDate] [datetime] NULL,
+//	[LastLoginDate] [datetime] NULL,
+//	[LastPasswordChangedDate] [datetime] NULL,
+//	[CreationDate] [datetime] NULL,
+//	[IsOnLine] [bit] NULL,
+//	[IsLockedOut] [bit] NULL,
+//	[LastLockedOutDate] [datetime] NULL,
+//	[FailedPasswordAttemptCount] [int] NULL,
+//	[FailedPasswordAttemptWindowStart] [datetime] NULL,
+//	[FailedPasswordAnswerAttemptCount] [int] NULL,
+//	[FailedPasswordAnswerAttemptWindowStart] [datetime] NULL,
+//PRIMARY KEY CLUSTERED 
+//(
+//	[UserID] ASC
+//)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+//) ON [PRIMARY]
+// 
 
 namespace CustomMembershipProvider
 {
+
     public sealed class DBMembershipProvider : MembershipProvider
     {
 
@@ -168,7 +197,7 @@ namespace CustomMembershipProvider
             if (String.IsNullOrEmpty(config["description"]))
             {
                 config.Remove("description");
-                config.Add("description", "DB Membership provider");
+                config.Add("description", "How Do I: Sample Membership provider");
             }
 
             //Initialize the abstract base class.
@@ -274,16 +303,31 @@ namespace CustomMembershipProvider
                 }
             }
 
-            using (DBHelper obj = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = new SqlCommand("User_ChangePassword", sqlConnection);
+
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwd);
+            sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+            sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+            try
             {
-                obj.AddParameter("@password", EncodePassword(newPwd));
-                obj.AddParameter("@username", username);
-                obj.AddParameter("@applicationName", applicationName);
-
-                obj.ExecuteCommand("User_ChangePassword", true);
-
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
             }
+            catch (SqlException e)
+            {
+                //Add exception handling here.
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
             return true;
+
         }
 
         /// <summary>
@@ -295,22 +339,49 @@ namespace CustomMembershipProvider
         /// <param name="newPwdAnswer">New answer text.</param>
         /// <returns></returns>
         /// <remarks></remarks>
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPwdQuestion, string newPwdAnswer)
+        public override bool ChangePasswordQuestionAndAnswer(
+        string username,
+          string password,
+         string newPwdQuestion,
+          string newPwdAnswer)
         {
+
             if (!ValidateUser(username, password))
             {
                 return false;
             }
-            const string procName = "User_ChangePasswordQuestionAnswer";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = new SqlCommand("User_ChangePasswordQuestionAnswer", sqlConnection);
+
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+            sqlCommand.Parameters.Add("@question", SqlDbType.NVarChar, 255).Value = newPwdQuestion;
+            sqlCommand.Parameters.Add("@answer", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwdAnswer);
+            sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
+            sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+            try
             {
-                dbObj.AddParameter("@question", newPwdQuestion);
-                dbObj.AddParameter("@answer", EncodePassword(newPwdAnswer));
-                dbObj.AddParameter("@username", username);
-                dbObj.AddParameter("@applicationName", applicationName);
-                dbObj.ExecuteCommand(procName, true);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                if ((int)sqlCommand.Parameters["@returnValue"].Value != 0)
+                {
+                    return false;
+                }
             }
+            catch (SqlException e)
+            {
+                //Add exception handling here.
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
             return true;
+
         }
         /// <summary>
         /// Create a new user.
@@ -347,23 +418,62 @@ namespace CustomMembershipProvider
 
             MembershipUser membershipUser = GetUser(username, false);
 
-            const string procName = "Users_Ins";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+            if (membershipUser == null)
             {
-                //dbObj.AddParameter("@returnValue",SqlDbType.Int);
-                dbObj.AddParameter("@username", username);
-                dbObj.AddParameter("@applicationName", applicationName);
-                dbObj.AddParameter("@password", EncodePassword(password));
-                dbObj.AddParameter("@email", email);
-                dbObj.AddParameter("@passwordQuestion", passwordQuestion);
-                dbObj.AddParameter("@passwordAnswer", EncodePassword(passwordAnswer));
-                dbObj.AddParameter("@isApproved", isApproved);
-                dbObj.AddParameter("@comment", string.Empty);
-                //IDataReader dr = dbObj.ExecuteReader(procName);
-                dbObj.ExecuteCommand(procName, true);
+                System.DateTime createDate = DateTime.Now;
+
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand sqlCommand = new SqlCommand("Users_Ins", sqlConnection);
+
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+                sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
+                sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+                sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(password);
+                sqlCommand.Parameters.Add("@email", SqlDbType.NVarChar, 128).Value = email;
+                sqlCommand.Parameters.Add("@passwordQuestion", SqlDbType.NVarChar, 255).Value = passwordQuestion;
+                sqlCommand.Parameters.Add("@passwordAnswer", SqlDbType.NVarChar, 255).Value = EncodePassword(passwordAnswer);
+                sqlCommand.Parameters.Add("@isApproved", SqlDbType.Bit).Value = isApproved;
+                sqlCommand.Parameters.Add("@comment", SqlDbType.NVarChar, 255).Value = String.Empty;
+
+                //sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 255).Value = firstName;
+                //sqlCommand.Parameters.Add("@middleName", SqlDbType.Bit).Value = middleName;
+                //sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 255).Value = lastName;
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    sqlCommand.ExecuteNonQuery();
+                    if ((int)sqlCommand.Parameters["@returnValue"].Value == 0)
+                    {
+
+                        status = MembershipCreateStatus.Success;
+                    }
+                    else
+                    {
+                        status = MembershipCreateStatus.UserRejected;
+                    }
+                }
+                catch (SqlException e)
+                {
+                    //Add exception handling here.
+
+                    status = MembershipCreateStatus.ProviderError;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+
+                return GetUser(username, false);
             }
-            status = MembershipCreateStatus.Success;
-            return GetUser(username, false);
+            else
+            {
+                status = MembershipCreateStatus.DuplicateUserName;
+            }
+
+            return null;
         }
 
 
@@ -387,23 +497,63 @@ namespace CustomMembershipProvider
             }
 
             MembershipUser membershipUser = GetUser(username, false);
-            const string procName = "Users_Ins";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+
+            if (membershipUser == null)
             {
-                //dbObj.AddParameter("@returnValue",SqlDbType.Int);
-                dbObj.AddParameter("@username", username);
-                dbObj.AddParameter("@applicationName", applicationName);
-                dbObj.AddParameter("@password", EncodePassword(password));
-                dbObj.AddParameter("@email", email);
-                dbObj.AddParameter("@passwordQuestion", passwordQuestion);
-                dbObj.AddParameter("@passwordAnswer", EncodePassword(passwordAnswer));
-                dbObj.AddParameter("@isApproved", isApproved);
-                dbObj.AddParameter("@comment", string.Empty);
-                //IDataReader dr = dbObj.ExecuteReader(procName);
-                dbObj.ExecuteCommand(procName, true);
+                System.DateTime createDate = DateTime.Now;
+
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand sqlCommand = new SqlCommand("User_Ins1", sqlConnection);
+
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+                sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
+                sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+                sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(password);
+                sqlCommand.Parameters.Add("@email", SqlDbType.NVarChar, 128).Value = email;
+                sqlCommand.Parameters.Add("@passwordQuestion", SqlDbType.NVarChar, 255).Value = passwordQuestion;
+                sqlCommand.Parameters.Add("@passwordAnswer", SqlDbType.NVarChar, 255).Value = EncodePassword(passwordAnswer);
+                sqlCommand.Parameters.Add("@isApproved", SqlDbType.Bit).Value = isApproved;
+                sqlCommand.Parameters.Add("@comment", SqlDbType.NVarChar, 255).Value = String.Empty;
+
+                sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 255).Value = firstName;
+                sqlCommand.Parameters.Add("@middleName", SqlDbType.NVarChar, 255).Value = middleName;
+                sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 255).Value = lastName;
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    sqlCommand.ExecuteNonQuery();
+                    if ((int)sqlCommand.Parameters["@returnValue"].Value == 0)
+                    {
+
+                        status = MembershipCreateStatus.Success;
+                    }
+                    else
+                    {
+                        status = MembershipCreateStatus.UserRejected;
+                    }
+                }
+                catch (SqlException e)
+                {
+                    //Add exception handling here.
+
+                    status = MembershipCreateStatus.ProviderError;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+
+                return GetUser(username, false);
             }
-            status = MembershipCreateStatus.Success;
-            return GetUser(username, false);
+            else
+            {
+                status = MembershipCreateStatus.DuplicateUserName;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -412,18 +562,47 @@ namespace CustomMembershipProvider
         /// <param name="username">User name.</param>
         /// <param name="deleteAllRelatedData">Whether to delete all related data.</param>
         /// <returns>T/F if the user was deleted.</returns>
-        public override bool DeleteUser(string username, bool deleteAllRelatedData)
+        public override bool DeleteUser(
+         string username,
+         bool deleteAllRelatedData
+        )
         {
-            const string procName = "User_Del";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = new SqlCommand("User_Del", sqlConnection);
+
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+            sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username; ;
+            sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+            try
             {
-                //dbObj.AddParameter("@returnValue",SqlDbType.Int);
-                dbObj.AddParameter("@username", username);
-                dbObj.AddParameter("@applicationName", applicationName);
-                //IDataReader dr = dbObj.ExecuteReader(procName);
-                dbObj.ExecuteCommand(procName, true);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                if ((int)sqlCommand.Parameters["@returnValue"].Value == 0)
+                {
+                    if (deleteAllRelatedData)
+                    {
+                        //Process commands to delete all data for the user in the database.
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
+            catch (SqlException e)
+            {
+                //Add exception handling here.
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
             return true;
+
         }
         /// <summary>
         /// Get a collection of users.
@@ -525,8 +704,12 @@ namespace CustomMembershipProvider
         /// <param name="username">User name.</param>
         /// <param name="answer">Answer to security question.</param>
         /// <returns>Password for the user.</returns>
-        public override string GetPassword(string username, string answer)
+        public override string GetPassword(
+         string username,
+         string answer
+        )
         {
+
             if (!EnablePasswordRetrieval)
             {
                 throw new ProviderException("Password Retrieval Not Enabled.");
@@ -595,7 +778,10 @@ namespace CustomMembershipProvider
             return password;
         }
 
-        public override MembershipUser GetUser(string username, bool userIsOnline)
+        public override MembershipUser GetUser(
+        string username,
+         bool userIsOnline
+        )
         {
             SqlConnection sqlConnection = new SqlConnection(connectionString);
             SqlCommand sqlCommand = new SqlCommand("User_Sel", sqlConnection);
@@ -930,51 +1116,70 @@ namespace CustomMembershipProvider
         /// <param name="username">User name.</param>
         /// <param name="password">Password.</param>
         /// <returns>T/F if the user is valid.</returns>
-        public override bool ValidateUser(string username, string password)
+        public override bool ValidateUser(
+         string username,
+         string password
+        )
         {
+
             bool isValid = false;
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = new SqlCommand("User_Validate", sqlConnection);
+
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+            sqlCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+
+            SqlDataReader sqlDataReader = null;
             bool isApproved = false;
             string storedPassword = String.Empty;
 
-            const string procName = "User_Validate";
-            using (DBHelper dbObj = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
+            try
             {
-                dbObj.AddParameter("@username", username);
-                dbObj.AddParameter("@applicationName", applicationName);
-                IDataReader dr = dbObj.ExecuteReader(procName);
+                sqlConnection.Open();
+                sqlDataReader = sqlCommand.ExecuteReader(CommandBehavior.SingleRow);
 
-                if (dr != null)
+                if (sqlDataReader.HasRows)
                 {
-                    while (dr.Read())
-                    {
-                        storedPassword = dr.GetString(0);
-                        isApproved = dr.GetBoolean(1);
-                    }
+                    sqlDataReader.Read();
+                    storedPassword = sqlDataReader.GetString(0);
+                    isApproved = sqlDataReader.GetBoolean(1);
                 }
                 else
                 {
                     return false;
                 }
 
+                sqlDataReader.Close();
+
                 if (CheckPassword(password, storedPassword))
                 {
                     if (isApproved)
                     {
                         isValid = true;
-                        const string procName1 = "User_UpdateLoginDate";
-                        using (DBHelper dbObj1 = new DBHelper(ConnectionStrings.DefaultDBConnection, 1))
-                        {
-                            dbObj1.AddParameter("@username", username);
-                            dbObj1.AddParameter("@applicationName", applicationName);
-                            dbObj1.ExecuteCommand(procName1, true);
-                        }
+
+                        SqlCommand sqlUpdateCommand = new SqlCommand("User_UpdateLoginDate", sqlConnection);
+
+                        sqlUpdateCommand.CommandType = CommandType.StoredProcedure;
+                        sqlUpdateCommand.Parameters.Add("@username", SqlDbType.NVarChar, 255).Value = username;
+                        sqlUpdateCommand.Parameters.Add("@applicationName", SqlDbType.NVarChar, 255).Value = applicationName;
+                        sqlUpdateCommand.ExecuteNonQuery();
                     }
                 }
                 else
                 {
-                    dr.Close();
+                    sqlConnection.Close();
                     UpdateFailureCount(username, FailureType.Password);
                 }
+            }
+            catch (SqlException e)
+            {
+                //Add exception handling here.
+            }
+            finally
+            {
+                if (sqlDataReader != null) { sqlDataReader.Close(); }
+                if ((sqlConnection != null) && (sqlConnection.State == ConnectionState.Open)) { sqlConnection.Close(); }
             }
 
             return isValid;
