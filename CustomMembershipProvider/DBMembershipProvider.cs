@@ -176,8 +176,8 @@ namespace CustomMembershipProvider
         }
         public DBMembershipProvider(string appPath)
         {
-            System.Configuration.Configuration cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
-            MembershipSection section = (MembershipSection)cfg.GetSection("system.web/membership");
+          //  System.Configuration.Configuration cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+            MembershipSection section = (MembershipSection)ConfigurationManager.GetSection("system.web/membership");
             NameValueCollection config = section.Providers[0].Parameters as NameValueCollection;
             Initialize(null, config);
         }
@@ -245,8 +245,8 @@ namespace CustomMembershipProvider
             connectionString = ConnectionStringSettings.ConnectionString;
 
             //Get encryption and decryption key information from the configuration.
-            System.Configuration.Configuration cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
-            machineKey = cfg.GetSection("system.web/machineKey") as MachineKeySection;
+           // System.Configuration.Configuration cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+            machineKey = ConfigurationManager.GetSection("system.web/machineKey") as MachineKeySection;
 
             if (machineKey.ValidationKey.Contains("AutoGenerate"))
             {
@@ -1300,7 +1300,7 @@ namespace CustomMembershipProvider
         }
 
         #endregion
-
+        
         #region "Utility Functions"
         /// <summary>
         /// Create a MembershipUser object from a data reader.
