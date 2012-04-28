@@ -19,9 +19,12 @@
         <Scripts>
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/jQuery.js" />
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/jQuery-ui-1.8.18.min.js" />
-            <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap.js" />
-            <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap-dropdown.js" />
+            <%--<asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap/bootstrap.js" />--%>
+            <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap/bootstrap-alerts.js" />
+            <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap/bootstrap-twipsy.js" />
+            <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap/bootstrap-dropdown.js" />
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/Common.js" />
+
         </Scripts>
        
     </asp:ScriptManager>
@@ -35,13 +38,13 @@
         </div>
         <div class="container_24 alpha" id="content">
             <div id="PageHeader" class="grid_24 alpha append_bottom">
-                <div class="topbar" data-dropdown="dropdown">
-                    <div class="topbar-inner">
-                            <div id="menuContainer" class="grid_24 omega">
-                                    <div id="menu" class="grid_23 omega">
-                                        <asp:Literal ID="lblMenu" runat="server"></asp:Literal>
-                                    </div>
-                            </div>
+                <div id="dvMenuCOntainer" class="grid_24 alpha">
+                    <div class="topbar grid_24 alpha" data-dropdown="dropdown"> 
+                      <div class="topbar-inner"> 
+                        <div class="container"> 
+                                  <asp:Literal ID="lblMenu" runat="server"></asp:Literal>
+                        </div> 
+                      </div>
                     </div>
                 </div>
                 <h3>
@@ -51,7 +54,7 @@
                 
             </div>
             <div id="mainContent" class="grid_24 alpha">
-            
+                
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
