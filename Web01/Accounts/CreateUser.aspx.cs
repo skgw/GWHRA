@@ -39,15 +39,5 @@ public partial class UserCreate : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
     }
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        //just for testing
-            txtUserName.Text = "testUser2";
-            txtPassword.Text = "P@ssword1";
-            txtEmail.Text =txtUserName.Text + "@yahoo.com";
-            //txtQuestion.Text = "What car";
-            txtAnswer.Text = "maruti:";
-            txtFirstName.Text = "Bibhuti";
-            txtLastName.Text = "Thakuria";
-    }
+  
 }
