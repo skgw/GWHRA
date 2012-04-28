@@ -5,7 +5,7 @@ Inherits="Config_HRA_SearchAssessments" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <script type="text/javascript">
     $(function () {
-        $("table tr")
+        $("table tbody tr")
         .css("cursor", "pointer")
         .click(function () {
             $row = $(this);
@@ -91,6 +91,9 @@ Inherits="Config_HRA_SearchAssessments" %>
                                 Description
                             </th>
                             <th>
+                                Group Name
+                            </th>
+                            <th>
                                 Effective From
                             </th>
                             <th>
@@ -122,6 +125,9 @@ Inherits="Config_HRA_SearchAssessments" %>
                     </td>
                     <td>
                         <%#Eval("Description") %>
+                    </td>
+                    <td>
+                        <%#Eval("AssessmentGroupName")%>
                     </td>
                     <td>
                         <%#DateTime.Parse(Eval("EffectiveFrom").ToString()).ToString("MM/dd/yyyy")%>
