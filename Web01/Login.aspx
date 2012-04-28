@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <script type="text/javascript">
     $(function () {
-        $("#menuContainer").css("display", "none");
+        $("#dvMenuCOntainer").css("display", "none");
     });
 </script>
     <div class="grid_24 alpha" style="background-color: rgb(232, 238, 246);">
