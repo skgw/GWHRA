@@ -436,10 +436,6 @@ namespace CustomMembershipProvider
                 sqlCommand.Parameters.Add("@isApproved", SqlDbType.Bit).Value = isApproved;
                 sqlCommand.Parameters.Add("@comment", SqlDbType.NVarChar, 255).Value = String.Empty;
 
-                //sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 255).Value = firstName;
-                //sqlCommand.Parameters.Add("@middleName", SqlDbType.Bit).Value = middleName;
-                //sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 255).Value = lastName;
-
                 try
                 {
                     sqlConnection.Open();
@@ -478,7 +474,7 @@ namespace CustomMembershipProvider
 
 
         public MembershipUser CreateUser(string username, string password, string email, string passwordQuestion
-          , string passwordAnswer, bool isApproved, out MembershipCreateStatus status, string firstName, string middleName, string lastName)
+          , string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status, string firstName, string lastName)
         {
             ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, password, true);
 
@@ -503,7 +499,7 @@ namespace CustomMembershipProvider
                 System.DateTime createDate = DateTime.Now;
 
                 SqlConnection sqlConnection = new SqlConnection(connectionString);
-                SqlCommand sqlCommand = new SqlCommand("User_Ins1", sqlConnection);
+                SqlCommand sqlCommand = new SqlCommand("Users_Ins", sqlConnection);
 
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
@@ -516,9 +512,8 @@ namespace CustomMembershipProvider
                 sqlCommand.Parameters.Add("@isApproved", SqlDbType.Bit).Value = isApproved;
                 sqlCommand.Parameters.Add("@comment", SqlDbType.NVarChar, 255).Value = String.Empty;
 
-                sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 255).Value = firstName;
-                sqlCommand.Parameters.Add("@middleName", SqlDbType.NVarChar, 255).Value = middleName;
-                sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 255).Value = lastName;
+                sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 50).Value = firstName;
+                sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 100).Value = lastName;
 
                 try
                 {
