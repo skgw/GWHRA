@@ -69,7 +69,7 @@ namespace BaseCore
             Description = ( reader["Description"] == DBNull.Value ) ? string.Empty : reader["Description"].ToString();
             URL = ( reader["URL"] == DBNull.Value ) ? string.Empty : reader["URL"].ToString();
             DisplayOrder = ( reader["DisplayOrder"] != DBNull.Value ) ? Convert.ToInt64( reader["DisplayOrder"].ToString() ) : 0;
-            DisplayOrder = ( reader["Status"] != DBNull.Value ) ? Convert.ToChar( reader["Status"].ToString() ) : 0;
+            //Status = (reader["Status"] != DBNull.Value) ? Convert.ToChar(reader["Status"].ToString()) : 0;
         }
         public MenuItem GetMenuItem(IDataReader reader)
         {

@@ -28,8 +28,9 @@ namespace BaseCore
             List<MenuItem> menuItems = new List<MenuItem>();
             using (dbhMenuManager = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhMenuManager.AddParameter("@IROLEID", roleID.ToString());
-                IDataReader dr = dbhMenuManager.ExecuteReader("USER_MANAGEMENT.GET_USER_SITEMAP");
+                dbhMenuManager.AddParameter("@RoleID", roleID.ToString());
+                dbhMenuManager.AddParameter("@CURRENTUSERID", CurrentUserID);
+                IDataReader dr = dbhMenuManager.ExecuteReader("GET_USER_SITEMAP");
                 while (dr.Read())
                 {
                     menuItems.Add(new MenuItem(dr));
