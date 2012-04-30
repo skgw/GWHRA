@@ -21,8 +21,7 @@ public partial class UserCreate : System.Web.UI.Page
         DBMembershipProvider obj = new DBMembershipProvider(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
         MembershipCreateStatus mMStatus;
         MembershipUser mNewMemberStatus = obj.CreateUser(
-            txtUserName.Text, txtPassword.Text, txtEmail.Text, ddlQuestion.SelectedItem.Text, txtAnswer.Text, true,null
-            , out mMStatus);
+            txtUserName.Text, txtPassword.Text, txtEmail.Text, ddlQuestion.SelectedItem.Text, txtAnswer.Text, true, null, out mMStatus, txtFirstName.Text.Trim(), txtLastName.Text.Trim());
         if (mNewMemberStatus == null)
         {
             ErrorMessage.Text = "User could not be created due to " + mMStatus.ToString();

@@ -9,8 +9,29 @@ using System.Text;
 
 public partial class BasePages_Base : System.Web.UI.MasterPage
 {
+<<<<<<< HEAD
     UserInfo currentUser = new UserInfo();
 
+=======
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            MenuManager menuObj = new MenuManager();
+            string MenuXML = GetMenuXml(menuObj.GetMenuForRole(1000, 1));
+            lblMenu.Text = MenuXML;
+            //xmlMenu = "<ul id='nav' class='nav'>";
+            //xmlMenu += "<li class='dropdown'><a href='#'>Home</a></li>";
+            //xmlMenu += "<li class='dropdown'><a class='dropdown-toggle' href='#'>Setup</a>";
+            //xmlMenu += "<ul class='dropdown-menu'>";
+            //xmlMenu += "<li style='line-height:2em; width:150%;'><a href='/Dashboard/WidgetSetup.aspx'>Suspect Identification Config</a></li>";
+            //xmlMenu += "<li style='line-height:2em; width:150%;'><a href='/Dashboard/WidgetSetup.aspx'>Rules Setup</a></li>";
+            //xmlMenu += "<li style='line-height:2em; width:150%;'><a href='/Dashboard/WidgetSetup.aspx'>Search Rules</a></li>";
+            //xmlMenu += "</ul></li></ul>";
+            //lblMenu.Text = xmlMenu;
+        }
+    }
+>>>>>>> 35d8ec522e85607c8d691316856b00fb688a71ab
     public string PageHeader
     {
         get
@@ -55,25 +76,33 @@ public partial class BasePages_Base : System.Web.UI.MasterPage
                                  select childItem;
                 if (childItems.Count() > 0)
                 {
+<<<<<<< HEAD
                     obj.Append("<li class='dropdown'>");
                     obj.Append(makeMainItems(parentItem.Title, true));
                     obj.Append("<ul class='dropdown-menu'>");
                     foreach (BaseCore.MenuItem childMenuItem in childItems)
                     {
                         obj.Append("<li>");
-                        obj.Append(ResolveHyperlink(childMenuItem.URL, childMenuItem.Title));
-                        //obj.Append(ResolveHyperlink("WidgetSetup.aspx", childMenuItem.Title));
+=======
+                    //obj.Append("<div class='span-15'> <ul class='dropdown-menu'>");
+                    obj.Append("<ul class='dropdown-menu'>");
+                    foreach (BaseCore.MenuItem childMenuItem in childItems)
+                    {
+                        obj.Append("<li style='line-height:2em;'>");
+>>>>>>> 35d8ec522e85607c8d691316856b00fb688a71ab
                         obj.Append(ResolveHyperlink(childMenuItem.URL, childMenuItem.Title));
                         //obj.Append(ResolveHyperlink("WidgetSetup.aspx", childMenuItem.Title));
                         obj.Append("</li>");
                     }
                     obj.Append("</ul>");
-                    obj.Append("</ul>");
+<<<<<<< HEAD
                 }
                 else
                 {
                     obj.Append("<li>");
                     obj.Append(ResolveHyperlink(parentItem.URL, parentItem.Title));
+=======
+>>>>>>> 35d8ec522e85607c8d691316856b00fb688a71ab
                 }
                 obj.Append("</li>");
             }
@@ -92,7 +121,11 @@ public partial class BasePages_Base : System.Web.UI.MasterPage
     {
         HyperLink obj = new HyperLink { NavigateUrl = currentHyperlink };
         StringBuilder hyperlink = new StringBuilder();
+<<<<<<< HEAD
         hyperlink.Append(string.Format("<a href='{0}'>{1}</a>", obj.ResolveClientUrl(obj.NavigateUrl), title));
+=======
+        hyperlink.Append(string.Format("<a href='{0}'>{1}</a>", obj.ResolveUrl(obj.NavigateUrl), title));
+>>>>>>> 35d8ec522e85607c8d691316856b00fb688a71ab
         return hyperlink.ToString();
     }
 }
