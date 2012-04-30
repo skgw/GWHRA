@@ -11,7 +11,6 @@
     <link href="../Common/Styles/lists.css" rel="stylesheet" type="text/css" />
     <link href="../Common/Styles/layout.css" rel="stylesheet" type="text/css" />
     <link href="../Common/Styles/bootstrap.css" rel="stylesheet" type="text/css" />
-    
 </head>
 <body>
     <form id="form1" runat="server">
@@ -24,37 +23,35 @@
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap/bootstrap-twipsy.js" />
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/bootstrap/bootstrap-dropdown.js" />
             <asp:ScriptReference ScriptMode="Release" Path="~/Common/Scripts/Common.js" />
-
         </Scripts>
-       
     </asp:ScriptManager>
     <div class="container_24">
         <div class="container_24 alpha" id="header">
-          <div class="grid_8 alpha"><asp:Image ID="Image1" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-ikaht.jpg" /></div>
-          <div class="grid_8">&nbsp;</div>
-          <div class="grid_8 omega">
-            <asp:Image ID="imgCompany" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-gw.jpg" />
-          </div>
+            <div class="grid_8 alpha">
+                <asp:Image ID="Image1" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-ikaht.jpg" /></div>
+            <div class="grid_8">
+                &nbsp;</div>
+            <div class="grid_8 omega">
+                <asp:Image ID="imgCompany" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-gw.jpg" />
+            </div>
         </div>
         <div class="container_24 alpha" id="content">
-            <div id="PageHeader" class="grid_24 alpha append_bottom">
-                <div id="dvMenuCOntainer" class="grid_24 alpha">
-                    <div class="topbar grid_24 alpha" data-dropdown="dropdown"> 
-                      <div class="topbar-inner"> 
-                        <div class="container"> 
-                                  <asp:Literal ID="lblMenu" runat="server"></asp:Literal>
-                        </div> 
-                      </div>
+            <div id="dvMenuCOntainer" style="width:100%;">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <asp:Literal ID="lblMenu" runat="server"></asp:Literal>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div id="PageHeader" class="grid_24 alpha append_bottom">
                 <h3>
                     <asp:Label ID="lblPageHeader" runat="server">
                     </asp:Label>
                 </h3>
-                
             </div>
             <div id="mainContent" class="grid_24 alpha">
-                
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>

@@ -2,7 +2,6 @@
 Filename          : MenuManager.cs
 Namespace         : BaseCore
 Author			  : Sashidhar S. Kokku
-Created on		  : 06/29/2010 14:58
 Contributors	  : 
 */
 
@@ -22,14 +21,15 @@ namespace BaseCore
     {
 
 
-        public List<MenuItem> GetMenuForRole(Int64 roleID, Int64 CurrentUserID)
+        public List<MenuItem> GetMenuForRole(Int64 roleID, int CurrentUserID)
         {
             DBHelper dbhMenuManager;
             List<MenuItem> menuItems = new List<MenuItem>();
             using (dbhMenuManager = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhMenuManager.AddParameter("@IROLEID", roleID.ToString());
-                IDataReader dr = dbhMenuManager.ExecuteReader("USER_MANAGEMENT.GET_USER_SITEMAP");
+                dbhMenuManager.AddParameter("@ROLEID", roleID.ToString());
+                dbhMenuManager.AddParameter("@CurrentUserID", CurrentUserID);
+                IDataReader dr = dbhMenuManager.ExecuteReader("GET_USER_SITEMAP");
                 while (dr.Read())
                 {
                     menuItems.Add(new MenuItem(dr));
@@ -48,7 +48,7 @@ namespace BaseCore
             using (dbhMenuManager = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
                 dbhMenuManager.AddParameter("@iSiteId", SiteId);
-                IDataReader dr = dbhMenuManager.ExecuteReader("USER_MANAGEMENT.IsthereChildMenu");
+                IDataReader dr = dbhMenuManager.ExecuteReader("IsthereChildMenu");
                 while (dr.Read())
                 {
                     IsValid = Convert.ToBoolean(Convert.ToInt32(dr["IsValid"].ToString()));
