@@ -63,11 +63,11 @@ public partial class BasePages_Base : System.Web.UI.MasterPage
                         obj.Append("<li>");
                         obj.Append(ResolveHyperlink(childMenuItem.URL, childMenuItem.Title));
                         //obj.Append(ResolveHyperlink("WidgetSetup.aspx", childMenuItem.Title));
-                        obj.Append(ResolveHyperlink(childMenuItem.URL, childMenuItem.Title));
+                        //obj.Append(ResolveHyperlink(childMenuItem.URL, childMenuItem.Title));
                         //obj.Append(ResolveHyperlink("WidgetSetup.aspx", childMenuItem.Title));
                         obj.Append("</li>");
                     }
-                    obj.Append("</ul>");
+                    //obj.Append("</ul>");
                     obj.Append("</ul>");
                 }
                 else
