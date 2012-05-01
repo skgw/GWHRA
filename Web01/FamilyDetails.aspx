@@ -3,6 +3,32 @@
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script type="text/javascript">
+    $(function () {
+        BindEvents();
+    });
+
+    function BindEvents() {
+        $("input[id$='txtDOB']").datepicker({
+            onSelect: function (e) {
+                //alert($("input[id$='txtEffectiveFrom']").val());
+            },
+            changeMonth: true,
+            changeYear: true,
+            maxDate: 0
+        });
+        $("input[id$='tbDateOfDeath']").datepicker({
+            onSelect: function (e) {
+                //alert($("input[id$='txtEffectiveFrom']").val());
+            },
+            changeMonth: true,
+            changeYear: true,
+            maxDate: 0
+        });
+
+        
+    }
+</script>
     <div class="grid_24 alpha">
         <div class="grid_12 alpha">
             <dl>
@@ -13,19 +39,27 @@
                 </dd>
                 <dt>First name</dt>
                 <dd>
-                    <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox><span style="color:Red"><b> *</b></span>
                 </dd>
+                <dt>&nbsp;</dt>
+                <dd><asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ControlToValidate="tbFirstName"  ErrorMessage="First Name is required."
+                            ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator></dd>
                 <dt>Last name</dt>
                 <dd>
-                    <asp:TextBox ID="tbLastname" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="tbLastname" runat="server"></asp:TextBox><span style="color:Red"><b> *</b></span>
                 </dd>
+                <dt>&nbsp;</dt>
+                <dd><asp:RequiredFieldValidator ID="rfvLastName" runat="server" ControlToValidate="tbLastname"  ErrorMessage="Last Name is required."
+                            ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator></dd>
                 <dt>Alive/Dead</dt>
                 <dd>
-                    <asp:DropDownList ID="ddlCurrentStatus" runat="server">
+                    <asp:DropDownList ID="ddlCurrentStatus" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCurrentStatus_IndexChanged">
+                    <asp:ListItem Value="A">Alive</asp:ListItem>
+                    <asp:ListItem Value="D">Dead</asp:ListItem>
                     </asp:DropDownList>
                 </dd>
-                <dt>Living Status </dt>
-                <dd>
+                <dt id="dtLivingStatus" runat="server">Living Status </dt>
+                <dd id="ddLivingStatus" runat="server">
                     <asp:DropDownList ID="ddlLivingStatus" runat="server">
                     </asp:DropDownList>
                 </dd>
@@ -35,26 +69,29 @@
             <dl>
                 <dt>DOB</dt>
                 <dd>
-                    <asp:DropDownList ID="ddlDOB" runat="server">
-                    </asp:DropDownList>
+                    <%--<asp:DropDownList ID="ddlDOB" runat="server">
+                    </asp:DropDownList>--%>
+                    <asp:TextBox ID="txtDOB" runat="server" CssClass="grid_3 alpha"></asp:TextBox><span style="color:Red"><b> *</b></span>
+                    <asp:CustomValidator ID="cvDOB" runat="server" ControlToValidate="txtDOB" ErrorMessage="" ForeColor="Red"></asp:CustomValidator>   
                 </dd>
                 <dt>Sex</dt>
                 <dd>
                     <asp:DropDownList ID="ddlSex" runat="server">
                     </asp:DropDownList>
                 </dd>
-                <dt>Date of Death</dt>
-                <dd>
-                    <asp:TextBox ID="tbDateOfDeath" runat="server"> c</asp:TextBox>
+                <dt id="dtDateOfDeath" runat="server">Date of Death</dt>
+                <dd id="ddDateOfDeath" runat="server">
+                    <asp:TextBox ID="tbDateOfDeath" runat="server" CssClass="grid_3 alpha"></asp:TextBox>
                 </dd>
-                <dt>Cause of Death</dt>
-                <dd>
+                <dt id="dtCauseOfDeath" runat="server">Cause of Death</dt>
+                <dd id="ddCauseOfDeath" runat="server">
                     <asp:DropDownList ID="ddlCauseOfDeath" runat="server">
                     </asp:DropDownList>
                 </dd>
             </dl>
         </div>
     </div>
+    <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_click" ValidationGroup="FamilyDetails" />
     <div class="grid_24 alpha">
         <asp:ListView ID="lvFamilyDetails" runat="server">
             <LayoutTemplate>

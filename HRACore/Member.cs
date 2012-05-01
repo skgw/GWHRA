@@ -292,34 +292,32 @@ namespace HRACore
                 dbhMember.AddParameter("@FIRSTNAME", this.Firstname);
                 dbhMember.AddParameter("@MIDDLENAME", this.Middlename);
                 dbhMember.AddParameter("@LASTNAME", this.Lastname);
+                dbhMember.AddParameter("@SEX", this.Sex);
+                dbhMember.AddParameter("@MEMBER_ID", this.MemberID);
+                dbhMember.AddParameter("@HICN", this.HICN);
+                dbhMember.AddParameter("@SUBSCRIBER_ID", this.MemberID);
+                dbhMember.AddParameter("@DOB",this.DOB);
+                dbhMember.AddParameter("@EMAIL", this.Email);
                 dbhMember.AddParameter("@ETHNICITY", this.Ethnicity);
+                dbhMember.AddParameter("@MARITAL_STATUS", this.MaritalStatus);
+                dbhMember.AddParameter("@HANDEDNESS", this.Handedness);
+                dbhMember.AddParameter("@OCCUPATION", this.Occupation);
                 dbhMember.AddParameter("@HEIGHT_FEET", this.Height_Feet);
                 dbhMember.AddParameter("@HEIGHT_INCHES", this.Height_Inches);
-                dbhMember.AddParameter("@WEIGHT", this.Weight);
-                dbhMember.AddParameter("@OCCUPATION", this.Occupation);
-                dbhMember.AddParameter("@MARITAL_STATUS", this.MaritalStatus);
-                dbhMember.AddParameter("@MEMBERID", this.MemberID);
-                dbhMember.AddParameter("@HICN", this.HICN);
-                dbhMember.AddParameter("@HANDEDNESS", this.Handedness);
-                dbhMember.AddParameter("@EMAIL", this.Email);
-                dbhMember.AddParameter("@SEX", this.Sex);
-                dbhMember.AddParameter("@DOB",this.DOB);
-
+                dbhMember.AddParameter("@WEIGHT_LBS", this.Weight);
                 dbhMember.AddParameter("@WADDRESS1", this.WorkAddress.Address1);
                 dbhMember.AddParameter("@WADDRESS2", this.WorkAddress.Address2);
                 dbhMember.AddParameter("@WCITY", this.WorkAddress.City);
                 dbhMember.AddParameter("@WSTATE", this.WorkAddress.State);
                 dbhMember.AddParameter("@WZIPCODE", this.WorkAddress.Zipcode);
-
                 dbhMember.AddParameter("@HADDRESS1", this.HomeAddress.Address1);
                 dbhMember.AddParameter("@HADDRESS2", this.HomeAddress.Address2);
                 dbhMember.AddParameter("@HCITY", this.HomeAddress.City);
                 dbhMember.AddParameter("@HSTATE", this.HomeAddress.State);
                 dbhMember.AddParameter("@HZIPCODE", this.HomeAddress.Zipcode);
-
                 dbhMember.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
-                IDataReader reader = dbhMember.ExecuteReader("INSERTUPDATE_MEMBER_DETAILS");
+                IDataReader reader = dbhMember.ExecuteReader("INSERTUPDATE_MEMBER_MASTER_INFO");
                 while (reader.Read())
                 {
                     LoadBasicInfo(reader);
