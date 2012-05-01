@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true"
     CodeFile="MemberDetails.aspx.cs" Inherits="MemberDetails" %>
-
+    <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="grid_24 alpha">
         <h3>
@@ -25,9 +25,18 @@
                     <dd>
                         <asp:TextBox ID="tbLastName" runat="server"></asp:TextBox>
                     </dd>
+                    <dt>DOB</dt>
+                    <dd>
+                        <asp:TextBox ID="tbDOB" runat="server"></asp:TextBox>
+                    </dd>
                     <dt>Ethnicity</dt>
                     <dd>
                         <asp:DropDownList ID="ddlEthnicity" runat="server">
+                        </asp:DropDownList>
+                    </dd>
+                    <dt>Sex</dt>
+                    <dd>
+                        <asp:DropDownList ID="ddlSex" runat="server">
                         </asp:DropDownList>
                     </dd>
                     <dt>Height</dt>
@@ -74,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="grid_24 alpha alert alert-block">
+    <div class="grid_24 alpha">
         <h3 class="alert-heading">
             Address Information</h3>
         <div class="grid_24 alpha">
@@ -87,23 +96,23 @@
                     </dd>
                     <dt>Address 1 </dt>
                     <dd>
-                        <asp:TextBox ID="tbAddress1" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbHAddress1" runat="server"></asp:TextBox>
                     </dd>
                     <dt>Address 2</dt>
                     <dd>
-                        <asp:TextBox ID="tbAddress2" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbHAddress2" runat="server"></asp:TextBox>
                     </dd>
                     <dt>City</dt>
                     <dd>
-                        <asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbHCity" runat="server"></asp:TextBox>
                     </dd>
                     <dt>State</dt>
                     <dd>
-                        <asp:TextBox ID="tbState" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbHState" runat="server"></asp:TextBox>
                     </dd>
                     <dt>Zip code</dt>
                     <dd>
-                        <asp:TextBox ID="tbZipcode" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbHZipcode" runat="server"></asp:TextBox>
                     </dd>
                 </dl>
             </div>
@@ -132,10 +141,13 @@
                     </dd>
                     <dt>Zip code</dt>
                     <dd>
-                        <asp:TextBox ID="tbWorkZip" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbWorkZipcode" runat="server"></asp:TextBox>
                     </dd>
                 </dl>
             </div>
         </div>
+    </div>
+    <div class="grid_24 alpha">
+        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
     </div>
 </asp:Content>

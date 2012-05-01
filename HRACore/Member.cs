@@ -260,6 +260,8 @@ namespace HRACore
         public Member(int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
+            HomeAddress = new Address(CurrentUserID);
+            WorkAddress = new Address(CurrentUserID);
         }
         public Member(string memberID, int CurrentUserID)
         {
@@ -319,14 +321,14 @@ namespace HRACore
 
                 dbhMember.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
-                IDataReader reader = dbhMember.ExecuteReader("INSERTUPDATE_MEMBER_DETAILS");
+                IDataReader reader = dbhMember.ExecuteReader("INSERTUPDATE_MEMBER_MASTER_INFO");
                 while (reader.Read())
                 {
-                    LoadBasicInfo(reader);
-                    reader.NextResult();
-                    WorkAddress = new Address(reader);
-                    reader.NextResult();
-                    HomeAddress = new Address(reader);
+                    //LoadBasicInfo(reader);
+                    //reader.NextResult();
+                    //WorkAddress = new Address(reader);
+                    //reader.NextResult();
+                    //HomeAddress = new Address(reader);
                 }
             }
         }
