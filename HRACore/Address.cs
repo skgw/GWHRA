@@ -12,7 +12,7 @@ namespace HRACore
         private string mAddress1;
         private string mAddress2;
         private string mCity;
-        private string mState;
+        private int mState;
         private string mZipCode;
 
         public int AddressType
@@ -56,7 +56,7 @@ namespace HRACore
                 mCity = value;
             }
         }
-        public string State
+        public int State
         {
             get { return mState; }
             set { mState = value; }
@@ -72,7 +72,7 @@ namespace HRACore
             Address1 = reader[1].ToString();
             Address2 = reader[2].ToString();
             City = reader[3].ToString();
-            State = reader[4].ToString();
+            State = Int32.Parse(reader[4].ToString());
             Zipcode = reader[5].ToString();
         }
         public Address(int CurrentUserID)

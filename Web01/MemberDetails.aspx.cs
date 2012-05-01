@@ -83,7 +83,19 @@ public partial class MemberDetails : System.Web.UI.Page
         ddlSex.DataSource = dropDownData;
         ddlSex.DataValueField = "Key";
         ddlSex.DataTextField = "Value";
-        ddlSex.DataBind();                
+        ddlSex.DataBind();
+
+        dropDownData = new Dictionary<int, string>();
+        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.US_STATES);
+        ddlHomeState.DataSource = dropDownData;
+        ddlHomeState.DataValueField = "Key";
+        ddlHomeState.DataTextField = "Value";
+        ddlHomeState.DataBind();
+
+        ddlWorkState.DataSource = dropDownData;
+        ddlWorkState.DataValueField = "Key";
+        ddlWorkState.DataTextField = "Value";
+        ddlWorkState.DataBind();
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
@@ -108,13 +120,13 @@ public partial class MemberDetails : System.Web.UI.Page
         currentMember.HomeAddress.Address1 = tbHAddress1.Text;
         currentMember.HomeAddress.Address2 = tbHAddress2.Text;
         currentMember.HomeAddress.City = tbHCity.Text;
-        currentMember.HomeAddress.State = tbHState.Text;
+        currentMember.HomeAddress.State = Convert.ToInt32(ddlHomeState.SelectedValue);
         currentMember.HomeAddress.Zipcode = tbHZipcode.Text;
 
         currentMember.WorkAddress.Address1 = tbWorkAddress1.Text;
         currentMember.WorkAddress.Address2 = tbWorkAddress2.Text;
         currentMember.WorkAddress.City = tbWorkCity.Text;
-        currentMember.WorkAddress.State = tbWorkState.Text;
+        currentMember.WorkAddress.State = Convert.ToInt32(ddlWorkState.SelectedValue);
         currentMember.WorkAddress.Zipcode = tbWorkZipcode.Text;
 
         currentMember.Save();

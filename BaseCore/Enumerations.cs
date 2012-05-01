@@ -21,5 +21,6 @@ namespace BaseCore.Enumerations
         HOBBIES = 1055,
         NAME_SUFFIX = 1060,
         OCCUPATION = 1065,
+        US_STATES = 1070
     }
 }

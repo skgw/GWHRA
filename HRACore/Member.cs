@@ -297,10 +297,11 @@ namespace HRACore
                 dbhMember.AddParameter("@ETHNICITY", this.Ethnicity);
                 dbhMember.AddParameter("@HEIGHT_FEET", this.Height_Feet);
                 dbhMember.AddParameter("@HEIGHT_INCHES", this.Height_Inches);
-                dbhMember.AddParameter("@WEIGHT", this.Weight);
+                dbhMember.AddParameter("@WEIGHT_LBS", this.Weight);
                 dbhMember.AddParameter("@OCCUPATION", this.Occupation);
                 dbhMember.AddParameter("@MARITAL_STATUS", this.MaritalStatus);
-                dbhMember.AddParameter("@MEMBERID", this.MemberID);
+                dbhMember.AddParameter("@MEMBER_ID", this.MemberID);
+                dbhMember.AddParameter("@SUBSCRIBER_ID", this.MemberID);
                 dbhMember.AddParameter("@HICN", this.HICN);
                 dbhMember.AddParameter("@HANDEDNESS", this.Handedness);
                 dbhMember.AddParameter("@EMAIL", this.Email);

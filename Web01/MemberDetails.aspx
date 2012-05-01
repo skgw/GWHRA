@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true"
     CodeFile="MemberDetails.aspx.cs" Inherits="MemberDetails" %>
-    <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
+
+<%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="grid_24 alpha">
         <h3>
@@ -108,7 +109,8 @@
                     </dd>
                     <dt>State</dt>
                     <dd>
-                        <asp:TextBox ID="tbHState" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="ddlHomeState" runat="server">
+                        </asp:DropDownList>
                     </dd>
                     <dt>Zip code</dt>
                     <dd>
@@ -137,7 +139,8 @@
                     </dd>
                     <dt>State</dt>
                     <dd>
-                        <asp:TextBox ID="tbWorkState" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="ddlWorkState" runat="server">
+                        </asp:DropDownList>
                     </dd>
                     <dt>Zip code</dt>
                     <dd>
