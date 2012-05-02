@@ -108,14 +108,14 @@ public partial class FamilyDetails : System.Web.UI.Page
         obj.WorkAddress.Address1 = addObj.Address1;
         obj.WorkAddress.Address2= "";
         obj.WorkAddress.City= "";
-        obj.WorkAddress.State= "";
+        obj.WorkAddress.State= 0;
         obj.WorkAddress.Zipcode= "";
 
         obj.HomeAddress = addObj;
         obj.HomeAddress.Address1 = addObj.Address1;
         obj.HomeAddress.Address2= "";
         obj.HomeAddress.City="";
-        obj.HomeAddress.State="";
+        obj.HomeAddress.State=0;
         obj.HomeAddress.Zipcode = "";
 
         obj.Save();
