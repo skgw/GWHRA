@@ -28,7 +28,6 @@ public partial class Login : System.Web.UI.Page
             UserInfo loggedInUser = new UserInfo();
             loggedInUser.GetUserInfo(this.siteLogin.UserName, 1);
             Session["LoggedInUserInfo"] = loggedInUser;
-
             //Response.Redirect("Config/HRA/SearchAssessments.aspx");
         }
         else

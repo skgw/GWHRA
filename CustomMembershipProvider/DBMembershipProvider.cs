@@ -304,7 +304,7 @@ namespace CustomMembershipProvider
             }
 
             SqlConnection sqlConnection = new SqlConnection(connectionString);
-            SqlCommand sqlCommand = new SqlCommand("User_ChangePassword", sqlConnection);
+            SqlCommand sqlCommand = new SqlCommand("ChangePassword", sqlConnection);
 
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = EncodePassword(newPwd);
@@ -352,7 +352,7 @@ namespace CustomMembershipProvider
             }
 
             SqlConnection sqlConnection = new SqlConnection(connectionString);
-            SqlCommand sqlCommand = new SqlCommand("User_ChangePasswordQuestionAnswer", sqlConnection);
+            SqlCommand sqlCommand = new SqlCommand("ChangePasswordQuestionAnswer", sqlConnection);
 
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.Parameters.Add("@returnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;

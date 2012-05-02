@@ -8,12 +8,22 @@ using System.Web.Configuration;
 using System.Configuration;
 using System.Web.Security;
 using CustomMembershipProvider;
+using BaseCore;
 
 public partial class UserCreate : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        if (!IsPostBack)
+        {
+            BaseCore.CodeManager cm = new CodeManager(1);
+            Dictionary<int, string> questions = new Dictionary<int, string>();
+            questions = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.SECRET_QUESTIONS);
+            ddlQuestion.DataSource = questions;
+            ddlQuestion.DataValueField = "Key";
+            ddlQuestion.DataTextField = "Value";
+            ddlQuestion.DataBind();
+        }
     }
     protected void btnSave_Click(object sender, EventArgs e)
     {
