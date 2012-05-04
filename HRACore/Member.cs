@@ -260,10 +260,14 @@ namespace HRACore
         public Member(int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
+            HomeAddress = new Address(CurrentUserID);
+            WorkAddress = new Address(CurrentUserID);
         }
         public Member(string memberID, int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
+            HomeAddress = new Address(CurrentUserID);
+            WorkAddress = new Address(CurrentUserID);
             MemberID = memberID;
 
             string procName = "GET_MEMBER_BY_MEMBERID";
@@ -320,11 +324,12 @@ namespace HRACore
                 IDataReader reader = dbhMember.ExecuteReader("INSERTUPDATE_MEMBER_MASTER_INFO");
                 while (reader.Read())
                 {
-                    LoadBasicInfo(reader);
-                    reader.NextResult();
-                    WorkAddress = new Address(reader);
-                    reader.NextResult();
-                    HomeAddress = new Address(reader);
+                    ID = Convert.ToInt32(reader[0].ToString());
+                    //LoadBasicInfo(reader);
+                    //reader.NextResult();
+                    //WorkAddress = new Address(reader);
+                    //reader.NextResult();
+                    //HomeAddress = new Address(reader);
                 }
             }
         }

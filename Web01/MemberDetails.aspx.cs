@@ -23,8 +23,8 @@ public partial class MemberDetails : System.Web.UI.Page
     }
     private void SetPageProperties()
     {
-        Dictionary<int,string> addressTypes = new Dictionary<int, string>();
-        addressTypes = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.ADDRESS_TYPES);        
+        Dictionary<int, string> addressTypes = new Dictionary<int, string>();
+        addressTypes = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.ADDRESS_TYPES);
 
         ddlAddressType.DataSource = addressTypes;
         ddlAddressType.DataValueField = "Key";
@@ -50,33 +50,33 @@ public partial class MemberDetails : System.Web.UI.Page
         ddlSalutation.DataTextField = "Value";
         ddlSalutation.DataBind();
         //Occupation
-        dropDownData = new Dictionary<int,string>();
+        dropDownData = new Dictionary<int, string>();
         dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.OCCUPATION);
         ddlOccupation.DataSource = dropDownData;
         ddlOccupation.DataValueField = "Key";
         ddlOccupation.DataTextField = "Value";
         ddlOccupation.DataBind();
         //Marital Status
-        dropDownData = new Dictionary<int,string>();
-        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.MARITAL_STATUS);        
+        dropDownData = new Dictionary<int, string>();
+        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.MARITAL_STATUS);
         ddlMaritalStatus.DataSource = dropDownData;
         ddlMaritalStatus.DataValueField = "Key";
         ddlMaritalStatus.DataTextField = "Value";
         ddlMaritalStatus.DataBind();
         //Ethnicity
-        dropDownData = new Dictionary<int,string>();
-        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.ETHNICITY);        
+        dropDownData = new Dictionary<int, string>();
+        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.ETHNICITY);
         ddlEthnicity.DataSource = dropDownData;
         ddlEthnicity.DataValueField = "Key";
         ddlEthnicity.DataTextField = "Value";
         ddlEthnicity.DataBind();
         //Handedness
-         dropDownData = new Dictionary<int,string>();
-        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.HANDEDNESS);        
+        dropDownData = new Dictionary<int, string>();
+        dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.HANDEDNESS);
         ddlHandedness.DataSource = dropDownData;
         ddlHandedness.DataValueField = "Key";
         ddlHandedness.DataTextField = "Value";
-        ddlHandedness.DataBind();                
+        ddlHandedness.DataBind();
         //Sex
         dropDownData = new Dictionary<int, string>();
         dropDownData = cm.GetSysCodeValues((int)BaseCore.Enumerations.SysCodeTypes.SEX);
@@ -99,7 +99,7 @@ public partial class MemberDetails : System.Web.UI.Page
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
-    {        
+    {
         Member currentMember = new Member(1);
         currentMember.Firstname = tbFirstname.Text;
         currentMember.Middlename = tbMiddleName.Text;
@@ -130,7 +130,7 @@ public partial class MemberDetails : System.Web.UI.Page
         currentMember.WorkAddress.Zipcode = tbWorkZipcode.Text;
 
         currentMember.Save();
-             
+        Response.Redirect("FamilyDetails.aspx?MemberMasterID=" + currentMember.ID);
 
 
     }

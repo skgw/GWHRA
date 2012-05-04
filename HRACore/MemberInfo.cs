@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using DAL;
 
@@ -13,12 +14,14 @@ namespace HRACore
         public string Lastname { get; set; }
         public string MemberID { get; set; }
         public string SubscriberID { get; set; }
+        public List<FamilyMember> familyMembers = new List<FamilyMember>();
+
 
         public MemberInfo(int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
         }
-        public void LoadReader(IDataReader reader)
+        public void LoadMemberInfo(IDataReader reader)
         {
             ID = Int32.Parse(reader[0].ToString());
             Firstname = reader[1].ToString();
@@ -29,14 +32,19 @@ namespace HRACore
         public MemberInfo(int MemberMasterID, int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
-            using(dbhMemberInfo =new DBHelper(ConnectionStrings.DefaultDBConnection,mCurrentUserID))
+            using (dbhMemberInfo = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
             {
-                dbhMemberInfo.AddParameter("@MemberMasterID",MemberMasterID);
-                dbhMemberInfo.AddParameter("@CurrentUserID",mCurrentUserID);                
+                dbhMemberInfo.AddParameter("@MemberMasterID", MemberMasterID);
+                dbhMemberInfo.AddParameter("@CurrentUserID", mCurrentUserID);
                 IDataReader reader = dbhMemberInfo.ExecuteReader("GET_MEMBER_BY_MASTER_ID");
-                if(reader.Read())
+                if (reader.Read())
                 {
-                    LoadReader(reader);
+                    LoadMemberInfo(reader);
+                    reader.NextResult();
+                    while (reader.Read())
+                    {
+                        familyMembers.Add(new FamilyMember(reader));
+                    }
                 }
 
             }
@@ -52,7 +60,7 @@ namespace HRACore
                 IDataReader reader = dbhMemberInfo.ExecuteReader("GET_MEMBER_BY_SUBSCRIBER_ID");
                 if (reader.Read())
                 {
-                    LoadReader(reader);
+                    LoadMemberInfo(reader);
                 }
             }
         }

@@ -9,10 +9,19 @@ using HRACore;
 
 public partial class FamilyDetails : System.Web.UI.Page
 {
+    private int MemberMasterID = 0;
     BaseCore.CodeManager cm = new CodeManager(1);
+    private MemberInfo mInfo;
+    private int CurrentUserID =0;
+    List<FamilyMember> familyMembers;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        Master.PageHeader = "Family Information";
+        
+        MemberMasterID = Int32.Parse(Request.QueryString["MemberMasterID"]);
+        mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
+        Master.PageHeader = "Family Information for " + mInfo.Firstname + " " + mInfo.Lastname ;
+
         if (!IsPostBack)
         {
             SetPageProperties();
@@ -83,42 +92,45 @@ public partial class FamilyDetails : System.Web.UI.Page
             cvDOB.Visible = true;
             return;
         }
-        Member obj = new Member(1);
+      //  FamilyMember obj = new FamilyMember();
+
+
+        //Member obj = new Member(1);
          
-        obj.ID = 0;
-        obj.Salutation = 0;
-        obj.Firstname= tbFirstName.Text;
-        obj.Middlename= "B";
-        obj.Lastname= tbLastname.Text;
-        obj.Sex= Convert.ToInt32(ddlSex.SelectedValue);
-        obj.MemberID= "788654329";
-        obj.HICN= "A492853954";
-        obj.DOB= Convert.ToDateTime(txtDOB.Text);
-        obj.Email= "";
-        obj.Ethnicity= 0;
-        obj.MaritalStatus= 0;
-        obj.Handedness= 0;
-        obj.Occupation= 0;
-        obj.Height_Feet= 0;
-        obj.Height_Inches= 0;
-        obj.Weight= 0;
-        Address addObj = new Address(1);
-        addObj.Address1 = "295 turnpike road";
-        obj.WorkAddress = addObj;
-        obj.WorkAddress.Address1 = addObj.Address1;
-        obj.WorkAddress.Address2= "";
-        obj.WorkAddress.City= "";
-        obj.WorkAddress.State= 0;
-        obj.WorkAddress.Zipcode= "";
+        //obj.ID = 0; 
+        //obj.Salutation = 0;
+        //obj.Firstname= tbFirstName.Text;
+        //obj.Middlename= "B";
+        //obj.Lastname= tbLastname.Text;
+        //obj.Sex= Convert.ToInt32(ddlSex.SelectedValue);
+        //obj.MemberID= "788654329";
+        //obj.HICN= "A492853954";
+        //obj.DOB= Convert.ToDateTime(txtDOB.Text);
+        //obj.Email= "";
+        //obj.Ethnicity= 0;
+        //obj.MaritalStatus= 0;
+        //obj.Handedness= 0;
+        //obj.Occupation= 0;
+        //obj.Height_Feet= 0;
+        //obj.Height_Inches= 0;
+        //obj.Weight= 0;
+        //Address addObj = new Address(1);
+        //addObj.Address1 = "295 turnpike road";
+        //obj.WorkAddress = addObj;
+        //obj.WorkAddress.Address1 = addObj.Address1;
+        //obj.WorkAddress.Address2= "";
+        //obj.WorkAddress.City= "";
+        //obj.WorkAddress.State= 0;
+        //obj.WorkAddress.Zipcode= "";
 
-        obj.HomeAddress = addObj;
-        obj.HomeAddress.Address1 = addObj.Address1;
-        obj.HomeAddress.Address2= "";
-        obj.HomeAddress.City="";
-        obj.HomeAddress.State=0;
-        obj.HomeAddress.Zipcode = "";
+        //obj.HomeAddress = addObj;
+        //obj.HomeAddress.Address1 = addObj.Address1;
+        //obj.HomeAddress.Address2= "";
+        //obj.HomeAddress.City="";
+        //obj.HomeAddress.State=0;
+        //obj.HomeAddress.Zipcode = "";
 
-        obj.Save();
+        //obj.Save();
         
 
     }

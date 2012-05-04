@@ -28,7 +28,7 @@
 
 
         }
-    </script>
+    </script>    
     <div class="grid_24 alpha">
         <div class="grid_12 alpha">
             <dl>
@@ -39,19 +39,15 @@
                 </dd>
                 <dt>First name</dt>
                 <dd>
-                    <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox><span style="color: Red"><b>*</b></span>
+                    <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>                
                     <asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ControlToValidate="tbFirstName"
-                        ErrorMessage="First Name is required." ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator>
-                </dd>
+                        ErrorMessage="*" ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator></dd>
                 <dt>Last name</dt>
                 <dd>
-                    <asp:TextBox ID="tbLastname" runat="server"></asp:TextBox><span style="color: Red"><b>
-                        *</b></span>
+                    <asp:TextBox ID="tbLastname" runat="server"></asp:TextBox> <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ControlToValidate="tbLastname"
+                        ErrorMessage="*" ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator>
                 </dd>
-                <dd>
-                <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ControlToValidate="tbLastname"
-                            ErrorMessage="Last Name is required." ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator>
-                </dd>
+            
                 <dt>Alive/Dead</dt>
                 <dd>
                     <asp:DropDownList ID="ddlCurrentStatus" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCurrentStatus_IndexChanged">
@@ -69,7 +65,7 @@
         <div class="grid_12 omega">
             <dl>
                 <dt>DOB</dt>
-                <dd>                 
+                <dd>
                     <asp:TextBox ID="txtDOB" runat="server" CssClass="grid_3 alpha"></asp:TextBox><span
                         style="color: Red"><b> *</b></span>
                     <asp:CustomValidator ID="cvDOB" runat="server" ControlToValidate="txtDOB" ErrorMessage=""
@@ -146,6 +142,37 @@
                     </td>
                 </tr>
             </ItemTemplate>
+            <EmptyDataTemplate>
+             <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Relation
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Sex
+                            </th>
+                            <th>
+                                DOB
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            No dependents.
+                        </tr>
+                    </tbody>
+                </table>
+            </EmptyDataTemplate>
         </asp:ListView>
     </div>
 </asp:Content>
