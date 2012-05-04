@@ -9,14 +9,21 @@ using HRACore;
 
 public partial class MemberDetails : System.Web.UI.Page
 {
+    private int MemberMasterID = 0;
     BaseCore.CodeManager cm = new CodeManager(1);
-
-    protected void Page_Load(object sender, EventArgs e)
+    private MemberInfo mInfo;
+    private int CurrentUserID = 0;
+   protected void Page_Load(object sender, EventArgs e)
     {
-        Master.PageHeader = "Member Details";
+
+
+        MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
+        mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
+        Master.PageHeader = "Member Details for" + mInfo.Firstname + " " + mInfo.Lastname;        
         if (!IsPostBack)
         {
             SetPageProperties();
+            Member m = new Member(mInfo.MemberID,CurrentUserID); //need to load.
         }
 
 

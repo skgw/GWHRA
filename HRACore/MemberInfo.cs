@@ -13,6 +13,8 @@ namespace HRACore
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string MemberID { get; set; }
+        public string Sex { get; set;}
+        public DateTime DOB { get; set;}
         public string SubscriberID { get; set; }
         public List<FamilyMember> familyMembers = new List<FamilyMember>();
 
@@ -28,6 +30,12 @@ namespace HRACore
             Lastname = reader[2].ToString();
             MemberID = reader[3].ToString();
             SubscriberID = reader[4].ToString();
+            Sex = reader[5].ToString();
+            DOB = Convert.ToDateTime(reader[6].ToString());
+        }
+        public MemberInfo(IDataReader reader)
+        {
+            LoadMemberInfo(reader);
         }
         public MemberInfo(int MemberMasterID, int CurrentUserID)
         {
@@ -40,10 +48,12 @@ namespace HRACore
                 if (reader.Read())
                 {
                     LoadMemberInfo(reader);
-                    reader.NextResult();
-                    while (reader.Read())
+                    if (reader.NextResult())
                     {
-                        familyMembers.Add(new FamilyMember(reader));
+                        while (reader.Read())
+                        {
+                            familyMembers.Add(new FamilyMember(reader));
+                        }
                     }
                 }
 

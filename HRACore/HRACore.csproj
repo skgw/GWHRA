@@ -48,6 +48,7 @@
     <Compile Include="FamilyMember.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberInfo.cs" />
+    <Compile Include="MemberInfoList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="QuestionGroup.cs" />
