@@ -27,6 +27,11 @@ public partial class FamilyDetails : System.Web.UI.Page
             SetPageProperties();
             HideDeadControls();
         }
+        else
+        {
+            lvFamilyDetails.DataSource = mInfo.familyMembers;
+            lvFamilyDetails.DataBind();
+        }
     }
     private void SetPageProperties()
     {
@@ -104,6 +109,7 @@ public partial class FamilyDetails : System.Web.UI.Page
         obj.CauseOfDeath = Convert.ToInt32(ddlCauseOfDeath.SelectedItem.Value);
 
         obj.Save();
+        
       
 
     }

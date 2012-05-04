@@ -92,7 +92,7 @@
     <div class="grid_24 alpha">
         <asp:ListView ID="lvFamilyDetails" runat="server">
             <LayoutTemplate>
-                <table>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>
@@ -126,10 +126,10 @@
                         <%#Eval("ID") %>
                     </td>
                     <td>
-                        <%#Eval("Relation") %>
+                      <%#Eval("Lastname") %>
                     </td>
                     <td>
-                        <%#Eval("Name") %>
+                        <%#Eval("Firstname") %>
                     </td>
                     <td>
                         <%#Eval("Sex") %>
@@ -138,7 +138,7 @@
                         <%#Eval("DOB") %>
                     </td>
                     <td>
-                        <%#Eval("Status") %>
+                     
                     </td>
                 </tr>
             </ItemTemplate>
