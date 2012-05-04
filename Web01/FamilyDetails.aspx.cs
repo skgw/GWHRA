@@ -92,46 +92,19 @@ public partial class FamilyDetails : System.Web.UI.Page
             cvDOB.Visible = true;
             return;
         }
-      //  FamilyMember obj = new FamilyMember();
+        FamilyMember obj = new FamilyMember(mInfo.ID);
+        obj.Firstname = tbFirstName.Text;
+        obj.Lastname = tbLastname.Text;
+        obj.DOB = Convert.ToDateTime(txtDOB.Text);
+        obj.Sex = ddlSex.SelectedItem.Value;
+        obj.CurrentStatus = Convert.ToChar(ddlCurrentStatus.SelectedItem.Value );
+        obj.LivingStatus = Convert.ToInt32(ddlLivingStatus.SelectedItem.Value);
+        obj.DateOfDeath = 
+            (tbDateOfDeath.Text.Length > 0)? Convert.ToDateTime(tbDateOfDeath.Text):DateTime.Now;
+        obj.CauseOfDeath = Convert.ToInt32(ddlCauseOfDeath.SelectedItem.Value);
 
-
-        //Member obj = new Member(1);
-         
-        //obj.ID = 0; 
-        //obj.Salutation = 0;
-        //obj.Firstname= tbFirstName.Text;
-        //obj.Middlename= "B";
-        //obj.Lastname= tbLastname.Text;
-        //obj.Sex= Convert.ToInt32(ddlSex.SelectedValue);
-        //obj.MemberID= "788654329";
-        //obj.HICN= "A492853954";
-        //obj.DOB= Convert.ToDateTime(txtDOB.Text);
-        //obj.Email= "";
-        //obj.Ethnicity= 0;
-        //obj.MaritalStatus= 0;
-        //obj.Handedness= 0;
-        //obj.Occupation= 0;
-        //obj.Height_Feet= 0;
-        //obj.Height_Inches= 0;
-        //obj.Weight= 0;
-        //Address addObj = new Address(1);
-        //addObj.Address1 = "295 turnpike road";
-        //obj.WorkAddress = addObj;
-        //obj.WorkAddress.Address1 = addObj.Address1;
-        //obj.WorkAddress.Address2= "";
-        //obj.WorkAddress.City= "";
-        //obj.WorkAddress.State= 0;
-        //obj.WorkAddress.Zipcode= "";
-
-        //obj.HomeAddress = addObj;
-        //obj.HomeAddress.Address1 = addObj.Address1;
-        //obj.HomeAddress.Address2= "";
-        //obj.HomeAddress.City="";
-        //obj.HomeAddress.State=0;
-        //obj.HomeAddress.Zipcode = "";
-
-        //obj.Save();
-        
+        obj.Save();
+      
 
     }
 }

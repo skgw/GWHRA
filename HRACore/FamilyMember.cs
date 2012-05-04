@@ -9,6 +9,7 @@ namespace HRACore
 {
     public class FamilyMember
     {
+      //  public string SubscriberID { get; set; }
         public int MemberMasterID { get; set; }
         public int ID { get; set; }
         public string Firstname { get; set; }
@@ -24,7 +25,10 @@ namespace HRACore
 
         public DBHelper dbhFamilyMember;
         private int mCurrentUserID = 0;
-
+        public FamilyMember(int memberMasterID)
+        {
+            MemberMasterID = memberMasterID;
+        }
         public FamilyMember(IDataReader reader)
         {
             ID = Int32.Parse(reader[0].ToString());
