@@ -50,7 +50,7 @@ namespace HRACore
                 dbhFamilyMember.AddParameter("@LASTNAME", this.Lastname);
                 dbhFamilyMember.AddParameter("@SEX", this.Sex);                                
                 dbhFamilyMember.AddParameter("@DOB", this.DOB);
-                
+                dbhFamilyMember.AddParameter("@RELATIONSHIP_ID", this.RelationshipID);
                 dbhFamilyMember.AddParameter("@CurrentStatus", this.CurrentStatus);
                 dbhFamilyMember.AddParameter("@LivingStatus", this.LivingStatus);
                 dbhFamilyMember.AddParameter("@DateOfDeath", this.DateOfDeath);

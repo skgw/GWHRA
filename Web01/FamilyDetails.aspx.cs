@@ -98,6 +98,7 @@ public partial class FamilyDetails : System.Web.UI.Page
             return;
         }
         FamilyMember obj = new FamilyMember(mInfo.ID);
+        obj.RelationshipID = Convert.ToInt32(ddlRelationship.SelectedItem.Value);
         obj.Firstname = tbFirstName.Text;
         obj.Lastname = tbLastname.Text;
         obj.DOB = Convert.ToDateTime(txtDOB.Text);
