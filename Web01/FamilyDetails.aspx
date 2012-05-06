@@ -89,6 +89,7 @@
         </div>
     </div>
     <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_click" ValidationGroup="FamilyDetails" />
+    <asp:Button ID="btnNext" runat="server" Text="Next" OnClick="btnNext_click" />
     <div class="grid_24 alpha">
         <asp:ListView ID="lvFamilyDetails" runat="server">
             <LayoutTemplate>
@@ -102,7 +103,10 @@
                                 Relation
                             </th>
                             <th>
-                                Name
+                               Last Name
+                            </th>
+                            <th>
+                               First Name
                             </th>
                             <th>
                                 Sex
@@ -126,7 +130,10 @@
                         <%#Eval("ID") %>
                     </td>
                     <td>
-                      <%#Eval("Lastname") %>
+                      <%#Eval("RelationshipName")%>
+                    </td>
+                    <td>
+                        <%#Eval("Lastname") %>
                     </td>
                     <td>
                         <%#Eval("Firstname") %>

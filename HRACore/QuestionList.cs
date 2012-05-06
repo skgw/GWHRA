@@ -80,6 +80,22 @@ namespace HRACore
             }
             return dt;
         }
+
+        public List<Tuple<int, string>> GetFamilyQuestions(int CurrentUserID)
+        {
+            List<Tuple<int, string>> lst = new List<Tuple<int, string>>();
+            using (dbhQuestion = new DBHelper(ConnectionStrings.DefaultDBConnection, CurrentUserID))
+            {
+                dbhQuestion.AddParameter("@CurrentUserID", CurrentUserID);
+                IDataReader reader = dbhQuestion.ExecuteReader("GET_FAMILY_QUESTIONS");
+                while (reader.Read())
+                {
+                    lst.Add(Tuple.Create<int, string>(Convert.ToInt32(reader["ID"]), Convert.ToString(reader["QUESTION_CONTENT"])));
+                }
+
+            }
+            return lst;
+        }
     }
 }
 

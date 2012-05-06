@@ -4,8 +4,10 @@
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="grid_16 alpha">
-    <a href="MemberDetails.aspx">Member Details</a>
-    <a href="FamilyDetails.aspx">Family Details</a>
+    <asp:LinkButton ID="lnkMemberDetails" runat="server" OnClick="lnkMemberDetails_click">MemberDetails</asp:LinkButton>
+    <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FamilyDetails</asp:LinkButton>
+    <%--<a href="MemberDetails.aspx">Member Details</a>
+    <a href="FamilyDetails.aspx">Family Details</a>--%>
     </div>
     <div class="grid_8 omega">
         <p>

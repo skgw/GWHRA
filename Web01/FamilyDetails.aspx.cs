@@ -26,12 +26,9 @@ public partial class FamilyDetails : System.Web.UI.Page
         {
             SetPageProperties();
             HideDeadControls();
+            DisplayFamily();
         }
-        else
-        {
-            lvFamilyDetails.DataSource = mInfo.familyMembers;
-            lvFamilyDetails.DataBind();
-        }
+       
     }
     private void SetPageProperties()
     {
@@ -110,8 +107,18 @@ public partial class FamilyDetails : System.Web.UI.Page
         obj.CauseOfDeath = Convert.ToInt32(ddlCauseOfDeath.SelectedItem.Value);
 
         obj.Save();
-        
-      
 
+        DisplayFamily();
+
+    }
+    protected void btnNext_click(object sender, EventArgs e)
+    {
+        Response.Redirect("FamilyHRA.aspx?ID=" + MemberMasterID.ToString());
+    }
+    protected void DisplayFamily()
+    {
+        mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
+        lvFamilyDetails.DataSource = mInfo.familyMembers;
+        lvFamilyDetails.DataBind();
     }
 }
