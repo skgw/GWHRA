@@ -57,10 +57,10 @@ public partial class FamilyHRA : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static void InsertFamilyHRA(int MemberMasterID, int RelationshipId, int FamilyQuestionId)
+    public static void InsertFamilyHRA(int MemberMasterID, int FamilyQuestionId)
     {
         MemberInfoList obj = new MemberInfoList(1);
-        obj.INSERTFAMILYHRA(MemberMasterID, RelationshipId, FamilyQuestionId, 1);
+        obj.INSERTFAMILYHRA(MemberMasterID, FamilyQuestionId, 1);
     }
 }
 
