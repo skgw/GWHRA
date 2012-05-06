@@ -26,6 +26,6 @@ public partial class MemberDashboard : System.Web.UI.Page
     }
     protected void lnkFamilyDetails_click(object sender, EventArgs e)
     {
-        Response.Redirect("FamilyDetails.aspx?MemberMasterID=" + MemberMasterID.ToString());
+        Response.Redirect("FamilyDetails.aspx?ID=" + MemberMasterID.ToString());
     }
 }
