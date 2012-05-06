@@ -17,7 +17,7 @@ namespace HRACore
         private string mFirstname;
         private string mLastname;
         private string mMiddleName;
-        private int mSex;
+        private string mSex;
         private DateTime mDOB;
         private int mEthnicity;
         private int mHeight_Feet;
@@ -31,6 +31,7 @@ namespace HRACore
         private string mEmail;
         private Address mWorkAddress;
         private Address mHomeAddress;
+        #region Public Properties
 
         public int Salutation
         {
@@ -208,7 +209,7 @@ namespace HRACore
                 mHomeAddress = value;
             }
         }
-        public int Sex
+        public string Sex
         {
             get
             {
@@ -236,6 +237,7 @@ namespace HRACore
             get { return mID; }
             set { mID = value; }
         }
+        #endregion
 
         public void LoadBasicInfo(IDataReader reader)
         {
@@ -254,7 +256,7 @@ namespace HRACore
             HICN = reader[12].ToString();
             Handedness = Int32.Parse(reader[13].ToString());
             Email = reader[14].ToString();
-            Sex = Int32.Parse(reader[15].ToString());
+            Sex = reader[15].ToString();
             DOB = DateTime.Parse(reader[16].ToString());
         }
         public Member(int CurrentUserID)
@@ -262,6 +264,35 @@ namespace HRACore
             mCurrentUserID = CurrentUserID;
             HomeAddress = new Address(CurrentUserID);
             WorkAddress = new Address(CurrentUserID);
+        }
+        public Member(int MasterID, int CurrentUserID)
+        {
+            mCurrentUserID = CurrentUserID;
+            HomeAddress = new Address(CurrentUserID);
+            WorkAddress = new Address(CurrentUserID);
+            ID = MasterID;
+
+            string procName = "GET_MEMBERDETAIL_BY_MASTER_ID";
+            using (dbhMember = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhMember.AddParameter("@MemberMasterID", ID);
+                dbhMember.AddParameter("@CURRENTUSERID", @mCurrentUserID);
+
+                IDataReader reader = dbhMember.ExecuteReader(procName);
+                while (reader.Read())
+                {
+                    LoadBasicInfo(reader);
+                    if (reader.NextResult())
+                    {
+
+                        WorkAddress = new Address(reader);
+                        if (reader.NextResult())
+                        {
+                            HomeAddress = new Address(reader);
+                        }
+                    }
+                }
+            }
         }
         public Member(string memberID, int CurrentUserID)
         {
@@ -300,7 +331,7 @@ namespace HRACore
                 dbhMember.AddParameter("@MEMBER_ID", this.MemberID);
                 dbhMember.AddParameter("@HICN", this.HICN);
                 dbhMember.AddParameter("@SUBSCRIBER_ID", this.MemberID);
-                dbhMember.AddParameter("@DOB",this.DOB);
+                dbhMember.AddParameter("@DOB", this.DOB);
                 dbhMember.AddParameter("@EMAIL", this.Email);
                 dbhMember.AddParameter("@ETHNICITY", this.Ethnicity);
                 dbhMember.AddParameter("@MARITAL_STATUS", this.MaritalStatus);

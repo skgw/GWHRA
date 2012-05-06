@@ -2,13 +2,13 @@
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <style type="text/css">
-    .relation { writing-mode: tb-rl; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); width: -moz-fit-content;height:10px; width:10px;}
-    .grid .gv TD
+   .relation { writing-mode: tb-rl; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); width: -moz-fit-content;}
+   <%--  .grid .gv TD
     {
         text-align: center;
         padding: 2px 4px 2px 4px;
         border: solid 1px Black;
-    }
+    }--%>
 </style>
 
 <script type="text/javascript">
@@ -41,7 +41,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                var strTable = "<table id='tblFamily' class='gv'><tr><th style='height:60px;'>Conditions</th></tr>";
+                var strTable = "<table id='tblFamily' class='gv table table-bordered'><tr><th style='height:60px;'>Conditions</th></tr>";
                 $.each(msg.d, function (index, item) {
                     //alert(item);
                     strTable += "<tr><td>" + item.Item1 + "</td><td>" + item.Item2 + "</td></tr>";

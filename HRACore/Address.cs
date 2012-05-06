@@ -68,12 +68,15 @@ namespace HRACore
         }
         public void LoadReader(IDataReader reader)
         {
-            AddressType = Int32.Parse(reader[0].ToString());
-            Address1 = reader[1].ToString();
-            Address2 = reader[2].ToString();
-            City = reader[3].ToString();
-            State = Int32.Parse(reader[4].ToString());
-            Zipcode = reader[5].ToString();
+            while (reader.Read())
+            {
+                AddressType = Int32.Parse(reader[0].ToString());
+                Address1 = reader[1].ToString();
+                Address2 = reader[2].ToString();
+                City = reader[3].ToString();
+                State = Int32.Parse(reader[4].ToString());
+                Zipcode = reader[5].ToString();
+            }
         }
         public Address(int CurrentUserID)
         {

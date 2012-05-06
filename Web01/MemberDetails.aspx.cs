@@ -13,20 +13,49 @@ public partial class MemberDetails : System.Web.UI.Page
     BaseCore.CodeManager cm = new CodeManager(1);
     private MemberInfo mInfo;
     private int CurrentUserID = 0;
+
    protected void Page_Load(object sender, EventArgs e)
     {
-
-
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
         Master.PageHeader = "Member Details for" + mInfo.Firstname + " " + mInfo.Lastname;        
         if (!IsPostBack)
         {
-            SetPageProperties();
-            //Member m = new Member(mInfo.MemberID,CurrentUserID); //need to load.
+            SetPageProperties();         
+            LoadMemberDetails();
         }
+    }
+    private void LoadMemberDetails()
+    {
+        Member m = new Member(MemberMasterID, CurrentUserID);
+        //Bind data 
+        tbFirstname.Text = m.Firstname;
+        tbMiddleName.Text = m.Middlename;
+        tbLastName.Text = m.Lastname;
+        ddlSalutation.SelectedValue = m.Salutation.ToString();
+        ddlSex.SelectedValue = m.Sex.ToString();
+        tbMemberID.Text = m.MemberID;
+        tbHICN.Text = m.HICN;
+        tbDOB.Text = m.DOB.ToShortDateString();
+        tbEmail.Text = m.Email;
+        ddlEthnicity.SelectedValue = m.Ethnicity.ToString();
+        ddlMaritalStatus.SelectedValue = m.MaritalStatus.ToString();
+        ddlHandedness.SelectedValue = m.Handedness.ToString();
+        ddlOccupation.SelectedValue = m.Occupation.ToString();
+        tbHeightFeet.Text = m.Height_Feet.ToString();
+        tbHeightInches.Text = m.Height_Inches.ToString();
+        tbWeight.Text = m.Weight.ToString();
+        tbHAddress1.Text = m.HomeAddress.Address1;
+        tbHAddress2.Text = m.HomeAddress.Address2;
+        tbHCity.Text = m.HomeAddress.City;
+        ddlHomeState.SelectedValue = m.HomeAddress.State.ToString();
+        tbHZipcode.Text = m.HomeAddress.Zipcode;
 
-
+        tbWorkAddress1.Text = m.WorkAddress.Address1;
+        tbWorkAddress2.Text = m.WorkAddress.Address2;
+        tbWorkCity.Text = m.WorkAddress.City;
+        ddlWorkState.SelectedValue = m.WorkAddress.State.ToString();
+        tbWorkZipcode.Text = m.WorkAddress.Zipcode;
     }
     private void SetPageProperties()
     {
@@ -112,7 +141,7 @@ public partial class MemberDetails : System.Web.UI.Page
         currentMember.Middlename = tbMiddleName.Text;
         currentMember.Lastname = tbLastName.Text;
         currentMember.Salutation = Convert.ToInt32(ddlSalutation.SelectedValue);
-        currentMember.Sex = Convert.ToInt32(ddlSex.SelectedValue);
+        currentMember.Sex = ddlSex.SelectedValue;
         currentMember.MemberID = tbMemberID.Text;
         currentMember.HICN = tbHICN.Text;
         currentMember.DOB = Convert.ToDateTime(tbDOB.Text);
@@ -137,7 +166,7 @@ public partial class MemberDetails : System.Web.UI.Page
         currentMember.WorkAddress.Zipcode = tbWorkZipcode.Text;
 
         currentMember.Save();
-        Response.Redirect("FamilyDetails.aspx?MemberMasterID=" + currentMember.ID);
+        Response.Redirect("FamilyDetails.aspx?ID=" + currentMember.ID);
 
 
     }
