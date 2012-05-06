@@ -130,9 +130,12 @@
                         <%#Eval("ID") %>
                     </td>
                     <td>
+<<<<<<< HEAD
+=======
                       <%#Eval("RelationshipName")%>
                     </td>
                     <td>
+>>>>>>> 39f3400ef6b96590223ba18dd7d9abc2985c7ab8
                         <%#Eval("Lastname") %>
                     </td>
                     <td>

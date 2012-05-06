@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using DAL;
 using System.Data;
 
@@ -11,7 +12,6 @@ namespace HRACore
     {
         private int mCurrentUserID;
         private DBHelper dbhMil;
-
         public MemberInfoList(int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
@@ -35,6 +35,38 @@ namespace HRACore
                 }
             }
             return members;
+        }
+
+        public List<Tuple<int,int>>  GetFamilyHRAResponse(int MemberMasterID, int CurrentUserID)
+        {
+            List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
+            mCurrentUserID = CurrentUserID;
+            using (dbhMil = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
+            {
+                dbhMil.AddParameter("@MemberMasterID", MemberMasterID);
+                dbhMil.AddParameter("@CurrentUserID", mCurrentUserID);
+                IDataReader reader = dbhMil.ExecuteReader("TEST_GetFamilyHRAResponses");
+                while (reader.Read())
+                {
+                    lst.Add(Tuple.Create<int, int>(Convert.ToInt32(reader["RELATIONSHIP_ID_REF"]), Convert.ToInt32(reader["FAMILYQUESTION_ID_REF"])));
+                }
+
+            }
+            return lst;
+        }
+
+        public void INSERTFAMILYHRA(int MemberMasterID, int RelationshipId, int FamilyQuestionId, int CurrentUserID)
+        {
+            using (dbhMil = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
+            {
+                dbhMil.AddParameter("@membermaster_id_ref", MemberMasterID);
+                dbhMil.AddParameter("@relation_id_ref", RelationshipId);
+                dbhMil.AddParameter("@familyquestion_id_ref", FamilyQuestionId);
+                dbhMil.AddParameter("@CURRENTUSERID", mCurrentUserID);
+                IDataReader reader = dbhMil.ExecuteReader("TEST_INSERT_FAMILYHRA");
+               
+            }
+            
         }
     }
 }

@@ -52,8 +52,5 @@ public partial class SearchMembers : System.Web.UI.Page
         }
         lvMemberDetails.DataSource = dt;
         lvMemberDetails.DataBind();
-
-
-
     }
 }

@@ -19,4 +19,11 @@ public partial class MemberHRA : System.Web.UI.Page
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
     }
+    protected void btnNext_click(object sender, EventArgs e)
+    {
+    }
+    protected void btnPrev_click(object sender, EventArgs e)
+    {
+        Response.Redirect("FamilyHRA.aspx?ID=" + MemberMasterID.ToString());
+    }
 }

@@ -20,4 +20,12 @@ public partial class MemberDashboard : System.Web.UI.Page
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
         Master.PageHeader = "Welcome " + mInfo.Firstname + " " + mInfo.Lastname;
     }
+    protected void lnkMemberDetails_click(object sender, EventArgs e)
+    {
+        Response.Redirect("MemberDetails.aspx?ID=" + MemberMasterID.ToString());
+    }
+    protected void lnkFamilyDetails_click(object sender, EventArgs e)
+    {
+        Response.Redirect("FamilyDetails.aspx?MemberMasterID=" + MemberMasterID.ToString());
+    }
 }

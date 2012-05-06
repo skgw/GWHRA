@@ -23,7 +23,7 @@ public partial class MemberDetails : System.Web.UI.Page
         if (!IsPostBack)
         {
             SetPageProperties();
-            Member m = new Member(mInfo.MemberID,CurrentUserID); //need to load.
+            //Member m = new Member(mInfo.MemberID,CurrentUserID); //need to load.
         }
 
 

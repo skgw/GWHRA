@@ -29,10 +29,13 @@ public partial class FamilyDetails : System.Web.UI.Page
             DisplayFamily();
         }
        
+<<<<<<< HEAD
         
             lvFamilyDetails.DataSource = mInfo.familyMembers;
             lvFamilyDetails.DataBind();
         
+=======
+>>>>>>> 39f3400ef6b96590223ba18dd7d9abc2985c7ab8
     }
     private void SetPageProperties()
     {
