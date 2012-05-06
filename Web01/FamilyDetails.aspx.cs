@@ -18,7 +18,7 @@ public partial class FamilyDetails : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         
-        MemberMasterID = Int32.Parse(Request.QueryString["MemberMasterID"]);
+        MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
         Master.PageHeader = "Family Information for " + mInfo.Firstname + " " + mInfo.Lastname ;
 
@@ -27,11 +27,11 @@ public partial class FamilyDetails : System.Web.UI.Page
             SetPageProperties();
             HideDeadControls();
         }
-        else
-        {
+       
+        
             lvFamilyDetails.DataSource = mInfo.familyMembers;
             lvFamilyDetails.DataBind();
-        }
+        
     }
     private void SetPageProperties()
     {

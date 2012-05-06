@@ -28,7 +28,7 @@
 
 
         }
-    </script>    
+    </script>
     <div class="grid_24 alpha">
         <div class="grid_12 alpha">
             <dl>
@@ -39,15 +39,15 @@
                 </dd>
                 <dt>First name</dt>
                 <dd>
-                    <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>                
+                    <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ControlToValidate="tbFirstName"
                         ErrorMessage="*" ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator></dd>
                 <dt>Last name</dt>
                 <dd>
-                    <asp:TextBox ID="tbLastname" runat="server"></asp:TextBox> <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ControlToValidate="tbLastname"
+                    <asp:TextBox ID="tbLastname" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ControlToValidate="tbLastname"
                         ErrorMessage="*" ValidationGroup="FamilyDetails" ForeColor="Red"></asp:RequiredFieldValidator>
                 </dd>
-            
                 <dt>Alive/Dead</dt>
                 <dd>
                     <asp:DropDownList ID="ddlCurrentStatus" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCurrentStatus_IndexChanged">
@@ -126,7 +126,7 @@
                         <%#Eval("ID") %>
                     </td>
                     <td>
-                      <%#Eval("Lastname") %>
+                        <%#Eval("Lastname") %>
                     </td>
                     <td>
                         <%#Eval("Firstname") %>
@@ -138,12 +138,11 @@
                         <%#Eval("DOB") %>
                     </td>
                     <td>
-                     
                     </td>
                 </tr>
             </ItemTemplate>
             <EmptyDataTemplate>
-             <table>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>
@@ -168,7 +167,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            No dependents.
+                            <td colspan="6">
+                                No dependents.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
