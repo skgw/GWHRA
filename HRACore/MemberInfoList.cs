@@ -48,19 +48,18 @@ namespace HRACore
                 IDataReader reader = dbhMil.ExecuteReader("TEST_GetFamilyHRAResponses");
                 while (reader.Read())
                 {
-                    lst.Add(Tuple.Create<int, int>(Convert.ToInt32(reader["RELATIONSHIP_ID_REF"]), Convert.ToInt32(reader["FAMILYQUESTION_ID_REF"])));
+                    lst.Add(Tuple.Create<int, int>(Convert.ToInt32(reader["MEMBERMASTER_ID_REF"]), Convert.ToInt32(reader["FAMILYQUESTION_ID_REF"])));
                 }
 
             }
             return lst;
         }
 
-        public void INSERTFAMILYHRA(int MemberMasterID, int RelationshipId, int FamilyQuestionId, int CurrentUserID)
+        public void INSERTFAMILYHRA(int MemberMasterID, int FamilyQuestionId, int CurrentUserID)
         {
             using (dbhMil = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
             {
                 dbhMil.AddParameter("@membermaster_id_ref", MemberMasterID);
-                dbhMil.AddParameter("@relation_id_ref", RelationshipId);
                 dbhMil.AddParameter("@familyquestion_id_ref", FamilyQuestionId);
                 dbhMil.AddParameter("@CURRENTUSERID", mCurrentUserID);
                 IDataReader reader = dbhMil.ExecuteReader("TEST_INSERT_FAMILYHRA");

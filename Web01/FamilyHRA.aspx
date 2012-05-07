@@ -3,12 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <style type="text/css">
    .relation { writing-mode: tb-rl; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); width: -moz-fit-content;}
-   <%--  .grid .gv TD
-    {
-        text-align: center;
-        padding: 2px 4px 2px 4px;
-        border: solid 1px Black;
-    }--%>
+   
 </style>
 
 <script type="text/javascript">
@@ -67,16 +62,17 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                var siblingsCount = 0;
+                var memberCount = 1;
                 var strSiblingsHeader = "";
+                strSiblingsHeader += "<th class='relation'>Self<span class='relationId' style='display:none;'>" + memberMasterID + "</span></th>";
                 $.each(msg.d, function (index, item) {
-                    strSiblingsHeader += "<th class='relation'>" + item.RelationshipName + "<span class='relationId' style='display:none;'>" + item.RelationshipID + "</span></th>";
-                    siblingsCount += 1;
+                    strSiblingsHeader += "<th class='relation'>" + item.RelationshipName + "<span class='relationId' style='display:none;'>" + item.ID + "</span></th>";
+                    memberCount += 1;
                 });
                 $("#" + "dvFamily" + " tr:first").append(strSiblingsHeader);
 
                 var strSiblingsRows = "";
-                for (var i = 0; i < siblingsCount; i++) {
+                for (var i = 0; i < memberCount; i++) {
                     strSiblingsRows += "<td><input type='checkbox' class='chk' value='xx'/></td>";
                 }
                 $("#" + "dvFamily" + " tr:not(:first)").append(strSiblingsRows);
@@ -100,9 +96,9 @@
             var $row = $(this);
             var FamilyQuestionId = $("td", $row).eq(0).text();
             $(" .relationId").each(function (indexth) {
-                var relationid = $(this).text();
+                var MemberMasterID = $(this).text();
                 if ($("td", $row).eq(indexth + 2).children().attr("checked") == "checked") {
-                    InsertFamilyHRA(relationid, FamilyQuestionId);
+                    InsertFamilyHRA(MemberMasterID, FamilyQuestionId);
                 }
             });
 
@@ -154,12 +150,12 @@
         });
     }
 
-    function InsertFamilyHRA(RelationshipId, FamilyQuestionId) {
+    function InsertFamilyHRA(MemberMasterID, FamilyQuestionId) {
         
         $.ajax({
             type: "POST",
             url: "FamilyHRA.aspx/InsertFamilyHRA",
-            data: "{'MemberMasterID':" + memberMasterID + ",'RelationshipId':" + RelationshipId + ",'FamilyQuestionId':" + FamilyQuestionId + "}",
+            data: "{'MemberMasterID':" + MemberMasterID + ",'FamilyQuestionId':" + FamilyQuestionId + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
