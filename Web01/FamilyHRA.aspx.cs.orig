@@ -19,7 +19,11 @@ public partial class FamilyHRA : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
+<<<<<<< HEAD
         Master.PageHeader = "Family Conditions History";
+=======
+        Master.PageHeader = "Family HRA";
+>>>>>>> 8fe3e8fad45463cca6d259f88666e5750521054d
         if (!IsPostBack)
         {
             MemberMasterID = Int32.Parse(Request.QueryString["ID"]);

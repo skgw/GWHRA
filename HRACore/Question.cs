@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using BaseCore;
 using DAL;
+using System.Xml;
 
 namespace HRACore
 {
@@ -56,6 +57,7 @@ namespace HRACore
         private string mCreatedBy;
         private DateTime mCreatedDate;
         private int mCurrentUserID = 0;
+        public List<Tuple<int, string, string>> Options = new List<Tuple<int, string, string>>();
 
         public Int64 ID
         {
@@ -164,6 +166,7 @@ namespace HRACore
             get { return mCreatedDate; }
             set { mCreatedDate = value; }
         }
+        
 
         public Question( int CurrentUserId)
         {
@@ -188,6 +191,7 @@ namespace HRACore
             HelpText = reader[12].ToString();
             ResponseText = reader[13].ToString();
             ResponseType = reader[14].ToString();
+            
         }
 
         public Question(IDataReader reader)
@@ -220,6 +224,38 @@ namespace HRACore
                 }
                 dbhQuestionGroup.Dispose();
             }
+        }
+
+        public List<Question> GetAssessmentQuestions(int AssessmentId, int CurrentUserId)
+        {
+            List<Question> lst = new List<Question>();
+            const string procName = "GET_ASSESSMENT_QUESTIONS";
+            using (dbhQuestionGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhQuestionGroup.AddParameter("@ASSESSMENT_ID", AssessmentId);
+                dbhQuestionGroup.AddParameter("@CURRENTUSERID", CurrentUserId);
+                IDataReader dr = dbhQuestionGroup.ExecuteReader(procName);
+                while (dr.Read())
+                {
+                    lst.Add(new Question(dr));
+                }
+                if (dr.NextResult())
+                {
+                    while (dr.Read())
+                    {
+                        for (int i = 0; i < lst.Count; i++)
+                        {
+                            if (Convert.ToInt32(dr["QUESTION_ID"]) == lst[i].ID)
+                            {
+                                lst[i].Options.Add(Tuple.Create<int, string, string>(Convert.ToInt32(dr["QUESTION_ID"]), Convert.ToString(dr["OPTION"]), Convert.ToString(dr["VALUE"])));
+                            }
+                        }
+                    }
+                }
+                
+                dbhQuestionGroup.Dispose();
+            }
+            return lst;
         }
                 
     }

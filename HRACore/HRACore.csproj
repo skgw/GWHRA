@@ -47,6 +47,8 @@
     <Compile Include="AssessmentList.cs" />
     <Compile Include="FamilyMember.cs" />
     <Compile Include="Member.cs" />
+    <Compile Include="MemberHRA.cs" />
+    <Compile Include="MemberHRAList.cs" />
     <Compile Include="MemberInfo.cs" />
     <Compile Include="MemberInfoList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
