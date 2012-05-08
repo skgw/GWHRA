@@ -37,32 +37,33 @@ namespace HRACore
             return members;
         }
 
-        public List<Tuple<int,int>>  GetFamilyHRAResponse(int MemberMasterID, int CurrentUserID)
+        public List<Tuple<int,int>>  GetFamilyHRAResponse(int MemberMasterID, int AssessmentId, int CurrentUserID)
         {
             List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
             mCurrentUserID = CurrentUserID;
             using (dbhMil = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
             {
                 dbhMil.AddParameter("@MemberMasterID", MemberMasterID);
+                dbhMil.AddParameter("@assessment_id", AssessmentId);
                 dbhMil.AddParameter("@CurrentUserID", mCurrentUserID);
-                IDataReader reader = dbhMil.ExecuteReader("TEST_GetFamilyHRAResponses");
+                IDataReader reader = dbhMil.ExecuteReader("GET_FAMILY_HRA_RESPONSES");
                 while (reader.Read())
                 {
-                    lst.Add(Tuple.Create<int, int>(Convert.ToInt32(reader["MEMBERMASTER_ID_REF"]), Convert.ToInt32(reader["FAMILYQUESTION_ID_REF"])));
+                    lst.Add(Tuple.Create<int, int>(Convert.ToInt32(reader["MEMBER_MASTER_ID_REF"]), Convert.ToInt32(reader["FAM_QUESTION_ID_REF"])));
                 }
-
             }
             return lst;
         }
 
-        public void INSERTFAMILYHRA(int MemberMasterID, int FamilyQuestionId, int CurrentUserID)
+        public void INSERTFAMILYHRA(int MemberMasterID, int AssessmentId, int FamilyQuestionId, int CurrentUserID)
         {
             using (dbhMil = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
             {
                 dbhMil.AddParameter("@membermaster_id_ref", MemberMasterID);
+                dbhMil.AddParameter("@assessment_id", AssessmentId);
                 dbhMil.AddParameter("@familyquestion_id_ref", FamilyQuestionId);
                 dbhMil.AddParameter("@CURRENTUSERID", mCurrentUserID);
-                IDataReader reader = dbhMil.ExecuteReader("TEST_INSERT_FAMILYHRA");
+                IDataReader reader = dbhMil.ExecuteReader("INSERT_HRA_FAMILY_RESPONSES");
                
             }
             

@@ -49,19 +49,19 @@ public partial class FamilyHRA : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static List<Tuple<int, int>> GetFamilyHRAResponseList(int MemberMasterID)
+    public static List<Tuple<int, int>> GetFamilyHRAResponseList(int MemberMasterID, int AssessmentId)
     {
         List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
         MemberInfoList obj = new MemberInfoList(1);
-        lst = obj.GetFamilyHRAResponse(MemberMasterID, 1);
+        lst = obj.GetFamilyHRAResponse(MemberMasterID, AssessmentId, 1);
         return lst;
     }
 
     [WebMethod]
-    public static void InsertFamilyHRA(int MemberMasterID, int FamilyQuestionId)
+    public static void InsertFamilyHRA(int MemberMasterID, int AssessmentId, int FamilyQuestionId)
     {
         MemberInfoList obj = new MemberInfoList(1);
-        obj.INSERTFAMILYHRA(MemberMasterID, FamilyQuestionId, 1);
+        obj.INSERTFAMILYHRA(MemberMasterID, AssessmentId, FamilyQuestionId, 1);
     }
 }
 

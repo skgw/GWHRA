@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
     var memberMasterID = 0;
+    var assessmentId = 0;
     $(function () {
         $("tr:odd").addClass('AlternateRow');
         $("tr th:eq(0)").add().css("display", "none");
@@ -25,6 +26,9 @@
         });
         if (jQuery.trim(getParameterByName("ID")) != "") {
             memberMasterID = jQuery.trim(getParameterByName("ID"));
+        }
+        if (jQuery.trim(getParameterByName("AssessmentId")) != "") {
+            assessmentId = jQuery.trim(getParameterByName("AssessmentId"));
         }
         GetFamilyQuestionList();
     });
@@ -121,7 +125,7 @@
         $.ajax({
             type: "POST",
             url: "FamilyHRA.aspx/GetFamilyHRAResponseList",
-            data: "{'MemberMasterID':" + memberMasterID + "}",
+            data: "{'MemberMasterID':" + memberMasterID + ",'AssessmentId':" + assessmentId + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
@@ -155,7 +159,7 @@
         $.ajax({
             type: "POST",
             url: "FamilyHRA.aspx/InsertFamilyHRA",
-            data: "{'MemberMasterID':" + MemberMasterID + ",'FamilyQuestionId':" + FamilyQuestionId + "}",
+            data: "{'MemberMasterID':" + MemberMasterID + ",'AssessmentId':" + assessmentId + ",'FamilyQuestionId':" + FamilyQuestionId + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {

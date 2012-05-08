@@ -117,7 +117,7 @@ public partial class FamilyDetails : System.Web.UI.Page
     }
     protected void btnNext_click(object sender, EventArgs e)
     {
-        Response.Redirect("FamilyHRA.aspx?ID=" + MemberMasterID.ToString());
+        Response.Redirect("FamilyHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
     }
     protected void DisplayFamily()
     {
