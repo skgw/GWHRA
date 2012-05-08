@@ -18,7 +18,7 @@ public partial class MemberDetails : System.Web.UI.Page
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
-        Master.PageHeader = "Member Details for" + mInfo.Firstname + " " + mInfo.Lastname;        
+        Master.PageHeader = "Member Details for " + mInfo.Firstname + " " + mInfo.Lastname;        
         if (!IsPostBack)
         {
             SetPageProperties();         

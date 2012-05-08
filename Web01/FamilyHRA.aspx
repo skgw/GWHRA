@@ -167,6 +167,9 @@
         });
     }
 </script>
+<div class="alert alert-display">
+ (Fill in None if unsure) Indicate Conditions you and / or Family Members have or had.
+</div>
 <asp:Button ID="btnSave" runat="server" Text="Save"/>
 <asp:Button ID="btnNext" runat="server" Text="Next" OnClick="btnNext_click"/>
 
