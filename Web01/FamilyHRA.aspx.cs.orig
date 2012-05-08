@@ -19,7 +19,11 @@ public partial class FamilyHRA : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
+<<<<<<< HEAD
         Master.PageHeader = "Family Conditions History";
+=======
+        Master.PageHeader = "Family HRA";
+>>>>>>> 8fe3e8fad45463cca6d259f88666e5750521054d
         if (!IsPostBack)
         {
             MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
@@ -49,19 +53,19 @@ public partial class FamilyHRA : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static List<Tuple<int, int>> GetFamilyHRAResponseList(int MemberMasterID, int AssessmentId)
+    public static List<Tuple<int, int>> GetFamilyHRAResponseList(int MemberMasterID)
     {
         List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
         MemberInfoList obj = new MemberInfoList(1);
-        lst = obj.GetFamilyHRAResponse(MemberMasterID, AssessmentId, 1);
+        lst = obj.GetFamilyHRAResponse(MemberMasterID, 1);
         return lst;
     }
 
     [WebMethod]
-    public static void InsertFamilyHRA(int MemberMasterID, int AssessmentId, int FamilyQuestionId)
+    public static void InsertFamilyHRA(int MemberMasterID, int FamilyQuestionId)
     {
         MemberInfoList obj = new MemberInfoList(1);
-        obj.INSERTFAMILYHRA(MemberMasterID, AssessmentId, FamilyQuestionId, 1);
+        obj.INSERTFAMILYHRA(MemberMasterID, FamilyQuestionId, 1);
     }
 }
 
