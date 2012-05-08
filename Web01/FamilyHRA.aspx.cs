@@ -19,6 +19,7 @@ public partial class FamilyHRA : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
+        Master.PageHeader = "Family HRA";
         if (!IsPostBack)
         {
             MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
@@ -27,7 +28,7 @@ public partial class FamilyHRA : System.Web.UI.Page
     }
     protected void btnNext_click(object sender, EventArgs e)
     {
-        Response.Redirect("MemberHRA.aspx?ID=" + MemberMasterID.ToString());
+        Response.Redirect("MemberHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
     }
     [WebMethod]
     public static List<Tuple<int, string>> GetFamilyQuestionList(int userid)

@@ -63,8 +63,9 @@ namespace HRACore
                 IDataReader dr = dbhAssessments.ExecuteReader(procName);
                 while (dr.Read())
                 {
-                    lst.Add(new Question(dr));
+                     lst.Add(new Question(dr));
                 }
+                
                 dbhAssessments.Dispose();
             }
             return lst;
