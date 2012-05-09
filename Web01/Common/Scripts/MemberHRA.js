@@ -20,6 +20,7 @@
                         break;
                     case "DROPDOWNLIST":
                         var strOptions = "";
+                        strOptions += "<option value=''>-- Select One --</option>";
                         for (var i = 0; i < item.Options.length; i++) {
                             strOptions += "<option value='" + item.Options[i].Item3 + "'>" + item.Options[i].Item2 + "</option>";
                         }
@@ -29,9 +30,10 @@
                     case "RADIOBUTTONS":
                         var strOptions = "";
                         for (var i = 0; i < item.Options.length; i++) {
-                            strOptions += "<div class='grid_8 alpha push_2'><input type='radio' id='rad_" + item.ID + "_" + i + "'" + " name='rad_" + item.ID + "' value='" + item.Options[i].Item3 + "' />" + item.Options[i].Item2 + "</div>"
+                            strOptions += "<div class='grid_11 alpha push_2'><input type='radio' id='rad_" + item.ID + "_" + i + "'" + " name='rad_" + item.ID + "' value='" + item.Options[i].Item3 + "' />" + item.Options[i].Item2 + "</div>"
                         }
-                        strTable += "<div class='grid_1 alpha'>&nbsp;</div>" + strOptions;
+                        //strTable += "<div class='grid_1 alpha'>&nbsp;</div>" + strOptions;
+                        strTable += strOptions;
                         break;
                     case "CHECKBOX":
                         var strOptions = "";
@@ -55,10 +57,10 @@ $("input[id$='btnSave']").live("click", function () {
     var answerString = "";
     var questionidArr = [];
     var answerArr = [];
+    var noAnswer = true;
     $("#dvQuetionaire .Question").each(function (index) {
         var QuetionId = $(this).attr("id").toString().split('_')[1];
         var responsetype = "";
-        var answer = "";
         responsetype = $(this).children(".restype").text();
         //alert(QuetionId + " -- " + responsetype);
         var selectedVal = "";
@@ -74,12 +76,17 @@ $("input[id$='btnSave']").live("click", function () {
                 break;
             case "DROPDOWNLIST":
                 selectedVal = $("#ddl_" + QuetionId).val();
-
+                if (selectedVal != "") {
+                    noAnswer = false;
+                }
                 break;
             case "RADIOBUTTONS":
                 $("input[name*='rad_" + QuetionId + "']").each(function () {
                     if ($(this).attr("checked") == "checked") {
                         selectedVal = $(this).val();
+                        if (selectedVal != "") {
+                            noAnswer = false;
+                        }
                     }
                 });
                 break;
@@ -89,13 +96,15 @@ $("input[id$='btnSave']").live("click", function () {
                 //answerString += tableid + "~" + answer;
                 break
         }
-        if (selectedVal == null || selectedVal == "undefined") {
-            selectedVal = "0";
-        }
+        
+
         questionidArr[index] = QuetionId;
         answerArr[index] = selectedVal;
     });
-
+    if (noAnswer == true) {
+        alert("You need to Answer atleast one Question.");
+        return;
+    }
     SaveResponses(questionidArr.toString(), answerArr.toString());
 });
 
