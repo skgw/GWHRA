@@ -3,11 +3,12 @@
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  <style type="text/css">
-      .error {
-          color: red;
-      }
-  </style>
+    <style type="text/css">
+        .error
+        {
+            color: red;
+        }
+    </style>
     <div class="grid_16 alpha">
         <asp:LinkButton ID="lnkMemberDetails" runat="server" OnClick="lnkMemberDetails_click">MemberDetails</asp:LinkButton>
         <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FamilyDetails</asp:LinkButton>
@@ -31,10 +32,10 @@
                                     RELATIONSHIP
                                 </th>
                                 <th>
-                                   LAST NAME
+                                    LAST NAME
                                 </th>
                                 <th>
-                                   FIRST NAME
+                                    FIRST NAME
                                 </th>
                                 <th>
                                     SEX
@@ -80,7 +81,6 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                               
                                 <th>
                                     ID
                                 </th>
@@ -88,10 +88,10 @@
                                     RELATIONSHIP
                                 </th>
                                 <th>
-                                   LAST NAME
+                                    LAST NAME
                                 </th>
                                 <th>
-                                   FIRST NAME
+                                    FIRST NAME
                                 </th>
                                 <th>
                                     SEX
@@ -215,18 +215,18 @@
             <li>Frailty considerations </li>
         </ul>
     </div>
-     <script type="text/javascript">
-         $(function () {
-             $("tr:odd").addClass('AlternateRow');
-             $("#tblAssessments tbody tr")
+    <script type="text/javascript">
+        $(function () {
+            $("tr:odd").addClass('AlternateRow');
+            $("#tblAssessments tbody tr")
               .css("cursor", "pointer")
         .click(function () {
             $row = $(this);
             var id = $("td", $row).eq(0).text();
-           
-           // alert("FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id));
+            // alert("FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id));
             window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+            // window.location.href = "Narrative.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
         });
-         });
-   </script>
+        });
+    </script>
 </asp:Content>
