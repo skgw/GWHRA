@@ -41,4 +41,19 @@ public partial class MemberHRA : System.Web.UI.Page
         lstQuestions = Obj.GetAssessmentQuestions(AssessmentID, 1);
         return lstQuestions;
     }
+
+    [WebMethod]
+    public static void SaveResponses(int MemberMasterID, int AssessmentID, string QuestionId, string Answers)
+    {
+        AssessmentResponse obj = new AssessmentResponse(1);
+        Dictionary<int, string> arr = new Dictionary<int, string>();
+        for (int i = 0; i < QuestionId.Split(',').Length; i++)
+        {
+           arr.Add(Convert.ToInt32(QuestionId.Split(',')[i]), Answers.Split(',')[i].ToString());
+        }
+        obj.MemberResponses = arr;
+        obj.MemberMasterID = MemberMasterID;
+        obj.AssessmentID = AssessmentID;
+        obj.SaveMemberResponses();
+    }
 }

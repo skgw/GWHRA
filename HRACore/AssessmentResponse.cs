@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,23 @@ namespace HRACore
         }
         public void SaveMemberResponses()
         {
+            //foreach (int id in this.MemberResponses.Keys)
+            //{
+            //    int xyz = id;
+            //}  
+
             
+            string procName = "";
+            using (dbhAssessmentResponse = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {
+                dbhAssessmentResponse.AddParameter("@MemberMasterID", this.MemberMasterID);
+                dbhAssessmentResponse.AddParameter("@assessment_id", this.AssessmentID);
+                dbhAssessmentResponse.AddParameter("@ResponseList", this.MemberResponses);
+                dbhAssessmentResponse.AddParameter("@CurrentUserID", this.mCurrentUserID);
+                IDataReader dr = dbhAssessmentResponse.ExecuteReader(procName);
+
+                dbhAssessmentResponse.Dispose();
+            }
         }
         public void SaveFamilyResponses()
         {

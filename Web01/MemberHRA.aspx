@@ -4,7 +4,15 @@
     <script src="Common/Scripts/MemberHRA.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+    var assessmentId = 0;
+    var memberMasterID = 0;
     $(function () {
+        if (jQuery.trim(getParameterByName("ID")) != "") {
+            memberMasterID = jQuery.trim(getParameterByName("ID"));
+        }
+        if (jQuery.trim(getParameterByName("AssessmentId")) != "") {
+            assessmentId = jQuery.trim(getParameterByName("AssessmentId"));
+        }
         GetQuestionaire();
     });
 </script>
