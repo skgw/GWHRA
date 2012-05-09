@@ -79,8 +79,8 @@ namespace HRACore
             DataSet DSNarrative = null;
             using (dbhMemberInfo = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
             {
-                dbhMemberInfo.AddParameter("@SubscriberID", SubscriberID);
-                dbhMemberInfo.AddParameter("@CurrentUserID", mCurrentUserID);
+                dbhMemberInfo.AddParameter("@pAssessmentID", AssessmentID);
+                dbhMemberInfo.AddParameter("@pMemberID", MemberMasterID);
                DSNarrative = dbhMemberInfo.ExecuteDataSet("GET_NARRATIVE");
                 
             }
