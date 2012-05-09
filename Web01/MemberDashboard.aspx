@@ -3,6 +3,11 @@
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+  <style type="text/css">
+      .error {
+          color: red;
+      }
+  </style>
     <div class="grid_16 alpha">
         <asp:LinkButton ID="lnkMemberDetails" runat="server" OnClick="lnkMemberDetails_click">MemberDetails</asp:LinkButton>
         <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FamilyDetails</asp:LinkButton>
@@ -11,9 +16,9 @@
         <div>
             <asp:ListView ID="lvFamilyDetails" runat="server">
                 <LayoutTemplate>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="tblFamilyDetails">
                         <thead>
-                            <tr style="background-color: #2ccccc">
+                            <tr style="background-color: #dfdfdf">
                                 <th colspan="6">
                                     FAMILY MEMBERS
                                 </th>
@@ -23,16 +28,16 @@
                                     ID
                                 </th>
                                 <th>
-                                    Relation
+                                    RELATIONSHIP
                                 </th>
                                 <th>
-                                    Last Name
+                                   LAST NAME
                                 </th>
                                 <th>
-                                    First Name
+                                   FIRST NAME
                                 </th>
                                 <th>
-                                    Sex
+                                    SEX
                                 </th>
                                 <th>
                                     DOB
@@ -75,23 +80,24 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                               
                                 <th>
                                     ID
                                 </th>
                                 <th>
-                                    Relation
+                                    RELATIONSHIP
                                 </th>
                                 <th>
-                                    Name
+                                   LAST NAME
                                 </th>
                                 <th>
-                                    Sex
+                                   FIRST NAME
+                                </th>
+                                <th>
+                                    SEX
                                 </th>
                                 <th>
                                     DOB
-                                </th>
-                                <th>
-                                    Status
                                 </th>
                             </tr>
                         </thead>
@@ -109,9 +115,9 @@
         <div>
             <asp:ListView ID="lvMemberAssessments" runat="server">
                 <LayoutTemplate>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="tblAssessments">
                         <thead>
-                            <tr style="background-color: #2ccccc">
+                            <tr style="background-color: #dfdfdf">
                                 <th colspan="4">
                                     ASSESSMENTS
                                 </th>
@@ -148,25 +154,30 @@
                             <%#Eval("AssessmentGroupName") %>
                         </td>
                         <td>
-                            <%#Eval("Status") %>
+                            <%# (Eval("Status").ToString()=="A")?"<span class='error'>Due</span>":"Completed" %>
                         </td>
                     </tr>
                 </ItemTemplate>
                 <EmptyDataTemplate>
                     <table class="table table-bordered">
                         <thead>
+                            <tr style="background-color: #dfdfdf">
+                                <th colspan="4">
+                                    ASSESSMENTS
+                                </th>
+                            </tr>
                             <tr>
                                 <th>
                                     ID
                                 </th>
                                 <th>
-                                    Relation
+                                    NAME
                                 </th>
                                 <th>
-                                    Name
+                                    GROUP
                                 </th>
                                 <th>
-                                    Sex
+                                    STATUS
                                 </th>
                             </tr>
                         </thead>
@@ -204,4 +215,18 @@
             <li>Frailty considerations </li>
         </ul>
     </div>
+     <script type="text/javascript">
+         $(function () {
+             $("tr:odd").addClass('AlternateRow');
+             $("#tblAssessments tbody tr")
+              .css("cursor", "pointer")
+        .click(function () {
+            $row = $(this);
+            var id = $("td", $row).eq(0).text();
+           
+           // alert("FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id));
+            window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+        });
+         });
+   </script>
 </asp:Content>

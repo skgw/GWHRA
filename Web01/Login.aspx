@@ -19,14 +19,14 @@
                         <dt>
                             <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name</asp:Label></dt>
                         <dd>
-                            <asp:TextBox ID="UserName" runat="server" CssClass="input-large"></asp:TextBox>
+                            <asp:TextBox ID="UserName" runat="server" ></asp:TextBox>
                             <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
                                 CssClass="Error" ErrorMessage="User Name is required." ToolTip="User Name is required."
                                 ValidationGroup="siteLogin">*</asp:RequiredFieldValidator></dd>
                         <dt>
                             <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password</asp:Label></dt>
                         <dd>
-                            <asp:TextBox ID="Password" runat="server" TextMode="Password" CssClass="input-large"></asp:TextBox>
+                            <asp:TextBox ID="Password" runat="server" TextMode="Password" ></asp:TextBox>
                             <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
                                 CssClass="Error" ErrorMessage="Password is required." ToolTip="Password is required."
                                 ValidationGroup="siteLogin">*</asp:RequiredFieldValidator></dd>
@@ -34,7 +34,7 @@
                             <asp:HyperLink ID="hlForgotPassword" runat="server" NavigateUrl="ForgotPassword.aspx">Forgot Password</asp:HyperLink></dt>
                       
                         <dd>
-                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In &raquo;"
+                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In &raquo;" CssClass="btn btn-primary"
                                 ValidationGroup="siteLogin" /></dd>
                     </dl>
                 </LayoutTemplate>

@@ -33,6 +33,8 @@
                 &nbsp;</div>
             <div class="grid_8 omega">
                 <asp:Image ID="imgCompany" runat="server" ImageAlign="Right" ImageUrl="~/Common/Images/logo-gw.jpg" />
+           <asp:LoginStatus runat="server" ID="loginStatus" LogoutPageUrl="~/Login.aspx" LogoutAction="RedirectToLoginPage"
+           />
             </div>
         </div>
         <div class="container_24 alpha" id="content">
