@@ -2,8 +2,9 @@
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <style type="text/css">
-   .relation2 { writing-mode: tb-rl; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); width: -moz-fit-content;}
-   
+  /* .relation2 { writing-mode: tb-rl; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); width: -moz-fit-content;}
+   */
+   th { background-color: #dfdfdf;}
 </style>
 
 <script type="text/javascript">
@@ -177,7 +178,7 @@
 <asp:Button ID="btnSave" runat="server" Text="Save"/>
 <asp:Button ID="btnNext" runat="server" Text="Next" OnClick="btnNext_click"/>
 
-<div id="dvFamily" class="grid">
+<div id="dvFamily" class="grid" >
     
 </div>
        
