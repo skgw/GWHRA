@@ -88,13 +88,18 @@
             </dl>
         </div>
     </div>
-    <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_click" ValidationGroup="FamilyDetails" />
-    <asp:Button ID="btnNext" runat="server" Text="Next" OnClick="btnNext_click" />
+    <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_click" ValidationGroup="FamilyDetails"
+        CssClass="btn btn-success" />
     <div class="grid_24 alpha">
         <asp:ListView ID="lvFamilyDetails" runat="server">
             <LayoutTemplate>
                 <table class="table table-bordered">
                     <thead>
+                    <tr style="background-color : #2ccccc">
+                        <th colspan="6">
+                        FAMILY MEMBERS
+                        </th>
+                    </tr>
                         <tr>
                             <th>
                                 ID
@@ -103,10 +108,10 @@
                                 Relation
                             </th>
                             <th>
-                               Last Name
+                                Last Name
                             </th>
                             <th>
-                               First Name
+                                First Name
                             </th>
                             <th>
                                 Sex
@@ -114,9 +119,9 @@
                             <th>
                                 DOB
                             </th>
-                            <th>
+                            <%--<th>
                                 Status
-                            </th>
+                            </th>--%>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,7 +135,7 @@
                         <%#Eval("ID") %>
                     </td>
                     <td>
-                      <%#Eval("RelationshipName")%>
+                        <%#Eval("RelationshipName")%>
                     </td>
                     <td>
                         <%#Eval("Lastname") %>
@@ -142,10 +147,10 @@
                         <%#Eval("Sex") %>
                     </td>
                     <td>
-                        <%#Eval("DOB") %>
+                        <%# ((DateTime)Eval("DOB")).ToShortDateString() %>
                     </td>
-                    <td>
-                    </td>
+                    <%--  <td>
+                    </td>--%>
                 </tr>
             </ItemTemplate>
             <EmptyDataTemplate>
@@ -182,5 +187,13 @@
                 </table>
             </EmptyDataTemplate>
         </asp:ListView>
+    </div>
+    <div class="grid_24 alpha">
+        <div class="grid_20 alpha" style="text-align:right;">
+            Once done, please click this button to enter medical details about your family.
+        </div>
+        <div class="grid_4 omega">
+            <asp:Button ID="btnNext" runat="server" Text="Next" CssClass="btn btn-primary" OnClick="btnNext_click" />
+        </div>
     </div>
 </asp:Content>

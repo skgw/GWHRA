@@ -45,6 +45,7 @@
     <Compile Include="AssessmentGroup.cs" />
     <Compile Include="AssessmentGroupList.cs" />
     <Compile Include="AssessmentList.cs" />
+    <Compile Include="AssessmentResponse.cs" />
     <Compile Include="FamilyMember.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberInfo.cs" />
