@@ -74,5 +74,17 @@ namespace HRACore
                 }
             }
         }
+        public DataSet GetNarrative(int MemberMasterID, int AssessmentID )
+        {
+            DataSet DSNarrative = null;
+            using (dbhMemberInfo = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
+            {
+                dbhMemberInfo.AddParameter("@SubscriberID", SubscriberID);
+                dbhMemberInfo.AddParameter("@CurrentUserID", mCurrentUserID);
+               DSNarrative = dbhMemberInfo.ExecuteDataSet("GET_NARRATIVE");
+                
+            }
+            return DSNarrative;
+        }
     }
 }
