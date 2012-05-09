@@ -8,24 +8,27 @@
         dataType: "json",
         success: function (msg) {
             $.each(msg.d, function (index, item) {
-                //alert(item.ID + " -- " + item.Content + " -- " + item.DisplayOrder + " -- " + item.ResponseType + " -- " + item.ResponseText);
-                var strTable = "<div id='" + "Q_" + item.ID + "' class='Question grid_24 last'><div class='grid_1 alpha'>" + (index + 1) + ".</div><div class='grid_14'>" + item.Content + "</div><div class='restype grid_8 omega' style='display:none;'>" + item.ResponseType + "</div>";
-                //alert(item.ResponseType);
+
+                var strTable = "<div id='" + "Q_" + item.ID + "' class='Question grid_24 omega'>";
+                strTable += "<div class='grid_1 alpha'>" + (index + 1) + ".</div>";
+                strTable += "<div class='grid_14'>" + item.Content + "</div>";
+                strTable += "<div class='restype grid_8 omega' style='display:none;'>" + item.ResponseType + "</div>";
                 switch (item.ResponseType) {
                     case "TEXTBOX":
-                        strTable += "<div class='grid_1 alpha'>&nbsp;</div><div class='grid_20 alpha'><input type='text'" + " id='" + "Q_" + item.ID + "_1'></textbox></div>";
+                        strTable += "<div class='grid_1 alpha'>&nbsp;</div>";
+                        strTable += "<div class='grid_20 omega'><input type='text'" + " id='" + "Q_" + item.ID + "_1'></textbox></div>";
                         break;
                     case "DROPDOWNLIST":
                         var strOptions = "";
                         for (var i = 0; i < item.Options.length; i++) {
                             strOptions += "<option value='" + item.Options[i].Item3 + "'>" + item.Options[i].Item2 + "</option>";
                         }
-                        strTable += "<div class='grid_1 alpha'>&nbsp;</div><div class='grid_20 omega push_2'><select id='ddl_" + item.ID + "'>" + strOptions + "</select></div>";
+                        strTable += "<div class='grid_1 alpha'>&nbsp;</div>";
+                        strTable += "<div class='grid_20 omega push_2'><select id='ddl_" + item.ID + "'>" + strOptions + "</select></div>";
                         break;
                     case "RADIOBUTTONS":
                         var strOptions = "";
                         for (var i = 0; i < item.Options.length; i++) {
-                            //strOptions += "<option value='" + item.Options[i].Item3 + "'>" + item.Options[i].Item2 + "</option>";
                             strOptions += "<div class='grid_20 alpha push_2'><input type='radio' id='rad_" + item.ID + "_" + i + "'" + " name='rad_" + item.ID + "' value='" + item.Options[i].Item3 + "' />" + item.Options[i].Item2 + "</div>"
                         }
                         strTable += "<div class='grid_1 alpha'>&nbsp;</div>" + strOptions;
@@ -45,7 +48,7 @@
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             //CheckSession(XMLHttpRequest.responseText);
         }
-    });                                 //end ajax
+    });                                  //end ajax
 }
 
 $("input[id$='btnSave']").live("click", function () {
