@@ -4,15 +4,15 @@
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-                $(function () {
-                    $("table tbody tr")
+        $(function () {
+            $("table tbody tr")
                 .css("cursor", "pointer")
                 .click(function () {
                     $row = $(this);
                     var id = $("td", $row).eq(0).text();
                     window.location.href = "AssessmentGroups.aspx?AGroupid=" + $.trim(id);
                 });
-                });
+        });
     
     </script>
     <div class="grid_24 alpha append_bottom">
@@ -42,11 +42,51 @@
     <div class="grid_24 alpha">
         <asp:ListView ID="lvAssessmentGroups" runat="server">
             <EmptyDataTemplate>
-                <b>No records returned.</b>
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th colspan="6" style="background-color: #dfdfdf">
+                                ASSESSMENT GROUPS
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Created Date
+                            </th>
+                            <th>
+                                Created By
+                            </th>
+                            <th>
+                                Is Active
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">
+                                No records returned.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </EmptyDataTemplate>
             <LayoutTemplate>
                 <table class="table table-bordered ">
                     <thead>
+                        <tr>
+                            <th colspan="6" style="background-color:#dfdfdf;">
+                                ASSESSMENT GROUPS
+                            </th>
+                        </tr>
                         <tr>
                             <th>
                                 ID

@@ -8,7 +8,7 @@ using HRACore;
 
 public partial class Config_HRA_SearchAGroups : System.Web.UI.Page
 {
-    private int CurrentUserID = 1;
+    private int CurrentUserID = 1003;
     protected void Page_Load(object sender, EventArgs e)
     {
         Master.PageHeader = "Search Assessment Groups";

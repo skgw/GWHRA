@@ -21,7 +21,7 @@ namespace HRACore
             using (mAGL_DBHelper = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
             {
                 mAGL_DBHelper.AddParameter("@name", assessmentGroupName);
-                mAGL_DBHelper.AddParameter("@status", assessmentGroupStatus);
+                mAGL_DBHelper.AddParameter("@status", (assessmentGroupStatus)?'A':'I');
                 mAGL_DBHelper.AddParameter("@CurrentUserID", 1);
                 IDataReader dr = mAGL_DBHelper.ExecuteReader(procName);
                 if (dr.Read())
