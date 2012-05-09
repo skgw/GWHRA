@@ -22,6 +22,7 @@ public partial class MemberDashboard : System.Web.UI.Page
         if (!IsPostBack)
         {
             DisplayFamily();
+            DisplayAssessmentsForMember();
         }
     }
     protected void DisplayFamily()
@@ -35,7 +36,7 @@ public partial class MemberDashboard : System.Web.UI.Page
     {
         AssessmentList alist = new AssessmentList();
         List<Assessment> obj =  alist.GetAssessmentsForMember(mInfo.ID, CurrentUserID);
-        lvMemberAssessments.DataSource = alist;
+        lvMemberAssessments.DataSource = obj;
         lvMemberAssessments.DataBind();
     }
     protected void lnkMemberDetails_click(object sender, EventArgs e)

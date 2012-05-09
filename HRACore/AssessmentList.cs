@@ -25,8 +25,8 @@ namespace HRACore
                 while (dr.Read())
                 {
                     Assessment a = new Assessment(CurrentUserID);
-                    items.Add(a.LoadAssessmentInfoForMember(dr));
-                    items.Add(new Assessment(a));
+                    a.LoadAssessmentInfoForMember(dr);
+                    items.Add(a);
                 }
                 dbhAssessments.Dispose();
             }
