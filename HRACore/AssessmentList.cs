@@ -12,6 +12,26 @@ namespace HRACore
     public class AssessmentList
     {
         private DBHelper dbhAssessments;
+
+        public List<Assessment> GetAssessmentsForMember(int MemberMasterID, int CurrentUserID)
+        {
+            List<Assessment> items = new List<Assessment>();
+            const string procName = "GET_ASSESSMENTS_FOR_MEMBER";
+            using (dbhAssessments = new DBHelper(ConnectionStrings.DefaultDBConnection))
+            {                
+                dbhAssessments.AddParameter("@MemberMasterID", MemberMasterID);
+                dbhAssessments.AddParameter("@CURRENTUSERID", CurrentUserID);
+                IDataReader dr = dbhAssessments.ExecuteReader(procName);
+                while (dr.Read())
+                {
+                    Assessment a = new Assessment(CurrentUserID);
+                    items.Add(a.LoadAssessmentInfoForMember(dr));
+                    items.Add(new Assessment(a));
+                }
+                dbhAssessments.Dispose();
+            }
+            return items;
+        }
         public List<Assessment> GetAssessments(string Name, int GroupId, string EffectiveFrom, string EffectiveTo, char Status, int CurrentUserId)
         {
             List<Assessment> items = new List<Assessment>();

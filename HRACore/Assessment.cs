@@ -28,6 +28,9 @@ namespace HRACore
         private char mStatus;
         private int mCurrentUserID = 0;
 
+        public DateTime CompletedDate { get; set; }
+        
+
         public int ID
         {
             get { return mID; }
@@ -154,6 +157,23 @@ namespace HRACore
             Status = Convert.ToChar(reader[8].ToString());
             AssessmentGroupName = reader[9].ToString();
             
+        }
+        public void LoadAssessmentInfoForMember(IDataReader reader)
+        {
+
+            ID = Int32.Parse(reader[0].ToString());
+            Name = reader[1].ToString();
+            Description = reader[2].ToString();
+            AssessmentGroupId = Int32.Parse(reader[3].ToString());
+            EffectiveFrom = DateTime.Parse(reader[4].ToString());
+            EffectiveTo = DateTime.Parse(reader[5].ToString());
+            ModifiedBy = reader[6].ToString();
+            ModifiedDate = reader[7] != DBNull.Value ? DateTime.Parse(reader[7].ToString()) : Convert.ToDateTime("01/01/2099");
+            Status = Convert.ToChar(reader[8].ToString());
+            AssessmentGroupName = reader[9].ToString();
+            CompletedDate = string.IsNullOrWhiteSpace(reader[10].ToString())
+                                ? DateTime.MinValue
+                                : Convert.ToDateTime(reader[10].ToString());
         }
   
     }

@@ -13,12 +13,30 @@ public partial class MemberDashboard : System.Web.UI.Page
     BaseCore.CodeManager cm = new CodeManager(1);
     private MemberInfo mInfo;
     private int CurrentUserID = 0;
-  
+
     protected void Page_Load(object sender, EventArgs e)
-    {      
+    {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
         Master.PageHeader = "Welcome " + mInfo.Firstname + " " + mInfo.Lastname;
+        if (!IsPostBack)
+        {
+            DisplayFamily();
+        }
+    }
+    protected void DisplayFamily()
+    {
+        mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
+        lvFamilyDetails.DataSource = mInfo.familyMembers;
+        lvFamilyDetails.DataBind();
+
+    }
+    protected void DisplayAssessmentsForMember()
+    {
+        AssessmentList alist = new AssessmentList();
+        List<Assessment> obj =  alist.GetAssessmentsForMember(mInfo.ID, CurrentUserID);
+        lvMemberAssessments.DataSource = alist;
+        lvMemberAssessments.DataBind();
     }
     protected void lnkMemberDetails_click(object sender, EventArgs e)
     {
