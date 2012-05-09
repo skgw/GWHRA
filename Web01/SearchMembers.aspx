@@ -44,33 +44,48 @@
             </dl>
         </div>
     </div>
-    <div class="grid_24 alpha">
-        <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" />
-        <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click" />
+    <div class="grid_24 alpha append_bottom">
+        <div class="grid_6 alpha">
+            &nbsp;</div>
+        <div class="grid_6">
+            <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
+                CssClass="btn btn-primary" />
+        </div>
+        <div class="grid_6 ">
+            &nbsp;
+        </div>
+        <div class="grid_6 omega">
+            <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click" CssClass="btn btn-inverse" />
+        </div>
     </div>
     <div class="grid_24 alpha">
         <asp:ListView ID="lvMemberDetails" runat="server">
             <LayoutTemplate>
                 <table class="table table-bordered">
                     <thead>
+                        <tr  style="background-color: #DFDFDF;">
+                            <th colspan="6">
+                                MEMBERS
+                            </th>
+                        </tr>
                         <tr>
                             <th>
-                                Member Master ID
+                                ID
                             </th>
                             <th>
-                                Member ID
+                                MEMBER ID
                             </th>
                             <th>
-                                First name
+                                FIRST NAME
                             </th>
                             <th>
-                                Last name
+                                LAST NAME
                             </th>
                             <th>
                                 DOB
                             </th>
                             <th>
-                                Sex
+                                SEX
                             </th>
                         </tr>
                     </thead>

@@ -3,11 +3,195 @@
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+  <style type="text/css">
+      .error {
+          color: red;
+      }
+  </style>
     <div class="grid_16 alpha">
-    <asp:LinkButton ID="lnkMemberDetails" runat="server" OnClick="lnkMemberDetails_click">MemberDetails</asp:LinkButton>
-    <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FamilyDetails</asp:LinkButton>
-    <%--<a href="MemberDetails.aspx">Member Details</a>
+        <asp:LinkButton ID="lnkMemberDetails" runat="server" OnClick="lnkMemberDetails_click">MemberDetails</asp:LinkButton>
+        <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FamilyDetails</asp:LinkButton>
+        <%--<a href="MemberDetails.aspx">Member Details</a>
     <a href="FamilyDetails.aspx">Family Details</a>--%>
+        <div>
+            <asp:ListView ID="lvFamilyDetails" runat="server">
+                <LayoutTemplate>
+                    <table class="table table-bordered" id="tblFamilyDetails">
+                        <thead>
+                            <tr style="background-color: #dfdfdf">
+                                <th colspan="6">
+                                    FAMILY MEMBERS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    RELATIONSHIP
+                                </th>
+                                <th>
+                                   LAST NAME
+                                </th>
+                                <th>
+                                   FIRST NAME
+                                </th>
+                                <th>
+                                    SEX
+                                </th>
+                                <th>
+                                    DOB
+                                </th>
+                                <%--<th>
+                                Status
+                            </th>--%>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <asp:PlaceHolder ID="itemPlaceHolder" runat="server"></asp:PlaceHolder>
+                        </tbody>
+                    </table>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <tr>
+                        <td>
+                            <%#Eval("ID") %>
+                        </td>
+                        <td>
+                            <%#Eval("RelationshipName")%>
+                        </td>
+                        <td>
+                            <%#Eval("Lastname") %>
+                        </td>
+                        <td>
+                            <%#Eval("Firstname") %>
+                        </td>
+                        <td>
+                            <%#Eval("Sex") %>
+                        </td>
+                        <td>
+                            <%# ((DateTime)Eval("DOB")).ToShortDateString() %>
+                        </td>
+                        <%--  <td>
+                    </td>--%>
+                    </tr>
+                </ItemTemplate>
+                <EmptyDataTemplate>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                               
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    RELATIONSHIP
+                                </th>
+                                <th>
+                                   LAST NAME
+                                </th>
+                                <th>
+                                   FIRST NAME
+                                </th>
+                                <th>
+                                    SEX
+                                </th>
+                                <th>
+                                    DOB
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6">
+                                    No dependents.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </EmptyDataTemplate>
+            </asp:ListView>
+        </div>
+        <div>
+            <asp:ListView ID="lvMemberAssessments" runat="server">
+                <LayoutTemplate>
+                    <table class="table table-bordered" id="tblAssessments">
+                        <thead>
+                            <tr style="background-color: #dfdfdf">
+                                <th colspan="4">
+                                    ASSESSMENTS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    NAME
+                                </th>
+                                <th>
+                                    GROUP
+                                </th>
+                                <th>
+                                    STATUS
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <asp:PlaceHolder ID="itemPlaceHolder" runat="server"></asp:PlaceHolder>
+                        </tbody>
+                    </table>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <tr>
+                        <td>
+                            <%#Eval("ID") %>
+                        </td>
+                        <td>
+                            <%#Eval("Name")%>
+                        </td>
+                        <td>
+                            <%#Eval("AssessmentGroupName") %>
+                        </td>
+                        <td>
+                            <%# (Eval("Status").ToString()=="A")?"<span class='error'>Due</span>":"Completed" %>
+                        </td>
+                    </tr>
+                </ItemTemplate>
+                <EmptyDataTemplate>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="background-color: #dfdfdf">
+                                <th colspan="4">
+                                    ASSESSMENTS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    NAME
+                                </th>
+                                <th>
+                                    GROUP
+                                </th>
+                                <th>
+                                    STATUS
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4">
+                                    No assessments due at this time.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </EmptyDataTemplate>
+            </asp:ListView>
+        </div>
     </div>
     <div class="grid_8 omega">
         <p>
@@ -28,7 +212,21 @@
             <li>Education, ethnicity, marital status </li>
             <li>Life style issues (exercise) </li>
             <li>Preventive health and safety considerations</li>
-            <li> Frailty considerations </li>
+            <li>Frailty considerations </li>
         </ul>
     </div>
+     <script type="text/javascript">
+         $(function () {
+             $("tr:odd").addClass('AlternateRow');
+             $("#tblAssessments tbody tr")
+              .css("cursor", "pointer")
+        .click(function () {
+            $row = $(this);
+            var id = $("td", $row).eq(0).text();
+           
+           // alert("FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id));
+            window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+        });
+         });
+   </script>
 </asp:Content>
