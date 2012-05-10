@@ -1,4 +1,4 @@
-﻿dt
+﻿/*dt
 {
 	clear:both;
 	width : 33%;
@@ -13,8 +13,32 @@ dd
 	width : auto;
 	margin : 0.25em 0.25em 0.5em 0.25em;
 	line-height : normal;	
+	
 }
 dl
 {
 	width : 100%;
+}
+*/
+
+DT
+{
+                clear: both;
+                width: 33%;
+                float: left;
+                text-align: left;
+                line-height: normal;
+                padding: 0.25em 0.25em 0.5em 0.25em; /*new*/
+}
+ 
+DD
+{
+                /*float: left;*/
+                width: auto; /*    width: 64%;*/ /*margin: 0 0 0.5em 0.25em;*/
+                margin: 0.25em 0.25em 0.5em 0.25em; /*new*/
+                line-height: normal;
+}
+dl
+{
+                width: 100%;
 }

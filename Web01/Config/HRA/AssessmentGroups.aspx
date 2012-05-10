@@ -5,11 +5,11 @@
         <dl>
             <dt>Name</dt>
             <dd>
-                <asp:TextBox ID="txtName" runat="server" CssClass="grid_15"></asp:TextBox>
+                <asp:TextBox ID="txtName" runat="server" CssClass="grid_10"></asp:TextBox>
             </dd>
             <dt>Description</dt>
             <dd>
-                <asp:TextBox ID="txtDescription" runat="server" CssClass="grid_15 textarea_h80" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="txtDescription" runat="server" CssClass="grid_10 textarea_h80" TextMode="MultiLine"></asp:TextBox>
             </dd>
             <dt>IsActive</dt>
             <dd>

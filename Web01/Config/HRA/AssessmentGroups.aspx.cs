@@ -31,9 +31,6 @@ public partial class Config_HRA_AssessmentGroups : System.Web.UI.Page
         txtName.Text = agrp.Name;
         txtDescription.Text = agrp.Description;
         rblAGroupStatus.SelectedValue = agrp.Status;
-
-
-       
     }
 
 }

@@ -11,6 +11,17 @@ public partial class BasePages_Base : System.Web.UI.MasterPage
 {
     UserInfo currentUser = new UserInfo();
 
+    public UserInfo CurrentUser
+    {
+        get
+        {
+            return currentUser;
+        }
+        set
+        {
+            currentUser = value;
+        }
+    }
     public string PageHeader
     {
         get

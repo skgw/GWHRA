@@ -23,7 +23,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         {
             List<QuestionGroup> lst = new List<QuestionGroup>();
             QuestionGroupList obj = new QuestionGroupList();
-            lst = obj.GetQuestionGroups("",'A');
+            lst = obj.GetQuestionGroups("",'A',Master.CurrentUser.UserID);
             ddlQuestionGroup.DataSource = lst;
             ddlQuestionGroup.DataTextField = "Name";
             ddlQuestionGroup.DataValueField = "ID";

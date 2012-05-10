@@ -43,7 +43,7 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     protected void PopulateGroups()
     {
         QuestionGroupList obj = new QuestionGroupList();
-        ddlQuestionGroup.DataSource = obj.GetQuestionGroups("",'A');
+        ddlQuestionGroup.DataSource = obj.GetQuestionGroups("",'A',Master.CurrentUser.UserID);
         ddlQuestionGroup.DataTextField = "Name";
         ddlQuestionGroup.DataValueField = "ID";
         ddlQuestionGroup.DataBind();

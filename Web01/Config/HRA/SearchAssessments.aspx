@@ -1,43 +1,41 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true" CodeFile="SearchAssessments.aspx.cs" 
-Inherits="Config_HRA_SearchAssessments" %>
-<%@ MasterType VirtualPath="~/BasePages/Base.master" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true"
+    CodeFile="SearchAssessments.aspx.cs" Inherits="Config_HRA_SearchAssessments" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<script type="text/javascript">
-    $(function () {
-        $("table tbody tr")
+<%@ MasterType VirtualPath="~/BasePages/Base.master" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script type="text/javascript">
+        $(function () {
+            $("table tbody tr")
         .css("cursor", "pointer")
         .click(function () {
             $row = $(this);
             var id = $("td", $row).eq(0).text();
             window.location.href = "Assessments.aspx?id=" + id;
         });
-        BindEvents();
-    });
-
-    function BindEvents() {
-        $("input[id$='txtEffectiveFrom']").datepicker({
-            onSelect: function (e) {
-                //alert($("input[id$='txtEffectiveFrom']").val());
-            },
-            changeMonth: true,
-            changeYear: true,
-            maxDate: 0
+            BindEvents();
         });
-        $("input[id$='txtEffectiveTo']").datepicker({
-            onSelect: function (e) {
-                //alert($("input[id$='txtEffectiveFrom']").val());
-            },
-            changeMonth: true,
-            changeYear: true,
-            maxDate: 0
-        });
-    }
-</script>
 
- <div class="grid_24 alpha">
+        function BindEvents() {
+            $("input[id$='txtEffectiveFrom']").datepicker({
+                onSelect: function (e) {
+                    //alert($("input[id$='txtEffectiveFrom']").val());
+                },
+                changeMonth: true,
+                changeYear: true,
+                maxDate: 0
+            });
+            $("input[id$='txtEffectiveTo']").datepicker({
+                onSelect: function (e) {
+                    //alert($("input[id$='txtEffectiveFrom']").val());
+                },
+                changeMonth: true,
+                changeYear: true,
+                maxDate: 0
+            });
+        }
+    </script>
+    <div class="grid_24 alpha">
         <div class="grid_12 alpha">
- 
             <dl>
                 <dt>Assessment Name </dt>
                 <dd>
@@ -47,32 +45,44 @@ Inherits="Config_HRA_SearchAssessments" %>
                 <dd>
                     <asp:TextBox ID="txtEffectiveFrom" runat="server" CssClass="grid_3 alpha"></asp:TextBox>
                 </dd>
-            
-                
             </dl>
         </div>
         <div class="grid_12 omega">
             <dl>
                 <dt>Assessment Group</dt>
                 <dd>
-                    <asp:DropdownList ID="ddlAssessGroup" runat="server">
+                    <asp:DropDownList ID="ddlAssessGroup" runat="server">
                         <asp:ListItem Value="">-- Select One --</asp:ListItem>
                         <asp:ListItem Value="1000">Medicare</asp:ListItem>
-                    </asp:DropdownList>
+                    </asp:DropDownList>
                 </dd>
                 <dt>Effective To</dt>
                 <dd>
                     <asp:TextBox ID="txtEffectiveTo" runat="server" CssClass="grid_3 alpha"></asp:TextBox>
                 </dd>
-             </dl>
+            </dl>
         </div>
         <div class="grid_24 alpha">
-            <asp:LinkButton ID="lnkSearchAssessments" runat="server" CssClass="btn btn-primary" OnClick="lnkSearchAssessments_Click">Search</asp:LinkButton>
-                    <asp:LinkButton ID="lnkAddNew" runat="server" CssClass="btn btn-success" OnClick="lnkAddNew_Click">+ Add New</asp:LinkButton>
-                    <asp:LinkButton ID="lnkCancel" runat="server" CssClass="btn" OnClick="lnkCancel_Click">Reset</asp:LinkButton>
+            <div class="grid_2 alpha">
+            </div>
+            <div class="grid_7 ">
+            <asp:LinkButton ID="lnkSearchAssessments" runat="server" CssClass="btn btn-primary"
+                OnClick="lnkSearchAssessments_Click">Search</asp:LinkButton>
+            </div>
+            <div class="grid_6 ">
+             <asp:LinkButton ID="lnkAddNew" runat="server" CssClass="btn btn-success" OnClick="lnkAddNew_Click">+ Add New</asp:LinkButton>
+            </div>
+            <div class="grid_6 ">
+             <asp:LinkButton ID="lnkCancel" runat="server" CssClass="btn" OnClick="lnkCancel_Click">Reset</asp:LinkButton>
+            </div>
+            <div class="grid_2 omega">
+            </div>
+            
+           
+           
         </div>
     </div>
-    <div class="grid_24 alpha" style="margin-top:1em">
+    <div class="grid_24 alpha" style="margin-top: 1em">
         <asp:ListView ID="lvAssessments" runat="server">
             <EmptyDataTemplate>
                 <b>No records returned.</b>
@@ -80,6 +90,12 @@ Inherits="Config_HRA_SearchAssessments" %>
             <LayoutTemplate>
                 <table class="table table-bordered">
                     <thead>
+                      <tr>
+                            <th colspan="6"> 
+                             ASSESSMENTS
+                            </th>
+                           
+                        </tr>
                         <tr>
                             <th>
                                 ID

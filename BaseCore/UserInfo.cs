@@ -22,7 +22,7 @@ namespace BaseCore
         private Int64 _mRoleID;
 
         private string _mRoleName;
-        private Int64 _mUserID;
+        private int _mUserID;
         private string _mUsername;
 
         #endregion
@@ -46,7 +46,7 @@ namespace BaseCore
             }
         }
 
-        public Int64 UserID
+        public int UserID
         {
             get { return _mUserID; }
 
@@ -238,7 +238,7 @@ namespace BaseCore
         /// <param name="reader">The reader.</param>
         private void Fetch(IDataReader reader)
         {
-            UserID = DBNull.Value == reader["UserID"] ? 0 : Convert.ToInt64(reader["UserID"].ToString());
+            UserID = DBNull.Value == reader["UserID"] ? 0 : Convert.ToInt32(reader["UserID"].ToString());
 
             Username = DBNull.Value == reader["Username"] ? string.Empty : (reader["Username"].ToString());
 

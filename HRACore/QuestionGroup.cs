@@ -86,7 +86,7 @@ namespace HRACore
             CreatedBy = reader[5].ToString();
             //LastModifiedDate = DateTime.Parse(reader[5].ToString());
             //LastModifiedBy = reader[6].ToString();
-            QuestionsCount = reader[6] == DBNull.Value ? 0 : Int32.Parse(reader[6].ToString());
+           // QuestionsCount = reader[6] == DBNull.Value ? 0 : Int32.Parse(reader[6].ToString());
         }
         public QuestionGroup(int CurrentUserID)
         {

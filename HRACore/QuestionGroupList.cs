@@ -9,7 +9,7 @@ namespace HRACore
 {
     public class QuestionGroupList
     {
-        public List<QuestionGroup> GetQuestionGroups(string questionGroupName,char qGroupStatus)
+        public List<QuestionGroup> GetQuestionGroups(string questionGroupName,char qGroupStatus, int CurrentUserID)
         {
             List<QuestionGroup> items = new List<QuestionGroup>();
             const string procName = "GET_QUESTIONGROUPS";
@@ -17,7 +17,7 @@ namespace HRACore
             {
                 dbObj.AddParameter("@name",questionGroupName);
                 dbObj.AddParameter("@status", qGroupStatus);
-                dbObj.AddParameter("@CurrentUserID", 1);
+                dbObj.AddParameter("@CurrentUserID", CurrentUserID);
                 IDataReader dr = dbObj.ExecuteReader(procName);
                 while (dr.Read())
                 {

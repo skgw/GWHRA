@@ -33,7 +33,7 @@
             <asp:LinkButton ID="lbSearchQGroups" runat="server" CssClass="btn btn-primary" OnClick="lbSearchQGroups_Click">Search</asp:LinkButton>
         </div>
         <div class="grid_8">
-            <asp:Button ID="LinkButton1" runat="server" CssClass="btn" Text="Cancel" ></asp:Button>
+            <asp:Button ID="LinkButton1" runat="server" CssClass="btn" Text="Cancel"></asp:Button>
         </div>
         <div class="grid_8 omega">
             <asp:LinkButton ID="lbAddNew" runat="server" OnClick="lbAddNew_Click" CssClass="btn btn-success "> + Add New</asp:LinkButton>
@@ -47,6 +47,11 @@
             <LayoutTemplate>
                 <table class="table table-bordered ">
                     <thead>
+                        <tr>
+                            <th colspan="6">
+                                QUESTION GROUPS
+                            </th>
+                        </tr>
                         <tr>
                             <th>
                                 ID
@@ -66,9 +71,7 @@
                             <th>
                                 Is Active
                             </th>
-                            <th>
-                                Question count
-                            </th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -96,9 +99,7 @@
                     <td>
                         <%#Eval("Status") %>
                     </td>
-                    <td>
-                        <%#Eval("QuestionsCount") %>
-                    </td>
+                  
                 </tr>
             </ItemTemplate>
         </asp:ListView>
