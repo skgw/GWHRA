@@ -25,7 +25,7 @@
             </dl>
         </div>
         <div class="grid_7 omega">
-            <asp:CheckBox ID="cbAGroupStatus" runat="server" Text="Search Active groups only" />
+            <asp:CheckBox ID="cbAGroupStatus" runat="server" Text="Search Active groups only" Checked="true" />
         </div>
     </div>
     <div class="grid_24 alpha append_bottom">

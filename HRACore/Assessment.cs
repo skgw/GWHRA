@@ -126,6 +126,8 @@ namespace HRACore
                 dbhAssessment.AddParameter("@EFFECTIVE_FROM", this.EffectiveFrom);
                 dbhAssessment.AddParameter("@EFFECTIVE_TO", this.EffectiveTo);
                 dbhAssessment.AddParameter("@STATUS", this.Status);
+                dbhAssessment.AddParameter("@NARRATIVE_HEADER", "");
+                dbhAssessment.AddParameter("@NARRATIVE_FOOTER", "");
                 dbhAssessment.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
                 IDataReader reader = dbhAssessment.ExecuteReader("INSERTUPDATE_ASSESSMENTS");

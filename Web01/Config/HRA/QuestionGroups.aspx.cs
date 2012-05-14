@@ -9,7 +9,7 @@ using HRACore;
 
 public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
 {
-    private int GroupID = 0;
+    private int GroupID = -1;
     protected void Page_Load(object sender, EventArgs e)
     {
         Master.PageHeader = "Question Group Details";
@@ -32,7 +32,7 @@ public partial class Config_HRA_QuestionGroups : System.Web.UI.Page
     protected void lbSave_Click(object sender, EventArgs e)
     {
         QuestionGroup obj = new QuestionGroup(1);
-        obj.ID = (GroupID > 0) ? GroupID : 0;
+        obj.ID = (GroupID > 0) ? GroupID : -1;
         obj.Name = txtName.Text;
         obj.Description = txtDescription.Text;
         obj.Status = rblqGroupStatus.SelectedValue;

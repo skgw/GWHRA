@@ -24,7 +24,7 @@ namespace HRACore
                 mAGL_DBHelper.AddParameter("@status", (assessmentGroupStatus)?'A':'I');
                 mAGL_DBHelper.AddParameter("@CurrentUserID", 1);
                 IDataReader dr = mAGL_DBHelper.ExecuteReader(procName);
-                if (dr.Read())
+                while(dr.Read())
                 {
                     items.Add(new AssessmentGroup(dr));
                 }

@@ -23,7 +23,7 @@ public partial class Config_HRA_SearchAssessments : System.Web.UI.Page
         List<Assessment> lst = new List<Assessment>();
         AssessmentList obj = new AssessmentList();
 
-        lst = obj.GetAssessments(txtAssessmentName.Text, ddlAssessGroup.SelectedIndex == 0 ? 0 : Convert.ToInt32(ddlAssessGroup.SelectedValue), txtEffectiveFrom.Text, txtEffectiveTo.Text, 'A', mCurrentUserID);
+        lst = obj.GetAssessments(txtAssessmentName.Text, ddlAssessGroup.SelectedIndex == 0 ? "" : ddlAssessGroup.SelectedValue, txtEffectiveFrom.Text, txtEffectiveTo.Text, 'A', mCurrentUserID);
 
         lvAssessments.DataSource = lst;
         lvAssessments.DataBind();

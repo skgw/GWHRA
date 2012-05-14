@@ -24,9 +24,9 @@
     <div class="grid_24 alpha">
         <asp:HyperLink ID="hlReturnToAssessmentGroups" runat="server" Text="Return to search results" NavigateUrl="~/Config/HRA/SearchAGroups.aspx"
             CssClass="btn btn-info"></asp:HyperLink>
-       <%-- <asp:Button ID="lbSave" runat="server" OnClick="lbSave_Click" Text="Save" CssClass="btn btn-primary" />
+       <asp:Button ID="lbSave" runat="server" OnClick="lbSave_Click" Text="Save" CssClass="btn btn-primary" />
         <asp:Button ID="lbAddNew" runat="server" OnClick="lbAddNew_Click" Text="+ Add New"
-            CssClass="btn btn-success" />--%>
+            CssClass="btn btn-success" />
     </div>
 </asp:Content>
 
