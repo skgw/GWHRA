@@ -56,8 +56,7 @@
                 <dt>Assessment Group</dt>
                 <dd>
                     <asp:DropDownList ID="ddlAssessGroup" runat="server">
-                        <asp:ListItem Value="">-- Select One --</asp:ListItem>
-                        <asp:ListItem Value="1000">Medicare</asp:ListItem>
+                        
                     </asp:DropDownList>
                 </dd>
                 <dt>Effective From</dt>
