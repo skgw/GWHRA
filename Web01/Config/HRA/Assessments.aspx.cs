@@ -49,6 +49,8 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         txtEffectiveTo.Text = obj.EffectiveTo.ToString("MM/dd/yyyy");
         ddlAssessGroup.SelectedValue = obj.AssessmentGroupId.ToString();
         chkStatus.Checked = obj.Status.ToString().Equals("A") ? true : false;
+        tbNarrativeHeader.Text = obj.NarrativeHeader;
+        tbNarrativeFooter.Text = obj.NarrativeFooter;
     }
     protected void lnkBack_Click(object sender, EventArgs e)
     {

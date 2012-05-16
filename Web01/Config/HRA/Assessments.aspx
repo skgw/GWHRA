@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BasePages/Base.master" AutoEventWireup="true" ValidateRequest="false"
     CodeFile="Assessments.aspx.cs" Inherits="Config_HRA_Assessments" %>
 
 <%@ MasterType VirtualPath="~/BasePages/Base.master" %>
@@ -72,11 +72,25 @@
         </div>
     </div>
     <div class="grid_24 alpha">
-        <div class="grid_6 alpha"> &nbsp;
+        <dl>
+            <dt>Narrative Header</dt>
+            <dd>
+                <asp:TextBox ID="tbNarrativeHeader" runat="server" TextMode="MultiLine" class="grid_15 textarea_h80 "></asp:TextBox>
+            </dd>
+            <dt>Narrative Footer</dt>
+            <dd>
+                <asp:TextBox ID="tbNarrativeFooter" runat="server" TextMode="MultiLine" class="grid_15 textarea_h80"></asp:TextBox>
+            </dd>
+        </dl>
+    </div>
+    <div class="grid_24 alpha">
+        <div class="grid_6 alpha">
+            &nbsp;
         </div>
         <div class="grid_6 ">
             <asp:LinkButton ID="lnkBack" runat="server" CssClass="btn" OnClick="lnkBack_Click">Return to search results</asp:LinkButton></div>
-        <div class="grid_6 ">&nbsp;
+        <div class="grid_6 ">
+            &nbsp;
         </div>
         <div class="grid_6 omega">
             <asp:LinkButton ID="lnkAddQuestions" runat="server" CssClass="btn btn-success" OnClick="lnkAddQuestions_Click"

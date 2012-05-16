@@ -27,6 +27,8 @@ namespace HRACore
         private string mCreatedBy;
         private char mStatus;
         private int mCurrentUserID = 0;
+        private string mNarrativeHeader = string.Empty;
+        private string mNarrativeFooter = string.Empty;
 
         public DateTime CompletedDate { get; set; }
         
@@ -93,6 +95,18 @@ namespace HRACore
             set { mStatus = value; }
         }
 
+        public string NarrativeHeader
+        {
+            get { return mNarrativeHeader; }
+            set { mNarrativeHeader = value; }
+        }
+
+        public string NarrativeFooter
+        {
+            get { return mNarrativeFooter; }
+            set { mNarrativeFooter = value; }
+        }
+
         public Assessment(int CurrentUserID)
         {
             mCurrentUserID = CurrentUserID;
@@ -126,6 +140,8 @@ namespace HRACore
                 dbhAssessment.AddParameter("@EFFECTIVE_FROM", this.EffectiveFrom);
                 dbhAssessment.AddParameter("@EFFECTIVE_TO", this.EffectiveTo);
                 dbhAssessment.AddParameter("@STATUS", this.Status);
+                dbhAssessment.AddParameter("@NARRATIVE_HEADER", this.NarrativeHeader);
+                dbhAssessment.AddParameter("@NARRATIVE_FOOTER", this.NarrativeFooter);
                 dbhAssessment.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
                 IDataReader reader = dbhAssessment.ExecuteReader("INSERTUPDATE_ASSESSMENTS");
@@ -156,6 +172,8 @@ namespace HRACore
             ModifiedDate = reader[7] != DBNull.Value ? DateTime.Parse(reader[7].ToString()) : Convert.ToDateTime("01/01/2099");
             Status = Convert.ToChar(reader[8].ToString());
             AssessmentGroupName = reader[9].ToString();
+            NarrativeHeader = reader[10].ToString();
+            NarrativeFooter = reader[11].ToString();
             
         }
         public void LoadAssessmentInfoForMember(IDataReader reader)
