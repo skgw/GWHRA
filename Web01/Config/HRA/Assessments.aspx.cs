@@ -38,6 +38,7 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
                     PopulateData(aObj);
                 }
             }
+            GetAssessmentGroups();
         }
 
     }
@@ -51,6 +52,17 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         chkStatus.Checked = obj.Status.ToString().Equals("A") ? true : false;
         tbNarrativeHeader.Text = obj.NarrativeHeader;
         tbNarrativeFooter.Text = obj.NarrativeFooter;
+    }
+    protected void GetAssessmentGroups()
+    {
+        List<AssessmentGroup> qGroups = new List<AssessmentGroup>();
+        AssessmentGroupList qGroupList = new AssessmentGroupList(CurrentUserId);
+        qGroups = qGroupList.GetAssessmentGroups("",true);
+        ddlAssessGroup.DataSource = qGroups;
+        ddlAssessGroup.DataTextField = "Name";
+        ddlAssessGroup.DataValueField = "ID";
+        ddlAssessGroup.DataBind();
+        ddlAssessGroup.Items.Insert(0, new ListItem("-- Select One --", ""));
     }
     protected void lnkBack_Click(object sender, EventArgs e)
     {

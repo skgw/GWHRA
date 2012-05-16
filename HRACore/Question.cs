@@ -179,7 +179,7 @@ namespace HRACore
             Gender = Convert.ToChar(reader[1].ToString());
             Content = reader[2].ToString();
             GroupName = reader[3].ToString();
-            DisplayOrder = Int64.Parse(reader[4].ToString());
+            DisplayOrder = reader[4] == DBNull.Value ? 0 : Int64.Parse(reader[4].ToString());
             Status = Convert.ToChar(reader[5].ToString());
             IsMandatory = Convert.ToChar(reader[6].ToString());
             CreatedBy = reader[7].ToString();

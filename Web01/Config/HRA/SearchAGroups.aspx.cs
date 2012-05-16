@@ -25,8 +25,8 @@ public partial class Config_HRA_SearchAGroups : System.Web.UI.Page
     {
         List<AssessmentGroup> qGroups = new List<AssessmentGroup>();
         AssessmentGroupList qGroupList = new AssessmentGroupList(CurrentUserID);
-
-        qGroups = qGroupList.GetAssessmentGroups(Server.HtmlEncode(tbSearchAGroups.Text), cbAGroupStatus.Checked);
+        string groupName = Server.HtmlEncode(tbSearchAGroups.Text.Trim());
+        qGroups = qGroupList.GetAssessmentGroups(groupName, cbAGroupStatus.Checked);
 
         lvAssessmentGroups.DataSource = qGroups;
         lvAssessmentGroups.DataBind();

@@ -118,7 +118,7 @@
                     <table class="table table-bordered" id="tblAssessments">
                         <thead>
                             <tr style="background-color: #dfdfdf">
-                                <th colspan="4">
+                                <th colspan="5">
                                     ASSESSMENTS
                                 </th>
                             </tr>
@@ -134,6 +134,9 @@
                                 </th>
                                 <th>
                                     STATUS
+                                </th>
+                                <th>
+                                    NARRATION
                                 </th>
                             </tr>
                         </thead>
@@ -156,13 +159,16 @@
                         <td>
                             <%# (Eval("Status").ToString()=="A")?"<span class='error'>Due</span>":"Completed" %>
                         </td>
+                        <td>
+                           <a href="#"><%#Eval("Narration") %></a>
+                        </td>
                     </tr>
                 </ItemTemplate>
                 <EmptyDataTemplate>
                     <table class="table table-bordered">
                         <thead>
                             <tr style="background-color: #dfdfdf">
-                                <th colspan="4">
+                                <th colspan="5">
                                     ASSESSMENTS
                                 </th>
                             </tr>
@@ -179,11 +185,14 @@
                                 <th>
                                     STATUS
                                 </th>
+                                <th>
+                                    <a href="#">NARRATION</a>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     No assessments due at this time.
                                 </td>
                             </tr>

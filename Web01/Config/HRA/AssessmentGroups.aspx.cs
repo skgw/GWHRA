@@ -33,4 +33,12 @@ public partial class Config_HRA_AssessmentGroups : System.Web.UI.Page
         rblAGroupStatus.SelectedValue = agrp.Status;
     }
 
+    protected void lbAddNew_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void lbSave_Click(object sender, EventArgs e)
+    {
+    }
 }

@@ -32,7 +32,7 @@ namespace HRACore
             }
             return items;
         }
-        public List<Assessment> GetAssessments(string Name, int GroupId, string EffectiveFrom, string EffectiveTo, char Status, int CurrentUserId)
+        public List<Assessment> GetAssessments(string Name, string GroupId, string EffectiveFrom, string EffectiveTo, char Status, int CurrentUserId)
         {
             List<Assessment> items = new List<Assessment>();
             const string procName = "GET_ASSESSMENTS";

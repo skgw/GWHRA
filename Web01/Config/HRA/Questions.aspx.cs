@@ -11,7 +11,7 @@ using HRACore;
 public partial class Config_HRA_Questions : System.Web.UI.Page
 {
     private Question qObj = new Question(1);
-    private Int64 QuestionId = 0;
+    private Int64 QuestionId = -1;
     List<Tuple<string>> lstOptions = new List<Tuple<string>>();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -121,7 +121,7 @@ public partial class Config_HRA_Questions : System.Web.UI.Page
         }
         //assign the values to the Question Object properties
         Question obj = new Question(1);
-        obj.ID = (QuestionId > 0) ? QuestionId : 0;
+        obj.ID = (QuestionId > 0) ? QuestionId : -1;
         obj.Content = txtQuestionText.Text;
         //obj.DisplayOrder = Convert.ToInt64(txtDisplayOrder.Text);
 
