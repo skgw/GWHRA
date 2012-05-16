@@ -160,7 +160,7 @@
                             <%# (Eval("Status").ToString()=="A")?"<span class='error'>Due</span>":"Completed" %>
                         </td>
                         <td>
-                           <a href="#"><%#Eval("Narration") %></a>
+                         <%--  <a href="#"><%#Eval("Narration") %></a>--%>
                         </td>
                     </tr>
                 </ItemTemplate>

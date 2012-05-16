@@ -28,6 +28,12 @@ public partial class FamilyHRA : System.Web.UI.Page
     }
     protected void btnNext_click(object sender, EventArgs e)
     {
+        // Load into dictionary object
+        //AssessmentResponse FamilyResponses
+        //Format for dictionary - use Question ID as the Key and for every member ID that has responded append the ID. 
+        //Ex For question ID 100 Set the Dict Key as 100 and value as 1020,1022,1023. Assuming 1020,1021,1022,1023 are family members and 1021 did not respond yes to question 100.
+        //Call SaveFamilyResponses method
+
         Response.Redirect("MemberHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
     }
     [WebMethod]

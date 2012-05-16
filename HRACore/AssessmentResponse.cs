@@ -35,28 +35,44 @@ namespace HRACore
         }
         public void SaveMemberResponses()
         {
-            //foreach (int id in this.MemberResponses.Keys)
-            //{
-            //    int xyz = id;
-            //}  
-
-            
-            string procName = "";
+           
+        }
+        public void SaveFamilyResponses()
+        {
+            String Response = GetFamilyResponseXML();
+            string procName = "INSERTUPDATE_FAMILY_RESPONSE";
             using (dbhAssessmentResponse = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
-                dbhAssessmentResponse.AddParameter("@MemberMasterID", this.MemberMasterID);
-                dbhAssessmentResponse.AddParameter("@assessment_id", this.AssessmentID);
-                dbhAssessmentResponse.AddParameter("@ResponseList", this.MemberResponses);
                 dbhAssessmentResponse.AddParameter("@CurrentUserID", this.mCurrentUserID);
+                dbhAssessmentResponse.AddParameter("@ResponseXML", Response);
+                dbhAssessmentResponse.AddParameter("@AssessmentID", this.AssessmentID);
+                dbhAssessmentResponse.AddParameter("@SubscriberID", this.MemberMasterID);
+
+
+
                 IDataReader dr = dbhAssessmentResponse.ExecuteReader(procName);
 
                 dbhAssessmentResponse.Dispose();
             }
         }
-        public void SaveFamilyResponses()
+        private string GetFamilyResponseXML ()
         {
-            
+            StringBuilder responseXML = new StringBuilder("<FAMILY_RESPONSE>");
+
+            foreach (int id in this.MemberResponses.Keys)
+            {
+                string[] MemberIds = MemberResponses[id].Split(",".ToCharArray());
+                for (int i=0; i < MemberIds.Length; i ++)
+                {
+                    responseXML.Append("<RESPONSE>");
+                    responseXML.Append("<QUESTION_ID>" + id.ToString() + "</QUESTION_ID>");
+                    responseXML.Append("<MEMBER_ID>" + MemberIds[i] + "</MEMBER_ID>");
+                    responseXML.Append("</RESPONSE>");
+                }
+            }
+            responseXML.Append("</FAMILY_RESPONSE>");
+            return responseXML.ToString();
         }
-        
+
     }
 }
