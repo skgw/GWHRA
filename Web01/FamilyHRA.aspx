@@ -94,21 +94,7 @@
             }
         });
     }
-    $("input[id$='btnSave']").live("click", function (e) {
-        e.preventDefault();
-
-        $("#dvFamily tr").each(function (indextd) {
-            var $row = $(this);
-            var FamilyQuestionId = $("td", $row).eq(0).text();
-            $(" .relationId").each(function (indexth) {
-                var MemberMasterID = $(this).text();
-                if ($("td", $row).eq(indexth + 2).children().attr("checked") == "checked") {
-                    InsertFamilyHRA(MemberMasterID, FamilyQuestionId);
-                }
-            });
-
-        });
-    });
+    
         
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -154,13 +140,45 @@
             }
         });
     }
-
-    function InsertFamilyHRA(MemberMasterID, FamilyQuestionId) {
-        
+    $("input[id$='btnSave']").live("click", function (e) {
+        e.preventDefault();
+        var Responses = "";
+        $("#dvFamily tr").each(function (indextd) {
+            var $row = $(this);
+            var FamilyQuestionId = $("td", $row).eq(0).text();
+            var memberIds = "";
+            $(" .relationId").each(function (indexth) {
+                var MemberMasterID = $(this).text();
+                if ($("td", $row).eq(indexth + 2).children().attr("checked") == "checked") {
+                    if (memberIds == "") {
+                        memberIds += MemberMasterID;
+                    }
+                    else {
+                        memberIds += "," + MemberMasterID;
+                    }
+                }
+            });
+            if (memberIds != "") {
+                if (Responses == "") {
+                    Responses += FamilyQuestionId + "#" + memberIds;
+                }
+                else {
+                    Responses += "~" + FamilyQuestionId + "#" + memberIds;
+                }
+            }
+        });
+        if (Responses == "") {
+            alert("You must select atleast one Answer.");
+            return;
+        }
+        InsertFamilyHRA(Responses);
+    });
+    function InsertFamilyHRA(Responses) {
+        //alert(Responses);
         $.ajax({
             type: "POST",
             url: "FamilyHRA.aspx/InsertFamilyHRA",
-            data: "{'MemberMasterID':" + MemberMasterID + ",'AssessmentId':" + assessmentId + ",'FamilyQuestionId':" + FamilyQuestionId + "}",
+            data: "{'Subscriberid':" + memberMasterID + ",'AssessmentId':" + assessmentId + ",'Responses':'" + Responses + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {

@@ -74,5 +74,22 @@ namespace HRACore
             return responseXML.ToString();
         }
 
+        public List<Tuple<int, int>> GetFamilyHRAResponse(int MemberMasterID, int AssessmentId, int CurrentUserID)
+        {
+            List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
+            mCurrentUserID = CurrentUserID;
+            using (dbhAssessmentResponse = new DBHelper(ConnectionStrings.DefaultDBConnection, mCurrentUserID))
+            {
+                dbhAssessmentResponse.AddParameter("@MemberMasterID", MemberMasterID);
+                dbhAssessmentResponse.AddParameter("@assessment_id", AssessmentId);
+                dbhAssessmentResponse.AddParameter("@CurrentUserID", mCurrentUserID);
+                IDataReader reader = dbhAssessmentResponse.ExecuteReader("GET_FAMILY_HRA_RESPONSES");
+                while (reader.Read())
+                {
+                    lst.Add(Tuple.Create<int, int>(Convert.ToInt32(reader["MEMBER_MASTER_ID_REF"]), Convert.ToInt32(reader["FAM_QUESTION_ID_REF"])));
+                }
+            }
+            return lst;
+        }
     }
 }

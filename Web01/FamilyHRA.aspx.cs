@@ -58,16 +58,26 @@ public partial class FamilyHRA : System.Web.UI.Page
     public static List<Tuple<int, int>> GetFamilyHRAResponseList(int MemberMasterID, int AssessmentId)
     {
         List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
-        MemberInfoList obj = new MemberInfoList(1);
+        AssessmentResponse obj = new AssessmentResponse(1);
         lst = obj.GetFamilyHRAResponse(MemberMasterID, AssessmentId, 1);
         return lst;
     }
 
     [WebMethod]
-    public static void InsertFamilyHRA(int MemberMasterID, int AssessmentId, int FamilyQuestionId)
+    public static void InsertFamilyHRA(int Subscriberid, int AssessmentId, string Responses)
     {
-        MemberInfoList obj = new MemberInfoList(1);
-        obj.INSERTFAMILYHRA(MemberMasterID, AssessmentId, FamilyQuestionId, 1);
+        string[] responseArr = Responses.Split('~');
+
+        AssessmentResponse obj = new AssessmentResponse(1);
+        Dictionary<int, string> arr = new Dictionary<int, string>();
+        for (int i = 0; i < responseArr.Length; i++)
+        {
+            arr.Add(Convert.ToInt32(responseArr[i].Split('#')[0]), responseArr[i].Split('#')[1].ToString());
+        }
+        obj.MemberResponses = arr;
+        obj.MemberMasterID = Subscriberid;
+        obj.AssessmentID = AssessmentId;
+        obj.SaveFamilyResponses();
     }
 }
 
