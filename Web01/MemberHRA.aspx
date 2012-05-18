@@ -4,24 +4,15 @@
     <script src="Common/Scripts/MemberHRA.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    var assessmentId = 0;
-    var memberMasterID = 0;
-    $(function () {
-        if (jQuery.trim(getParameterByName("ID")) != "") {
-            memberMasterID = jQuery.trim(getParameterByName("ID"));
-        }
-        if (jQuery.trim(getParameterByName("AssessmentId")) != "") {
-            assessmentId = jQuery.trim(getParameterByName("AssessmentId"));
-        }
-        GetQuestionaire();
-    });
+    
 </script>
-
+<asp:Button ID="btnBack" runat="server" Text="Back" OnClick="btnBack_click"/>
+<input type="submit" id="btnSubmit" value="Submit" />
+<asp:Button ID="btnNext" runat="server" Text="Next" />
 <div id="dvQuetionaire" class="grid_24">
     
 </div>
 
-<asp:Button ID="btnSave" runat="server" Text="Save"  OnClick="btnSave_click"/>
 
 </asp:Content>
 

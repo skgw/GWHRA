@@ -25,12 +25,9 @@ public partial class MemberHRA : System.Web.UI.Page
     }
 
     
-    protected void btnSave_click(object sender, EventArgs e)
+    protected void btnBack_click(object sender, EventArgs e)
     {
-    }
-    protected void btnPrev_click(object sender, EventArgs e)
-    {
-        Response.Redirect("FamilyHRA.aspx?ID=" + MemberMasterID.ToString());
+        Response.Redirect("FamilyHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
     }
 
     [WebMethod]
@@ -49,11 +46,20 @@ public partial class MemberHRA : System.Web.UI.Page
         Dictionary<int, string> arr = new Dictionary<int, string>();
         for (int i = 0; i < QuestionId.Split(',').Length; i++)
         {
-           arr.Add(Convert.ToInt32(QuestionId.Split(',')[i]), Answers.Split(',')[i].ToString());
+            arr.Add(Convert.ToInt32(QuestionId.Split(',')[i]), Answers.Split('~')[i].ToString());
         }
         obj.MemberResponses = arr;
         obj.MemberMasterID = MemberMasterID;
         obj.AssessmentID = AssessmentID;
         obj.SaveMemberResponses();
+    }
+
+    [WebMethod]
+    public static List<Tuple<int, string>> GetResponseList(int MemberMasterID, int AssessmentId)
+    {
+        List<Tuple<int, string>> lst = new List<Tuple<int, string>>();
+        AssessmentResponse obj = new AssessmentResponse(1);
+        lst = obj.GetMemberHRAResponse(MemberMasterID, AssessmentId, 1);
+        return lst;
     }
 }

@@ -36,6 +36,11 @@ public partial class FamilyHRA : System.Web.UI.Page
 
         Response.Redirect("MemberHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
     }
+    protected void btnBack_click(object sender, EventArgs e)
+    {
+        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
+    }
+    
     [WebMethod]
     public static List<Tuple<int, string>> GetFamilyQuestionList(int userid)
     {
@@ -74,7 +79,7 @@ public partial class FamilyHRA : System.Web.UI.Page
         {
             arr.Add(Convert.ToInt32(responseArr[i].Split('#')[0]), responseArr[i].Split('#')[1].ToString());
         }
-        obj.MemberResponses = arr;
+        obj.FamilyResponses = arr;
         obj.MemberMasterID = Subscriberid;
         obj.AssessmentID = AssessmentId;
         obj.SaveFamilyResponses();

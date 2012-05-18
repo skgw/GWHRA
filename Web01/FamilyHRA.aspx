@@ -193,7 +193,8 @@
 <div class="alert alert-display">
  (Fill in None if unsure) Indicate Conditions you and / or Family Members have or had.
 </div>
-<asp:Button ID="btnSave" runat="server" Text="Save"/>
+<asp:Button ID="btnBack" runat="server" Text="Back" OnClick="btnBack_click"/>
+<asp:Button ID="btnSave" runat="server" Text="Submit"/>
 <asp:Button ID="btnNext" runat="server" Text="Next" OnClick="btnNext_click"/>
 
 <div id="dvFamily" class="grid" >

@@ -1,4 +1,17 @@
-﻿function GetQuestionaire() {
+﻿var assessmentId = 0;
+var memberMasterID = 0;
+$(function () {
+    if (jQuery.trim(getParameterByName("ID")) != "") {
+        memberMasterID = jQuery.trim(getParameterByName("ID"));
+    }
+    if (jQuery.trim(getParameterByName("AssessmentId")) != "") {
+        assessmentId = jQuery.trim(getParameterByName("AssessmentId"));
+    }
+    GetQuestionaire();
+    BindEvents();
+    
+});
+function GetQuestionaire() {
     $("#dvQuetionaire").html("");
     $.ajax({
         type: "POST",
@@ -71,69 +84,79 @@
                 $("#dvQuetionaire").append(strTable);
                 groupname = item.GroupName;
             });
+            GetMemberHRAResponse();
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             //CheckSession(XMLHttpRequest.responseText);
         }
     });                                             //end ajax
 }
+var answerString = '';
+function BindEvents() {
+    $("#btnNext").click(function (e) {
+        e.preventDefault();
+        alert("Need to set the page URL.");
+    });
+    $("#btnSubmit").click(function (e) {
+        e.preventDefault();
+            var questionidArr = [];
 
-$("input[id$='btnSave']").live("click", function () {
-    var answerString = "";
-    var questionidArr = [];
-    var answerArr = [];
-    var noAnswer = true;
-    $("#dvQuetionaire .Question").each(function (index) {
-        var QuetionId = $(this).attr("id").toString().split('_')[1];
-        var responsetype = "";
-        responsetype = $(this).children(".restype").text();
-        var selectedVal = "";
-        switch (responsetype) {
-            case "TEXTBOX":
-                $("#" + tableid + " tr:not(:first)").each(function (index, item) {
-                    var row = $(this);
-                    var id = $("td", row).eq(1).children().attr("id");
-                    if (jQuery.trim($("#" + id).val()) != "") {
-                        answer += id + "," + jQuery.trim($("#" + id).val());
-                    }
-                });
-                break;
-            case "DROPDOWNLIST":
-                selectedVal = $("#ddl_" + QuetionId).val();
-                if (selectedVal != "") {
-                    noAnswer = false;
-                }
-                break;
-            case "RADIOBUTTONS":
-                $("input[name*='rad_" + QuetionId + "']").each(function () {
-                    if ($(this).attr("checked") == "checked") {
-                        selectedVal = $(this).val();
+            var noAnswer = true;
+            var ansCount = 0;
+            $("#dvQuetionaire .Question").each(function (index) {
+                var QuetionId = $(this).attr("id").toString().split('_')[1];
+                var responsetype = "";
+                responsetype = $(this).children().children(".restype").text();
+                var selectedVal = "";
+                switch (responsetype) {
+                    case "TEXTBOX":
+                        //                $("#" + tableid + " tr:not(:first)").each(function (index, item) {
+                        //                    var row = $(this);
+                        //                    var id = $("td", row).eq(1).children().attr("id");
+                        //                    if (jQuery.trim($("#" + id).val()) != "") {
+                        //                        answer += id + "," + jQuery.trim($("#" + id).val());
+                        //                    }
+                        //                });
+                        break;
+                    case "DROPDOWNLIST":
+                        //$("#yourdropdownid option:selected").text(); 
+                        //selectedVal = $("#ddl_" + QuetionId + " option:selected").text();
+                        selectedVal = $("#ddl_" + QuetionId).val();
                         if (selectedVal != "") {
+                            questionidArr[ansCount] = QuetionId;
+                            if (jQuery.trim(answerString) != '') {
+                                answerString = answerString + "~" + selectedVal.toString();
+                            }
+                            if (jQuery.trim(answerString) == '') {
+                                answerString = selectedVal.toString();
+                            }
+                            ansCount += 1;
                             noAnswer = false;
                         }
-                    }
-                });
-                break;
-            case "CHECKBOX":
-                //answerString += tableid + "~" + answer;
-                break
-        }
-        questionidArr[index] = QuetionId;
-        answerArr[index] = selectedVal;
-    });
-    if (noAnswer == true) {
-        alert("You need to Answer atleast one Question.");
-        return;
-    }
-    SaveResponses(questionidArr.toString(), answerArr.toString());
-});
+                        break;
+                    case "RADIOBUTTONS":
+                        break;
+                    case "CHECKBOX":
+                        //answerString += tableid + "~" + answer;
+                        break
+                }
+                
 
-function SaveResponses(questionidArr, answerArr) {
+            });
+            if (noAnswer == true) {
+                alert("You need to Answer atleast one Question.");
+                return;
+            }
+           
+           SaveResponses(questionidArr.toString(), answerString);         
+    });
+}
+function SaveResponses(questionidArr, answerString) {
     //alert(questionidArr + " -- " + answerArr);
     $.ajax({
         type: "POST",
         url: "MemberHRA.aspx/SaveResponses",
-        data: "{'MemberMasterID':" + memberMasterID + ",'AssessmentID':" + assessmentId + ",'QuestionId':'" + questionidArr + "','Answers':'" + answerArr + "'}",
+        data: "{'MemberMasterID':" + memberMasterID + ",'AssessmentID':" + assessmentId + ",'QuestionId':'" + questionidArr + "','Answers':'" + answerString + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -142,8 +165,29 @@ function SaveResponses(questionidArr, answerArr) {
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             //CheckSession(XMLHttpRequest.responseText);
         }
-    });  
+    });
 }
+function GetMemberHRAResponse() {
+    //alert(memberMasterID + " -- " + assessmentId);
+    $.ajax({
+        type: "POST",
+        url: "MemberHRA.aspx/GetResponseList",
+        data: "{'MemberMasterID':" + memberMasterID + ",'AssessmentId':" + assessmentId + "}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            //alert(msg.d);
+            $.each(msg.d, function (index, item) {
+                //setResponses(item.Item1,item.Item2);
+                $("#ddl_" + item.Item1).val(item.Item2);
+            });
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //CheckSession(XMLHttpRequest.responseText);
+        }
+    });
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regexS = "[\\?&]" + name + "=([^&#]*)";
