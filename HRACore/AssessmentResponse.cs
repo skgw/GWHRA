@@ -56,7 +56,7 @@ namespace HRACore
                 dbhAssessmentResponse.AddParameter("@CurrentUserID", this.mCurrentUserID);
                 dbhAssessmentResponse.AddParameter("@ResponseXML", Response);
                 dbhAssessmentResponse.AddParameter("@AssessmentID", this.AssessmentID);
-                dbhAssessmentResponse.AddParameter("@SubscriberID", this.MemberMasterID);
+                dbhAssessmentResponse.AddParameter("@MemberMasterID", this.MemberMasterID);
                 IDataReader dr = dbhAssessmentResponse.ExecuteReader(procName);
                 dbhAssessmentResponse.Dispose();
             }
