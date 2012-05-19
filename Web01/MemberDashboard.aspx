@@ -160,7 +160,7 @@
                             <%# (Eval("Status").ToString()=="A")?"<span class='error'>Due</span>":"Completed" %>
                         </td>
                         <td>
-                         <%--  <a href="#"><%#Eval("Narration") %></a>--%>
+                         <a href="#"><%#Eval("Narrative") %></a>
                         </td>
                     </tr>
                 </ItemTemplate>
@@ -227,14 +227,18 @@
     <script type="text/javascript">
         $(function () {
             $("tr:odd").addClass('AlternateRow');
-            $("#tblAssessments tbody tr")
+            $("#tblAssessments tbody tr td")
               .css("cursor", "pointer")
-        .click(function () {
-            $row = $(this);
+        .click(function (e) {
+            $row = $(this).parent();
             var id = $("td", $row).eq(0).text();
-            // alert("FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id));
-            window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
-            // window.location.href = "Narrative.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+            var col = $(this).parent().children().index($(this)); ;
+            if (col == 4) {
+                window.location.href = "Narrative.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+            }
+            else {
+                window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+            }
         });
         });
     </script>

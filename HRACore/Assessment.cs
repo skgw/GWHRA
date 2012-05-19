@@ -29,6 +29,7 @@ namespace HRACore
         private int mCurrentUserID = 0;
         private string mNarrativeHeader = string.Empty;
         private string mNarrativeFooter = string.Empty;
+        private string mNarrative;
 
         public DateTime CompletedDate { get; set; }
         
@@ -106,6 +107,11 @@ namespace HRACore
             get { return mNarrativeFooter; }
             set { mNarrativeFooter = value; }
         }
+        public string Narrative
+        {
+            get { return mNarrative; }
+            set { mNarrative = value; }
+        }
 
         public Assessment(int CurrentUserID)
         {
@@ -174,6 +180,7 @@ namespace HRACore
             AssessmentGroupName = reader[9].ToString();
             NarrativeHeader = reader[10].ToString();
             NarrativeFooter = reader[11].ToString();
+            Narrative = reader[12].ToString();
             
         }
         public void LoadAssessmentInfoForMember(IDataReader reader)
@@ -192,6 +199,7 @@ namespace HRACore
             CompletedDate = string.IsNullOrWhiteSpace(reader[10].ToString())
                                 ? DateTime.MinValue
                                 : Convert.ToDateTime(reader[10].ToString());
+            Narrative = reader[11].ToString();
         }
   
     }
