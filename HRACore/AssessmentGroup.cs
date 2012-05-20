@@ -92,7 +92,8 @@ namespace HRACore
         public void Save()
         {
 
-            string procName = "INSERTUPDATE_ASSESSMENT_GROUP";
+            //const string procName = "INSERTUPDATE_ASSESSMENTS_GROUP";
+            const string procName = "INSERTUPDATE_ASSESSMENTS_GROUP";
             using (dbhAssessmentGroup = new DBHelper(ConnectionStrings.DefaultDBConnection))
             {
                 dbhAssessmentGroup.AddParameter("@ID", this.ID);
