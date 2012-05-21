@@ -109,7 +109,7 @@
                         <%#Eval("Lastname") %>
                     </td>
                     <td>
-                        <%#Eval("DOB") %>
+                        <%#((DateTime)Eval("DOB")).ToShortDateString() %>
                     </td>
                     <td>
                         <%#Eval("Sex") %>
