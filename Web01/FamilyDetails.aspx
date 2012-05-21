@@ -95,7 +95,7 @@
             <LayoutTemplate>
                 <table class="table table-bordered">
                     <thead>
-                    <tr style="background-color : #2ccccc">
+                         <tr style="background-color: #DFDFDF;">
                         <th colspan="6">
                         FAMILY MEMBERS
                         </th>
@@ -189,11 +189,11 @@
         </asp:ListView>
     </div>
     <div class="grid_24 alpha">
-        <div class="grid_20 alpha" style="text-align:right;">
-            Once done, please click this button to enter medical details about your family.
+        <div class="grid_16 alpha">
+            <asp:Button ID="btnNext" runat="server" Text="Return to member dashboard" CssClass="btn btn-primary" OnClick="btnNext_click" />
         </div>
-        <div class="grid_4 omega">
-            <asp:Button ID="btnNext" runat="server" Text="Next" CssClass="btn btn-primary" OnClick="btnNext_click" />
+        <div class="grid_8 omega">
+            &nbsp;
         </div>
     </div>
 </asp:Content>

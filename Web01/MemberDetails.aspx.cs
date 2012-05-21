@@ -14,14 +14,14 @@ public partial class MemberDetails : System.Web.UI.Page
     private MemberInfo mInfo;
     private int CurrentUserID = 0;
 
-   protected void Page_Load(object sender, EventArgs e)
+    protected void Page_Load(object sender, EventArgs e)
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
-        Master.PageHeader = "Member Details for " + mInfo.Firstname + " " + mInfo.Lastname;        
+        Master.PageHeader = "Member Details for " + mInfo.Firstname + " " + mInfo.Lastname;
         if (!IsPostBack)
         {
-            SetPageProperties();         
+            SetPageProperties();
             LoadMemberDetails();
         }
     }
@@ -137,6 +137,7 @@ public partial class MemberDetails : System.Web.UI.Page
     protected void btnSave_Click(object sender, EventArgs e)
     {
         Member currentMember = new Member(1);
+        currentMember.ID = MemberMasterID;
         currentMember.Firstname = tbFirstname.Text;
         currentMember.Middlename = tbMiddleName.Text;
         currentMember.Lastname = tbLastName.Text;
@@ -169,5 +170,10 @@ public partial class MemberDetails : System.Web.UI.Page
         Response.Redirect("FamilyDetails.aspx?ID=" + currentMember.ID);
 
 
+    }
+
+    protected void btnBackToMemberDashboard_click(object sender, EventArgs e)
+    {
+        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString());//+ "&AssessmentId=1000");
     }
 }

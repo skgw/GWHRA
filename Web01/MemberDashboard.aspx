@@ -11,7 +11,6 @@
     </style>
     <div class="grid_16 alpha">
         <asp:LinkButton ID="lnkMemberDetails" runat="server" OnClick="lnkMemberDetails_click">MemberDetails</asp:LinkButton>
-        <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FamilyDetails</asp:LinkButton>
         <%--<a href="MemberDetails.aspx">Member Details</a>
     <a href="FamilyDetails.aspx">Family Details</a>--%>
         <div>
@@ -21,7 +20,7 @@
                         <thead>
                             <tr style="background-color: #dfdfdf">
                                 <th colspan="6">
-                                    FAMILY MEMBERS
+                                    <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FAMILY DETAILS</asp:LinkButton>
                                 </th>
                             </tr>
                             <tr>
@@ -78,8 +77,13 @@
                     </tr>
                 </ItemTemplate>
                 <EmptyDataTemplate>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="tblFamilyDetails">
                         <thead>
+                            <tr style="background-color: #dfdfdf">
+                                <th colspan="6">
+                                    <asp:LinkButton ID="lnkFamilyDetails" runat="server" OnClick="lnkFamilyDetails_click">FAMILY DETAILS</asp:LinkButton>
+                                </th>
+                            </tr>
                             <tr>
                                 <th>
                                     ID
@@ -99,6 +103,9 @@
                                 <th>
                                     DOB
                                 </th>
+                                <%--<th>
+                                Status
+                            </th>--%>
                             </tr>
                         </thead>
                         <tbody>
@@ -160,7 +167,8 @@
                             <%# (Eval("Status").ToString()=="A")?"<span class='error'>Due</span>":"Completed" %>
                         </td>
                         <td>
-                         <a href="#"><%#Eval("Narrative") %></a>
+                            <a href="#">
+                                <%#Eval("Narrative") %></a>
                         </td>
                     </tr>
                 </ItemTemplate>

@@ -63,7 +63,7 @@
             <LayoutTemplate>
                 <table class="table table-bordered">
                     <thead>
-                        <tr  style="background-color: #DFDFDF;">
+                        <tr style="background-color: #DFDFDF;">
                             <th colspan="6">
                                 MEMBERS
                             </th>
@@ -116,6 +116,44 @@
                     </td>
                 </tr>
             </ItemTemplate>
+            <EmptyDataTemplate>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr style="background-color: #DFDFDF;">
+                            <th colspan="6">
+                                MEMBERS
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                MEMBER ID
+                            </th>
+                            <th>
+                                FIRST NAME
+                            </th>
+                            <th>
+                                LAST NAME
+                            </th>
+                            <th>
+                                DOB
+                            </th>
+                            <th>
+                                SEX
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">
+                              No members found.
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </EmptyDataTemplate>
         </asp:ListView>
     </div>
 </asp:Content>

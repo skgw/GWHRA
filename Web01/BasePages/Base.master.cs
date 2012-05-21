@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BaseCore;
 using System.Text;
+using BaseCore.Enumerations;
 
 public partial class BasePages_Base : System.Web.UI.MasterPage
 {
@@ -105,5 +106,37 @@ public partial class BasePages_Base : System.Web.UI.MasterPage
         StringBuilder hyperlink = new StringBuilder();
         hyperlink.Append(string.Format("<a href='{0}'>{1}</a>", obj.ResolveClientUrl(obj.NavigateUrl), title));
         return hyperlink.ToString();
+    }
+    public void SetMessage(string message, MessageBoxCss cssType)
+    {
+        if (message.Length > 0)
+        {
+            string cssClass = string.Empty;
+            lblMessage.Text = message;
+            switch (cssType)
+            {
+                case MessageBoxCss.ERROR:
+                    {
+                        cssClass = "alert alert-error";
+                        break;
+                    }
+                case MessageBoxCss.SUCCESS:
+                    {
+                        cssClass = "alert alert-success";
+                        break;
+                    }
+                case MessageBoxCss.NOTICE:
+                    {
+                        cssClass = "alert alert-info";
+                        break;
+                    }
+
+            }
+            pnlMessage.CssClass = cssClass;
+        }
+        else
+        {
+            pnlMessage.Visible = false;
+        }
     }
 }

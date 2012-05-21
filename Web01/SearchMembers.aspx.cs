@@ -13,19 +13,29 @@ public partial class SearchMembers : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Master.PageHeader = "Search Members";
-        //BindDummyData();
+        if (!Page.IsPostBack)
+        {
+            Search();
+        }
     }
     protected void btnSearch_Click(object sender, EventArgs e)
+    {
+
+        Search();
+    }
+    private void Search()
     {
         MemberInfoList mil = new MemberInfoList(CurrentUserID);
         List<MemberInfo> m = mil.GetMembers(tbFirstname.Text, tbLastname.Text, ddlSex.SelectedItem.Text, tbMemberID.Text);
         lvMemberDetails.DataSource = m;
         lvMemberDetails.DataBind();
-
     }
     protected void btnReset_Click(object sender, EventArgs e)
     {
-
+        tbFirstname.Text = string.Empty;
+        tbLastname.Text = string.Empty;
+        tbMemberID.Text = string.Empty;
+        ddlSex.SelectedIndex = 0;
     }
     private void BindDummyData()
     {

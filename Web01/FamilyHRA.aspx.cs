@@ -12,6 +12,7 @@ using HRACore;
 public partial class FamilyHRA : System.Web.UI.Page
 {
     private int MemberMasterID = 0;
+    private int AssessmentID = 0;
     BaseCore.CodeManager cm = new CodeManager(1);
     private MemberInfo mInfo;
     private int CurrentUserID = 0;
@@ -19,10 +20,11 @@ public partial class FamilyHRA : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
+        AssessmentID = Int32.Parse(Request.QueryString["AssessmentID"]);
         Master.PageHeader = "Family Conditions History";
         if (!IsPostBack)
         {
-            MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
+            //MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
             mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
         }
     }
@@ -34,11 +36,11 @@ public partial class FamilyHRA : System.Web.UI.Page
         //Ex For question ID 100 Set the Dict Key as 100 and value as 1020,1022,1023. Assuming 1020,1021,1022,1023 are family members and 1021 did not respond yes to question 100.
         //Call SaveFamilyResponses method
 
-        Response.Redirect("MemberHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
+        Response.Redirect("MemberHRA.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentID=" + AssessmentID);
     }
     protected void btnBack_click(object sender, EventArgs e)
     {
-        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString() + "&AssessmentId=1000");
+        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString() );
     }
     
     [WebMethod]

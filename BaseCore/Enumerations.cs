@@ -24,4 +24,10 @@ namespace BaseCore.Enumerations
         US_STATES = 1070,
         SECRET_QUESTIONS = 1075
     }
+    public enum MessageBoxCss
+    {
+        ERROR,
+        NOTICE,
+        SUCCESS
+    }
 }

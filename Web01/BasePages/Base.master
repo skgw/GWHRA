@@ -54,6 +54,9 @@
                 </h3>
             </div>
             <div id="mainContent" class="grid_24 alpha">
+           <asp:Panel ID="pnlMessage" runat="server" HorizontalAlign="Center">
+                <center><asp:Label ID="lblMessage" runat="server"></asp:Label></center> 
+            </asp:Panel>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>

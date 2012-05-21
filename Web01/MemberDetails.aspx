@@ -151,11 +151,11 @@
         </div>
     </div>
     <div class="grid_24 alpha">
-        <div class="grid_18 alpha" style ="text-align:right;">
-            Once you are done confirming the above, please click next.
+        <div class="grid_12 alpha">
+            <asp:Button ID="btnBackToMemberDashboard" runat="server" Text="Return to member dashboard" CssClass="btn btn-primary" OnClick="btnBackToMemberDashboard_click" />
         </div>
-        <div class="grid_6 omega">
-            <asp:Button ID="btnSave" runat="server" Text="Family Details" OnClick="btnSave_Click" CssClass="btn btn-success omega" />
+        <div class="grid_12 omega">
+            Once you are done confirming the above, please click <asp:Button ID="btnSave" runat="server" Text="Family Details" OnClick="btnSave_Click" CssClass="btn btn-success omega" />
         </div>
     </div>
 </asp:Content>

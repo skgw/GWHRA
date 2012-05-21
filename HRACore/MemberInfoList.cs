@@ -25,7 +25,7 @@ namespace HRACore
                 dbhMil.AddParameter("@FIRSTNAME", firstname);
                 dbhMil.AddParameter("@LASTNAME", lastname);
                 dbhMil.AddParameter("@SEX", sex);
-                dbhMil.AddParameter("@MEMBERID", memberID);
+                dbhMil.AddParameter("@MEMBERID",  memberID);
                 dbhMil.AddParameter("@CURRENTUSERID", mCurrentUserID);
 
                 IDataReader reader = dbhMil.ExecuteReader("GET_MEMBERINFOLIST");
