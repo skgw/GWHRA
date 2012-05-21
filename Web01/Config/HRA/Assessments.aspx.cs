@@ -93,6 +93,8 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
             obj.EffectiveTo = Convert.ToDateTime(txtEffectiveTo.Text);
         }
         obj.Status = chkStatus.Checked == true ? 'A' : 'I';
+        obj.NarrativeHeader = tbNarrativeHeader.Text;
+        obj.NarrativeFooter = tbNarrativeFooter.Text;
         Session["objAssessment"] = obj;
         //save this and go to the next page
         obj.Save();
