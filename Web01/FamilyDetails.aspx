@@ -144,7 +144,7 @@
                         <%#Eval("Firstname") %>
                     </td>
                     <td>
-                        <%#Eval("Sex") %>
+                          <%# ((Eval("Sex")).ToString()=="1001")?"F":"M" %>
                     </td>
                     <td>
                         <%# ((DateTime)Eval("DOB")).ToShortDateString() %>
