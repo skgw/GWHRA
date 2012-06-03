@@ -29,6 +29,10 @@ public partial class Narrative : System.Web.UI.Page
     {
         divNarrative.InnerHtml = GetNarrative();
     }
+    protected void btnBack_click(object sender, EventArgs e)
+    {
+        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString());
+    }
     private string GetNarrative()
     {
         MemberInfo mi = new MemberInfo(CurrentUserID);

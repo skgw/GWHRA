@@ -31,8 +31,7 @@ namespace HRACore
         private string mEmail;
         private Address mWorkAddress;
         private Address mHomeAddress;
-        #region Public Properties
-
+        #region Public Properties      
         public int Salutation
         {
             get
