@@ -30,8 +30,8 @@
             if (jQuery.trim(getParameterByName("ID")) != "") {
                 memberMasterID = jQuery.trim(getParameterByName("ID"));
             }
-            if (jQuery.trim(getParameterByName("AssessmentId")) != "") {
-                assessmentId = jQuery.trim(getParameterByName("AssessmentId"));
+            if (jQuery.trim(getParameterByName("AssessmentID")) != "") {
+                assessmentId = jQuery.trim(getParameterByName("AssessmentID"));
             }
             GetFamilyQuestionList();
         });

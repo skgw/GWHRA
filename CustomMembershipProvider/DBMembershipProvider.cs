@@ -474,7 +474,7 @@ namespace CustomMembershipProvider
 
 
         public MembershipUser CreateUser(string username, string password, string email, string passwordQuestion
-          , string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status, string firstName, string lastName)
+          , string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status, string firstName, string lastName, Int32 RoleID)
         {
             ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, password, true);
 
@@ -514,7 +514,7 @@ namespace CustomMembershipProvider
 
                 sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar, 50).Value = firstName;
                 sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar, 100).Value = lastName;
-
+                sqlCommand.Parameters.Add("@RoleID", SqlDbType.Int, 0).Value = RoleID;
                 try
                 {
                     sqlConnection.Open();

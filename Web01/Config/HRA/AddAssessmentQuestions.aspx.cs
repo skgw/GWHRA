@@ -156,7 +156,7 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
                 QList = (List<Question>)Session["SelectedList"];
                 UpdateQuestions(QList);
             }
-            Response.Redirect("AssessmentPreview.aspx?=id" + objAssessment.ID);
+            Response.Redirect("AssessmentPreview.aspx?=ID" + objAssessment.ID);
         }
         else
         {
@@ -168,7 +168,7 @@ public partial class Config_HRA_AddAssessmentQuestions : System.Web.UI.Page
     }
     protected void btnBack_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Assessments.aspx?id=" + objAssessment.ID);
+        Response.Redirect("Assessments.aspx?ID=" + objAssessment.ID);
     }
 
     protected void SaveQuestions(List<Question> lst)

@@ -40,6 +40,6 @@ public partial class Config_HRA_AssessmentPreview : System.Web.UI.Page
     }
     protected void btnEdit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Assessments.aspx?id=" + objAssessment.ID);
+        Response.Redirect("Assessments.aspx?ID=" + objAssessment.ID);
     }
 }

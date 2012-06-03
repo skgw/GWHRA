@@ -4,8 +4,8 @@ $(function () {
     if (jQuery.trim(getParameterByName("ID")) != "") {
         memberMasterID = jQuery.trim(getParameterByName("ID"));
     }
-    if (jQuery.trim(getParameterByName("AssessmentId")) != "") {
-        assessmentId = jQuery.trim(getParameterByName("AssessmentId"));
+    if (jQuery.trim(getParameterByName("AssessmentID")) != "") {
+        assessmentId = jQuery.trim(getParameterByName("AssessmentID"));
     }
     GetQuestionaire();
     BindEvents();
@@ -99,56 +99,73 @@ function BindEvents() {
     });
     $("#btnSubmit").click(function (e) {
         e.preventDefault();
-            var questionidArr = [];
+        var questionidArr = [];
 
-            var noAnswer = true;
-            var ansCount = 0;
-            $("#dvQuetionaire .Question").each(function (index) {
-                var QuetionId = $(this).attr("id").toString().split('_')[1];
-                var responsetype = "";
-                responsetype = $(this).children().children(".restype").text();
-                var selectedVal = "";
-                switch (responsetype) {
-                    case "TEXTBOX":
-                        //                $("#" + tableid + " tr:not(:first)").each(function (index, item) {
-                        //                    var row = $(this);
-                        //                    var id = $("td", row).eq(1).children().attr("id");
-                        //                    if (jQuery.trim($("#" + id).val()) != "") {
-                        //                        answer += id + "," + jQuery.trim($("#" + id).val());
-                        //                    }
-                        //                });
-                        break;
-                    case "DROPDOWNLIST":
-                        //$("#yourdropdownid option:selected").text(); 
-                        //selectedVal = $("#ddl_" + QuetionId + " option:selected").text();
-                        selectedVal = $("#ddl_" + QuetionId).val();
-                        if (selectedVal != "") {
-                            questionidArr[ansCount] = QuetionId;
-                            if (jQuery.trim(answerString) != '') {
-                                answerString = answerString + "~" + selectedVal.toString();
-                            }
-                            if (jQuery.trim(answerString) == '') {
-                                answerString = selectedVal.toString();
-                            }
-                            ansCount += 1;
-                            noAnswer = false;
+        var noAnswer = true;
+        var ansCount = 0;
+        $("#dvQuetionaire .Question").each(function (index) {
+            var QuetionId = $(this).attr("id").toString().split('_')[1];
+            var responsetype = "";
+            responsetype = $(this).children().children(".restype").text();
+            var selectedVal = "";
+            switch (responsetype) {
+                case "TEXTBOX":
+                    //                $("#" + tableid + " tr:not(:first)").each(function (index, item) {
+                    //                    var row = $(this);
+                    //                    var id = $("td", row).eq(1).children().attr("id");
+                    //                    if (jQuery.trim($("#" + id).val()) != "") {
+                    //                        answer += id + "," + jQuery.trim($("#" + id).val());
+                    //                    }
+                    //                });
+                    break;
+                case "DROPDOWNLIST":
+                    //$("#yourdropdownid option:selected").text(); 
+                    //selectedVal = $("#ddl_" + QuetionId + " option:selected").text();
+                    selectedVal = $("#ddl_" + QuetionId).val();
+                    if (selectedVal != "") {
+                        questionidArr[ansCount] = QuetionId;
+                        if (jQuery.trim(answerString) != '') {
+                            answerString = answerString + "~" + selectedVal.toString();
                         }
-                        break;
-                    case "RADIOBUTTONS":
-                        break;
-                    case "CHECKBOX":
-                        //answerString += tableid + "~" + answer;
-                        break
-                }
-                
-
-            });
-            if (noAnswer == true) {
-                alert("You need to Answer atleast one Question.");
-                return;
+                        if (jQuery.trim(answerString) == '') {
+                            answerString = selectedVal.toString();
+                        }
+                        ansCount += 1;
+                        noAnswer = false;
+                    }
+                    break;
+                case "RADIOBUTTONS":
+                    selectedVal = $("#rad_" + QuetionId).val();
+                    if (selectedVal != "") {
+                        questionidArr[ansCount] = QuetionId;
+                        if (jQuery.trim(answerString) != '') {
+                            answerString = answerString + "~" + selectedVal.toString();
+                        }
+                        if (jQuery.trim(answerString) == '') {
+                            answerString = selectedVal.toString();
+                        }
+                        ansCount += 1;
+                        noAnswer = false;
+                    }
+                    break;
+                case "CHECKBOX":
+                    //need to write this functionality
+                    $("input[name*='ckh_" + QuetionId + "']").each(function () {
+                        if ($(this).css("checked") == "checked") {
+                            alert('ok');
+                        }
+                    });
+                    break
             }
-           
-           SaveResponses(questionidArr.toString(), answerString);         
+
+
+        });
+        if (noAnswer == true) {
+            alert("You need to Answer atleast one Question.");
+            return;
+        }
+
+        SaveResponses(questionidArr.toString(), answerString);
     });
 }
 function SaveResponses(questionidArr, answerString) {

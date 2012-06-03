@@ -12,9 +12,9 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
     private int AssessmentId = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null)
+        if (Request.QueryString["ID"] != null)
         {
-            AssessmentId = Convert.ToInt32(Request.QueryString["id"]);
+            AssessmentId = Convert.ToInt32(Request.QueryString["ID"]);
         }
         if (!IsPostBack)
         {
@@ -100,7 +100,7 @@ public partial class Config_HRA_Assessments : System.Web.UI.Page
         obj.Save();
         if (obj.ID > 0)
         {
-            Response.Redirect("AddAssessmentQuestions.aspx?id=" + obj.ID);
+            Response.Redirect("AddAssessmentQuestions.aspx?ID=" + obj.ID);
         }
         //Response.Redirect("AddAssessmentQuestions.aspx");
      }

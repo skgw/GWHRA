@@ -43,9 +43,8 @@
                 <asp:DropDownList ID="ddlQuestion" runat="server">
                     
                 </asp:DropDownList>
-                <asp:RequiredFieldValidator ID="QuestionRequired" runat="server" ControlToValidate="ddlQuestion"
-                    ErrorMessage="Security question is required." ToolTip="Security question is required."
-                    ValidationGroup="UserDetails" ForeColor="Red"><b>*</b></asp:RequiredFieldValidator></dd>
+                <asp:CustomValidator ID="cvSecretQuestion" runat="server" ControlToValidate="ddlQuestion"
+                    ValidationGroup="UserDetails" ForeColor="Red"></asp:CustomValidator></dd>
             <dt>
                 <asp:Label ID="AnswerLabel" runat="server">
                         Security Answer:</asp:Label></dt>
@@ -54,6 +53,15 @@
                 <asp:RequiredFieldValidator ID="AnswerRequired" runat="server" ControlToValidate="txtAnswer"
                     ErrorMessage="Security answer is required." ToolTip="Security answer is required."
                     ValidationGroup="UserDetails" ForeColor="Red"><b>*</b></asp:RequiredFieldValidator></dd>
+            <dt>
+                <asp:Label ID="Label4" runat="server">
+                        Role:</asp:Label></dt>
+            <dd>
+                <asp:DropDownList ID="ddlRole" runat="server">
+                    
+                </asp:DropDownList>
+                <asp:CustomValidator ID="cvRole" runat="server" ControlToValidate="ddlRole"
+                    ValidationGroup="UserDetails" ForeColor="Red"></asp:CustomValidator></dd>
             <dt>
                 <asp:Label ID="Label2" runat="server">
                         First Name:</asp:Label></dt>
@@ -76,8 +84,8 @@
         </dl>
         <asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="txtPassword"
             ControlToValidate="txtConfirmPassword" Display="Dynamic" ErrorMessage="The Password and Confirmation Password must match."
-            ValidationGroup="UserDetails"></asp:CompareValidator>
-        <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False"></asp:Literal>
+            ValidationGroup="UserDetails" ForeColor="Red"></asp:CompareValidator>
+        
         <div class="grid_10">
             <asp:Button ID="btnSave" runat="server" Text="Create User" OnClick="btnSave_Click"
                 ValidationGroup="UserDetails" />

@@ -174,6 +174,6 @@ public partial class MemberDetails : System.Web.UI.Page
 
     protected void btnBackToMemberDashboard_click(object sender, EventArgs e)
     {
-        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString());//+ "&AssessmentId=1000");
+        Response.Redirect("MemberDashboard.aspx?ID=" + MemberMasterID.ToString());//+ "&AssessmentID=1000");
     }
 }

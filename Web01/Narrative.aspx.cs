@@ -19,7 +19,7 @@ public partial class Narrative : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         MemberMasterID = Int32.Parse(Request.QueryString["ID"]);
-        AssessmentID = Int32.Parse(Request.QueryString["AssessmentId"]);
+        AssessmentID = Int32.Parse(Request.QueryString["AssessmentID"]);
         mInfo = new MemberInfo(MemberMasterID, CurrentUserID);
         Master.PageHeader = "Member Narrative:";
         LoadNarrative();

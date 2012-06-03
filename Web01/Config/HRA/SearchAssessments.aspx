@@ -10,7 +10,7 @@
         .click(function () {
             $row = $(this);
             var id = $("td", $row).eq(0).text();
-            window.location.href = "Assessments.aspx?id=" + id;
+            window.location.href = "Assessments.aspx?ID=" + id;
         });
             BindEvents();
         });

@@ -10,7 +10,9 @@
         .click(function () {
             $row = $(this);
             var id = $("td", $row).eq(0).text();
-            window.location.href = "MemberDashboard.aspx?ID=" + $.trim(id);
+            if ($.trim(id) != "No members found.") {
+                window.location.href = "MemberDashboard.aspx?ID=" + $.trim(id);
+            }
         });
         });
     
@@ -146,7 +148,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="nodata">
                             <td colspan="6">
                               No members found.
                             </td>

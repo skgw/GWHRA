@@ -242,10 +242,10 @@
             var id = $("td", $row).eq(0).text();
             var col = $(this).parent().children().index($(this)); ;
             if (col == 4) {
-                window.location.href = "Narrative.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+                window.location.href = "Narrative.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentID=" + $.trim(id);
             }
             else {
-                window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentId=" + $.trim(id);
+                window.location.href = "FamilyHRA.aspx?ID=" + getQueryStringByName("ID") + "&AssessmentID=" + $.trim(id);
             }
         });
         });
