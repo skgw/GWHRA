@@ -19,7 +19,8 @@ public partial class Accounts_ChangePassword : System.Web.UI.Page
     {
         if (Session["UserName"] == null)
         {
-            ErrorMessage.Text = "You are not authorized to change Q&A.";
+            //ErrorMessage.Text = "You are not authorized to change Q&A.";
+            Master.SetMessage("You are not authorized to change Password.", BaseCore.Enumerations.MessageBoxCss.NOTICE);
             return;
         }
         string userName = (string)Session["UserName"];
@@ -28,15 +29,17 @@ public partial class Accounts_ChangePassword : System.Web.UI.Page
         Boolean res = obj.ChangePassword(userName, ChangePassword1.CurrentPassword, ChangePassword1.NewPassword);
         if (res == false)
         {
-            ErrorMessage.Text = "Your password could not be changed.";
+            //ErrorMessage.Text = "Your password could not be changed.";
+            Master.SetMessage("Your password could not be changed.", BaseCore.Enumerations.MessageBoxCss.ERROR);
         }
         else
         {
-            ErrorMessage.Text = "Your password is changed successfully.";
+            //ErrorMessage.Text = "Your password is changed successfully.";
+            Master.SetMessage("Your password is changed successfully.", BaseCore.Enumerations.MessageBoxCss.ERROR);
         }
     }
     protected void Cancel_Click(object sender, EventArgs e)
     {
-        // Redirect to the previous page
+        
     }
 }
