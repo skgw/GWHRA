@@ -30,7 +30,7 @@ public partial class ChangeSecretQA : System.Web.UI.Page
     {
         if (Session["UserName"] == null)
         {
-            ErrorMessage.Text = "You are not authorized to change Q&A.";
+            Master.SetMessage("You are not authorized to change Q&A.", BaseCore.Enumerations.MessageBoxCss.NOTICE);
             return;
         }
         string userName = (string)Session["UserName"];
@@ -40,12 +40,11 @@ public partial class ChangeSecretQA : System.Web.UI.Page
         Boolean res = obj.ChangePasswordQuestionAndAnswer(userName, txtPassword.Text, ddlQuestion.SelectedItem.Text, txtAnswer.Text);
         if (res == false)
         {
-            ErrorMessage.Text = "Your secret Q&A could not be changed.";
+            Master.SetMessage("Your secret Q&A could not be changed.", BaseCore.Enumerations.MessageBoxCss.ERROR);
         }
         else
         {
-            ErrorMessage.Text = "Your secret Q&A is changed successfully.";
-            
+            Master.SetMessage("Your secret Q&A is changed successfully.", BaseCore.Enumerations.MessageBoxCss.SUCCESS);
         }
     }
     protected void Cancel_Click(object sender, EventArgs e)
