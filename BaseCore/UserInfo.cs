@@ -24,6 +24,7 @@ namespace BaseCore
         private string _mRoleName;
         private int _mUserID;
         private string _mUsername;
+        private Boolean _mIsLocked;
 
         #endregion
 
@@ -165,6 +166,18 @@ namespace BaseCore
             set { _mAuthorizedOperations = value; }
         }
 
+        public Boolean IsLocked
+        {
+            get { return _mIsLocked; }
+
+            set
+            {
+                if (_mIsLocked != value)
+                {
+                    _mIsLocked = value;
+                }
+            }
+        }
         #endregion
 
         #region Ctor
@@ -272,6 +285,7 @@ namespace BaseCore
                     AuthorizedOperations.Add(Int32.Parse(currentOperation));
                 }
             }
+            IsLocked = DBNull.Value == reader["IsLockedOut"] ? false : (Boolean) reader["IsLockedOut"];
         }
 
 

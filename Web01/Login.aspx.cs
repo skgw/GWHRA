@@ -27,13 +27,21 @@ public partial class Login : System.Web.UI.Page
             Session["UserName"] = this.siteLogin.UserName;
             UserInfo loggedInUser = new UserInfo();
             loggedInUser.GetUserInfo(this.siteLogin.UserName, 1);
-            Session["LoggedInUserInfo"] = loggedInUser;
-            Response.Redirect(string.IsNullOrEmpty(loggedInUser.Homepage) ? "default.aspx" : loggedInUser.Homepage);
+            if (!loggedInUser.IsLocked)
+            {
+                Session["LoggedInUserInfo"] = loggedInUser;
+                Response.Redirect(string.IsNullOrEmpty(loggedInUser.Homepage) ? "default.aspx" : loggedInUser.Homepage);
+            }
+            else
+            {
+                Master.SetMessage("This account is Locked. Contact Administrator.", BaseCore.Enumerations.MessageBoxCss.NOTICE);
+            }
         }
         else
         {
             Session["UserName"] = null;
-            this.siteLogin.FailureText = "Wrong username/password.";
+            //this.siteLogin.FailureText = "Wrong username/password.";
+            Master.SetMessage("Wrong username/password.", BaseCore.Enumerations.MessageBoxCss.ERROR);
         }
     }
 
